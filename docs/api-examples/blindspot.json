@@ -1,0 +1,70 @@
+{
+  "tactics": [
+    "Reconnaissance",
+    "Resource Development",
+    "Initial Access",
+    "...(11 more)"
+  ],
+  "entities": [
+    {
+      "entity_id": "BFS-01",
+      "entity_name": "Bank A",
+      "sector": "BFS",
+      "declared_log_sources": "auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf"
+    },
+    {
+      "entity_id": "BFS-02",
+      "entity_name": "Bank B",
+      "sector": "BFS",
+      "declared_log_sources": "auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn"
+    },
+    {
+      "entity_id": "BFS-03",
+      "entity_name": "Bank C",
+      "sector": "BFS",
+      "declared_log_sources": "auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf"
+    },
+    "...(39 more)"
+  ],
+  "cells": [
+    {
+      "entity_id": "PWR-01",
+      "tactic": "Reconnaissance",
+      "state": "covered",
+      "observed": 1074,
+      "expected": 990.1,
+      "p": 0.642742136004872,
+      "supportable": true
+    },
+    {
+      "entity_id": "PWR-01",
+      "tactic": "Resource Development",
+      "state": "not_applicable",
+      "observed": 0,
+      "expected": 0.0,
+      "p": null,
+      "supportable": false
+    },
+    {
+      "entity_id": "PWR-01",
+      "tactic": "Initial Access",
+      "state": "covered",
+      "observed": 1683,
+      "expected": 1316.7,
+      "p": 0.8188199763635658,
+      "supportable": true
+    },
+    "...(585 more)"
+  ],
+  "summary": {
+    "blind": 7,
+    "covered": 539,
+    "not_applicable": 42
+  },
+  "legend": {
+    "covered": "Log sources can see this tactic and alerts are present at expected levels",
+    "quiet": "Log sources can see this tactic but alerts are far below the expected level",
+    "blind": "Declared log sources cannot support detection of this tactic (most peers can)",
+    "not_applicable": "Not expected for this entity's asset mix"
+  }
+}

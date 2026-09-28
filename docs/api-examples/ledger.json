@@ -1,0 +1,66 @@
+{
+  "entries": [
+    {
+      "actor": "simulated-examiner",
+      "hash": "1ccad6d83f290c9f45e32645578d6bb09aa4158108db254ce67aa71e6c49e97c",
+      "payload": {
+        "blind_first": true,
+        "case_id": "BFS-02-CS003814",
+        "entity_id": "BFS-02",
+        "label": 0
+      },
+      "payload_sha256": "daf132b40a4fda7bbdfed8627b21ae0e43e73c27e51c8fe5c30bcbd7873e21ea",
+      "prev_hash": "978bd1281915b50814a381cd74d47bbb4ae729e9ae4aa0a510e2355cb2747ef4",
+      "seq": 35,
+      "ts": "2026-09-28T22:26:40+00:00",
+      "type": "examiner_verdict"
+    },
+    {
+      "actor": "simulated-examiner",
+      "hash": "978bd1281915b50814a381cd74d47bbb4ae729e9ae4aa0a510e2355cb2747ef4",
+      "payload": {
+        "blind_first": true,
+        "case_id": "BFS-02-CS006003",
+        "entity_id": "BFS-02",
+        "label": 0
+      },
+      "payload_sha256": "4fefcfb9305bbc380e39f412fc7e6df883caf8a3d10b49aca8b5544c1d978916",
+      "prev_hash": "ec449d8284de01294cddaf5b5cd27eb767a73b47cf0829b103f4f186e8ac4b48",
+      "seq": 34,
+      "ts": "2026-09-28T22:26:40+00:00",
+      "type": "examiner_verdict"
+    },
+    {
+      "actor": "simulated-examiner",
+      "hash": "ec449d8284de01294cddaf5b5cd27eb767a73b47cf0829b103f4f186e8ac4b48",
+      "payload": {
+        "blind_first": true,
+        "case_id": "BFS-02-CS009039",
+        "entity_id": "BFS-02",
+        "label": 0
+      },
+      "payload_sha256": "31cf2f8ff70d25f9574b10534ea688ee569fc8f3d7cfef00e23a72b5d4067501",
+      "prev_hash": "ea5b37cebe9effa37aac3b4b1825ca433931f961108a55696b7be51003f17b86",
+      "seq": 33,
+      "ts": "2026-09-28T22:26:40+00:00",
+      "type": "examiner_verdict"
+    },
+    {
+      "actor": "simulated-examiner",
+      "hash": "ea5b37cebe9effa37aac3b4b1825ca433931f961108a55696b7be51003f17b86",
+      "payload": {
+        "blind_first": true,
+        "case_id": "BFS-02-CS001698",
+        "entity_id": "BFS-02",
+        "label": 1
+      },
+      "payload_sha256": "45250a4f6b2173df456baf587dccaf31b81bf6975c9da94637ffe8bd0380ce66",
+      "prev_hash": "47f0985c46ec6d76b811f9dd7018295c0d60d552a442093900e095b11bd10395",
+      "seq": 32,
+      "ts": "2026-09-28T22:26:40+00:00",
+      "type": "examiner_verdict"
+    },
+    "...(1 more)"
+  ],
+  "total": 35
+}

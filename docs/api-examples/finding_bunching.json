@@ -1,0 +1,148 @@
+{
+  "entity_id": "BFS-03",
+  "detector_id": "EG6",
+  "p_value": 1e-12,
+  "n": 2215,
+  "k": 388,
+  "rate": null,
+  "peer_rate": null,
+  "effect": "+389 closures just under the 240-min SLA (4.7x expected)",
+  "reason": "389 more critical cases were closed in the 30 minutes before the 240-minute SLA than the smooth counterfactual predicts (4.7x), with ~42 missing just after it - the signature of closures timed to the metric.",
+  "evidence": [
+    "BFS-03-CS005668",
+    "BFS-03-CS000400",
+    "BFS-03-CS000389",
+    "BFS-03-CS005058",
+    "...(36 more)"
+  ],
+  "evidence_type": "case",
+  "deterministic": false,
+  "severity": null,
+  "extra": {
+    "chart": {
+      "p": 1e-12,
+      "excess": 388.91098635002805,
+      "missing_above": 41.85019127750202,
+      "ratio": 4.700776825686115,
+      "phi": 1.0606522267379015,
+      "bins": [
+        2.5,
+        7.5,
+        12.5,
+        17.5,
+        "...(140 more)"
+      ],
+      "observed": [
+        7,
+        74,
+        24,
+        14,
+        "...(140 more)"
+      ],
+      "counterfactual": [
+        0.5,
+        0.5,
+        4.45,
+        10.91,
+        "...(140 more)"
+      ],
+      "sla": 240.0,
+      "window": [
+        210.0,
+        270.0
+      ]
+    }
+  },
+  "name": "SLA-threshold bunching (metric gaming)",
+  "family": "Execution gap",
+  "capability": "Operational Discipline",
+  "method": "Bunching estimator: excess mass of critical closures just below the SLA vs a polynomial counterfactual (Chetty et al. 2011; Kleven 2016)",
+  "regulations": [
+    "SEBI CSCRF - Detective Effectiveness (metric integrity)"
+  ],
+  "significant": true,
+  "score": 100,
+  "records": [
+    {
+      "case_id": "BFS-03-CS002075",
+      "severity": "critical",
+      "category": "credential_dump",
+      "tactic": "Credential Access",
+      "asset_id": "BFS-03-A0030",
+      "opened_ts": "2025-12-23T06:48:52.267238102",
+      "ack_ts": "2025-12-23T06:51:32.014084382",
+      "closed_ts": "2025-12-23T10:48:06.413394428",
+      "ttc_min": 239.23333333333332,
+      "ack_min": 2.6666666666666665,
+      "escalated": true,
+      "disposition": "BP",
+      "n_investigate": 1,
+      "p_fast": 0.7459259259259259,
+      "templated": false,
+      "yhat": 0.000309080218554865,
+      "notes": "Analysed credential dump alert on BFS-03-A0030. Checked mailbox rules for the recipient. Behaviour is real but expected: backup job performed by u3700 from 10.202.124.3. Added context to asset record.",
+      "injection_like": false
+    },
+    {
+      "case_id": "BFS-03-CS002375",
+      "severity": "critical",
+      "category": "credential_dump",
+      "tactic": "Credential Access",
+      "asset_id": "BFS-03-A0008",
+      "opened_ts": "2026-01-03T09:39:24.843812968",
+      "ack_ts": "2026-01-03T09:42:56.524661368",
+      "closed_ts": "2026-01-03T13:38:05.513984836",
+      "ttc_min": 238.68333333333334,
+      "ack_min": 3.533333333333333,
+      "escalated": true,
+      "disposition": "TP",
+      "n_investigate": 1,
+      "p_fast": 0.7451851851851852,
+      "templated": false,
+      "yhat": 0.00030287324971454196,
+      "notes": "Triaged credential dump alert on BFS-03-A0008. Checked proxy logs for the destination. Confirmed beaconing to 10.119.107.186 every 60s with jitter; domain registered 3 days ago. Disabled persistence entry and re-imaged host.",
+      "injection_like": false
+    },
+    {
+      "case_id": "BFS-03-CS002536",
+      "severity": "critical",
+      "category": "exfil_large_upload",
+      "tactic": "Exfiltration",
+      "asset_id": "BFS-03-A0050",
+      "opened_ts": "2026-01-09T17:40:33.531982318",
+      "ack_ts": "2026-01-09T17:44:44.094661900",
+      "closed_ts": "2026-01-09T21:38:54.478719226",
+      "ttc_min": 238.35,
+      "ack_min": 4.183333333333334,
+      "escalated": false,
+      "disposition": "BP",
+      "n_investigate": 2,
+      "p_fast": 0.7363367799113737,
+      "templated": false,
+      "yhat": 5.440031758713862e-06,
+      "notes": "Reviewed exfil large upload alert on BFS-03-A0050. Checked EDR process tree 30 min either side and change calendar for the window. Activity attributed to authorised SCCM software push by u9330; change ticket CHG81693 matches window. Documented and closed after verification.",
+      "injection_like": false
+    },
+    {
+      "case_id": "BFS-03-CS003013",
+      "severity": "critical",
+      "category": "lateral_rdp_smb",
+      "tactic": "Lateral Movement",
+      "asset_id": "BFS-03-A0043",
+      "opened_ts": "2026-01-29T17:35:31.634895652",
+      "ack_ts": "2026-01-29T17:37:54.068071564",
+      "closed_ts": "2026-01-29T21:34:32.365208626",
+      "ttc_min": 239.01666666666668,
+      "ack_min": 2.3833333333333333,
+      "escalated": true,
+      "disposition": "TP",
+      "n_investigate": 1,
+      "p_fast": 0.7297032474804032,
+      "templated": false,
+      "yhat": 8.319687101153333e-05,
+      "notes": "Examined lateral rdp smb alert on BFS-03-A0043. Checked EDR process tree 30 min either side and proxy logs for the destination. Confirmed malicious activity: mshta.exe spawned from Office document with encoded command line. Disabled persistence entry and re-imaged host.",
+      "injection_like": false
+    },
+    "...(36 more)"
+  ]
+}

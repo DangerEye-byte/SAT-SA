@@ -1,0 +1,162 @@
+{
+  "entity_id": "PWR-01",
+  "detector_id": "EG3",
+  "p_value": 1.972841915387491e-07,
+  "n": 4653,
+  "k": 2241,
+  "rate": 0.4816247582205029,
+  "peer_rate": 0.03531820508445658,
+  "effect": "48% vs peer median 4%",
+  "reason": "2241 of 4653 investigation notes (48%) are near-duplicates of a small set of templates; peer median 4%.",
+  "evidence": [
+    "PWR-01-CS000004",
+    "PWR-01-CS000021",
+    "PWR-01-CS004760",
+    "PWR-01-CS000026",
+    "...(36 more)"
+  ],
+  "evidence_type": "case",
+  "deterministic": false,
+  "severity": null,
+  "extra": {
+    "clusters": [
+      {
+        "count": 409,
+        "example": "Checked logs, activity normal, no further action required.",
+        "cases": [
+          "PWR-01-CS000004",
+          "PWR-01-CS000021",
+          "PWR-01-CS000026",
+          "PWR-01-CS000046",
+          "...(1 more)"
+        ]
+      },
+      {
+        "count": 403,
+        "example": "Alert reviewed. No malicious activity observed. Closing as false positive.",
+        "cases": [
+          "PWR-01-CS000005",
+          "PWR-01-CS000008",
+          "PWR-01-CS000016",
+          "PWR-01-CS000038",
+          "...(1 more)"
+        ]
+      },
+      {
+        "count": 391,
+        "example": "Verified source IP, benign tool scan confirmed, closing.",
+        "cases": [
+          "PWR-01-CS000007",
+          "PWR-01-CS000010",
+          "PWR-01-CS000011",
+          "PWR-01-CS000031",
+          "...(1 more)"
+        ]
+      },
+      {
+        "count": 365,
+        "example": "Reviewed as per SOP. Not a threat. Closed.",
+        "cases": [
+          "PWR-01-CS000063",
+          "PWR-01-CS000068",
+          "PWR-01-CS000074",
+          "PWR-01-CS000082",
+          "...(1 more)"
+        ]
+      },
+      "...(1 more)"
+    ]
+  },
+  "name": "Template / copy-paste investigation notes",
+  "family": "Execution gap",
+  "capability": "Operational Discipline",
+  "method": "Near-duplicate clustering (char 3-5-gram cosine >= 0.9, cluster >= 5); beta-binomial vs peers",
+  "regulations": [
+    "SEBI CSCRF - 'Whether qualified personnel are deployed in SOC?'"
+  ],
+  "significant": true,
+  "score": 100,
+  "records": [
+    {
+      "case_id": "PWR-01-CS000004",
+      "severity": "critical",
+      "category": "phishing",
+      "tactic": "Initial Access",
+      "asset_id": "PWR-01-A0011",
+      "opened_ts": "2025-10-01T06:05:31.607673720",
+      "ack_ts": "2025-10-01T06:09:15.073834092",
+      "closed_ts": "2025-10-01T06:16:20.282959638",
+      "ttc_min": 10.816666666666666,
+      "ack_min": 3.7333333333333334,
+      "escalated": false,
+      "disposition": "BP",
+      "n_investigate": 0,
+      "p_fast": 0.030090684253915912,
+      "templated": true,
+      "yhat": 0.9654032653833773,
+      "notes": "Checked logs, activity normal, no further action required.",
+      "injection_like": false
+    },
+    {
+      "case_id": "PWR-01-CS000021",
+      "severity": "critical",
+      "category": "network_scan",
+      "tactic": "Discovery",
+      "asset_id": "PWR-01-A0022",
+      "opened_ts": "2025-10-03T04:11:15.217734572",
+      "ack_ts": "2025-10-03T04:25:30.289192543",
+      "closed_ts": "2025-10-03T04:32:35.498318089",
+      "ttc_min": 21.333333333333332,
+      "ack_min": 14.25,
+      "escalated": false,
+      "disposition": "TP",
+      "n_investigate": 0,
+      "p_fast": 0.055226824457593686,
+      "templated": true,
+      "yhat": 0.9616523244702472,
+      "notes": "Checked logs, activity normal, no further action required. Ref.",
+      "injection_like": false
+    },
+    {
+      "case_id": "PWR-01-CS000026",
+      "severity": "medium",
+      "category": "policy_violation",
+      "tactic": "Defense Evasion",
+      "asset_id": "PWR-01-A0004",
+      "opened_ts": "2025-10-03T15:08:50.838911254",
+      "ack_ts": "2025-10-03T15:27:15.180596326",
+      "closed_ts": "2025-10-03T17:23:12.483939316",
+      "ttc_min": 134.36666666666667,
+      "ack_min": 18.416666666666668,
+      "escalated": false,
+      "disposition": "BP",
+      "n_investigate": 1,
+      "p_fast": 0.17437012869313032,
+      "templated": true,
+      "yhat": 0.05730965968153862,
+      "notes": "Checked logs, activity normal, no further action required.",
+      "injection_like": false
+    },
+    {
+      "case_id": "PWR-01-CS000112",
+      "severity": "high",
+      "category": "priv_escalation",
+      "tactic": "Privilege Escalation",
+      "asset_id": "PWR-01-A0018",
+      "opened_ts": "2025-10-11T13:41:33.017579138",
+      "ack_ts": "2025-10-11T13:45:20.968855010",
+      "closed_ts": "2025-10-11T13:52:26.177980556",
+      "ttc_min": 10.883333333333333,
+      "ack_min": 3.783333333333333,
+      "escalated": false,
+      "disposition": "BP",
+      "n_investigate": 0,
+      "p_fast": 0.020158387329013677,
+      "templated": true,
+      "yhat": 0.9679773787155481,
+      "notes": "Checked logs, activity normal, no further action required.",
+      "injection_like": false
+    },
+    "...(36 more)"
+  ]
+}

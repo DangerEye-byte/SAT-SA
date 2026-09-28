@@ -1,0 +1,339 @@
+{
+  "entity_id": "PWR-01",
+  "p_value": 4.2389980414725414e-12,
+  "n_tests": 14,
+  "n_deterministic": 2,
+  "det_severity": 2,
+  "capabilities": {
+    "Threat Detection": 100.0,
+    "Investigation": 100.0,
+    "Escalation": 100.0,
+    "Incident Response": 100.0,
+    "Security Operations": 14.441358037903274,
+    "Governance & Oversight": 100.0,
+    "Operational Discipline": 100.0,
+    "Cyber Resilience": 70.0
+  },
+  "top_reasons": [
+    {
+      "detector_id": "EG2",
+      "name": "Critical cases closed without escalation",
+      "p_value": 1e-12,
+      "effect": "83% vs peer median 10%"
+    },
+    {
+      "detector_id": "EG5",
+      "name": "Workflow non-conformance",
+      "p_value": 1e-12,
+      "effect": "25% vs peer median 4%"
+    },
+    {
+      "detector_id": "EG1",
+      "name": "Unusually fast high-severity closures",
+      "p_value": 1.216915457291634e-12,
+      "effect": "19% vs peer median 3%"
+    },
+    {
+      "detector_id": "RT1",
+      "name": "Red-team techniques missed",
+      "p_value": null,
+      "effect": "6 of 12 red-team techniques never alerted",
+      "deterministic": true,
+      "severity": "high"
+    },
+    "...(1 more)"
+  ],
+  "q_value": 7.3498956920659e-11,
+  "attention": 100.0,
+  "entity_name": "Utility P",
+  "sector": "PWR",
+  "sector_name": "Power & Energy",
+  "size_band": "M",
+  "soc_provider": "INHOUSE",
+  "claims_24x7": true,
+  "declared_log_sources": [
+    "auth_logs",
+    "av",
+    "dns",
+    "email_gw",
+    "...(6 more)"
+  ],
+  "n_assets": 27,
+  "n_analysts": 10,
+  "sla_critical_min": 240,
+  "trust_completeness": 1.0,
+  "trust_temporal": 1.0,
+  "trust_timeliness": 1.0,
+  "trust_coverage": 1.0,
+  "trust_score": 100.0,
+  "findings": [
+    {
+      "entity_id": "PWR-01",
+      "detector_id": "EG1",
+      "p_value": 1.216915457291634e-12,
+      "n": 3339,
+      "k": 618,
+      "rate": 0.18508535489667566,
+      "peer_rate": 0.02605091770278271,
+      "effect": "19% vs peer median 3%",
+      "reason": "618 of 3339 high/critical cases (19%) were closed faster than 95% of comparable peer cases (same severity and alert type); the peer median is 3%. Automated SOAR closures are excluded.",
+      "evidence": [
+        "PWR-01-CS004629",
+        "PWR-01-CS004258",
+        "PWR-01-CS004352",
+        "PWR-01-CS004355",
+        "...(6 more)"
+      ],
+      "evidence_type": "case",
+      "deterministic": false,
+      "severity": null,
+      "extra": {},
+      "name": "Unusually fast high-severity closures",
+      "family": "Execution gap",
+      "capability": "Investigation",
+      "method": "Leave-one-entity-out conformal p-value per case vs peer cases of the same severity and alert type; entity count tested with a beta-binomial peer model",
+      "regulations": [
+        "SEBI CSCRF - SOC functional efficacy: Detective Effectiveness",
+        "NCIIPC guidelines - incident handling"
+      ],
+      "significant": true,
+      "score": 100
+    },
+    {
+      "entity_id": "PWR-01",
+      "detector_id": "EG2",
+      "p_value": 1e-12,
+      "n": 1044,
+      "k": 869,
+      "rate": 0.8323754789272031,
+      "peer_rate": 0.09762419006479482,
+      "effect": "83% vs peer median 10%",
+      "reason": "869 of 1044 closed critical cases (83%) show no escalation; peer median 10%.",
+      "evidence": [
+        "PWR-01-CS004434",
+        "PWR-01-CS004355",
+        "PWR-01-CS004629",
+        "PWR-01-CS004258",
+        "...(6 more)"
+      ],
+      "evidence_type": "case",
+      "deterministic": false,
+      "severity": null,
+      "extra": {},
+      "name": "Critical cases closed without escalation",
+      "family": "Execution gap",
+      "capability": "Escalation",
+      "method": "Beta-binomial test of the unescalated share of closed critical cases vs peers",
+      "regulations": [
+        "SEBI CSCRF - Detective Effectiveness",
+        "CEA 2024 - Cyber Crisis Management Plan escalation"
+      ],
+      "significant": true,
+      "score": 100
+    },
+    {
+      "entity_id": "PWR-01",
+      "detector_id": "EG3",
+      "p_value": 1.972841915387491e-07,
+      "n": 4653,
+      "k": 2241,
+      "rate": 0.4816247582205029,
+      "peer_rate": 0.03531820508445658,
+      "effect": "48% vs peer median 4%",
+      "reason": "2241 of 4653 investigation notes (48%) are near-duplicates of a small set of templates; peer median 4%.",
+      "evidence": [
+        "PWR-01-CS000004",
+        "PWR-01-CS000021",
+        "PWR-01-CS004760",
+        "PWR-01-CS000026",
+        "...(6 more)"
+      ],
+      "evidence_type": "case",
+      "deterministic": false,
+      "severity": null,
+      "extra": {
+        "clusters": [
+          {
+            "count": 409,
+            "example": "Checked logs, activity normal, no further action required.",
+            "cases": [
+              "PWR-01-CS000004",
+              "PWR-01-CS000021",
+              "PWR-01-CS000026",
+              "PWR-01-CS000046",
+              "...(1 more)"
+            ]
+          },
+          {
+            "count": 403,
+            "example": "Alert reviewed. No malicious activity observed. Closing as false positive.",
+            "cases": [
+              "PWR-01-CS000005",
+              "PWR-01-CS000008",
+              "PWR-01-CS000016",
+              "PWR-01-CS000038",
+              "...(1 more)"
+            ]
+          },
+          {
+            "count": 391,
+            "example": "Verified source IP, benign tool scan confirmed, closing.",
+            "cases": [
+              "PWR-01-CS000007",
+              "PWR-01-CS000010",
+              "PWR-01-CS000011",
+              "PWR-01-CS000031",
+              "...(1 more)"
+            ]
+          },
+          {
+            "count": 365,
+            "example": "Reviewed as per SOP. Not a threat. Closed.",
+            "cases": [
+              "PWR-01-CS000063",
+              "PWR-01-CS000068",
+              "PWR-01-CS000074",
+              "PWR-01-CS000082",
+              "...(1 more)"
+            ]
+          },
+          "...(1 more)"
+        ]
+      },
+      "name": "Template / copy-paste investigation notes",
+      "family": "Execution gap",
+      "capability": "Operational Discipline",
+      "method": "Near-duplicate clustering (char 3-5-gram cosine >= 0.9, cluster >= 5); beta-binomial vs peers",
+      "regulations": [
+        "SEBI CSCRF - 'Whether qualified personnel are deployed in SOC?'"
+      ],
+      "significant": true,
+      "score": 100
+    },
+    {
+      "entity_id": "PWR-01",
+      "detector_id": "EG4",
+      "p_value": 2.1445067943659524e-12,
+      "n": 3339,
+      "k": 808,
+      "rate": 0.2419886193471099,
+      "peer_rate": 0.031545741324921134,
+      "effect": "24% vs peer median 3%",
+      "reason": "808 of 3339 high/critical cases (24%) were acknowledged and closed with no investigation step recorded; peer median 3%.",
+      "evidence": [
+        "PWR-01-CS004434",
+        "PWR-01-CS004355",
+        "PWR-01-CS004629",
+        "PWR-01-CS004258",
+        "...(6 more)"
+      ],
+      "evidence_type": "case",
+      "deterministic": false,
+      "severity": null,
+      "extra": {},
+      "name": "Acknowledged but not investigated",
+      "family": "Execution gap",
+      "capability": "Investigation",
+      "method": "Closed high/critical cases with no 'investigate' workflow event; beta-binomial vs peers",
+      "regulations": [
+        "SEBI CSCRF - 'Whether IOCs are processed by SOC?'",
+        "NCIIPC guidelines - incident handling"
+      ],
+      "significant": true,
+      "score": 100
+    },
+    "...(7 more)"
+  ],
+  "monthly": [
+    {
+      "entity_id": "PWR-01",
+      "period": "2025-10",
+      "cases": 342,
+      "fast_share": 0.14619883040935672,
+      "no_investigation_share": 0.216,
+      "templated_share": 0.4415204678362573,
+      "median_ttc_critical": 31.633333333333333,
+      "escalation_rate_critical": 0.23809523809523808,
+      "mean_superficial_score": 0.18081091683952105
+    },
+    {
+      "entity_id": "PWR-01",
+      "period": "2025-11",
+      "cases": 407,
+      "fast_share": 0.15724815724815724,
+      "no_investigation_share": 0.24742268041237114,
+      "templated_share": 0.4643734643734644,
+      "median_ttc_critical": 16.233333333333334,
+      "escalation_rate_critical": 0.15789473684210525,
+      "mean_superficial_score": 0.19805547211637972
+    },
+    {
+      "entity_id": "PWR-01",
+      "period": "2025-12",
+      "cases": 433,
+      "fast_share": 0.16166281755196305,
+      "no_investigation_share": 0.22857142857142856,
+      "templated_share": 0.5011547344110855,
+      "median_ttc_critical": 24.783333333333335,
+      "escalation_rate_critical": 0.19801980198019803,
+      "mean_superficial_score": 0.19160036901477046
+    },
+    {
+      "entity_id": "PWR-01",
+      "period": "2026-01",
+      "cases": 431,
+      "fast_share": 0.16009280742459397,
+      "no_investigation_share": 0.2329192546583851,
+      "templated_share": 0.5034802784222738,
+      "median_ttc_critical": 25.483333333333334,
+      "escalation_rate_critical": 0.17346938775510204,
+      "mean_superficial_score": 0.18988185957466902
+    },
+    "...(8 more)"
+  ],
+  "tactics": [
+    {
+      "tactic": "Reconnaissance",
+      "state": "covered",
+      "observed": 1074,
+      "expected": 990.1,
+      "p": 0.642742136004872,
+      "supportable": true
+    },
+    {
+      "tactic": "Resource Development",
+      "state": "not_applicable",
+      "observed": 0,
+      "expected": 0.0,
+      "p": null,
+      "supportable": false
+    },
+    {
+      "tactic": "Initial Access",
+      "state": "covered",
+      "observed": 1683,
+      "expected": 1316.7,
+      "p": 0.8188199763635658,
+      "supportable": true
+    },
+    {
+      "tactic": "Execution",
+      "state": "covered",
+      "observed": 3023,
+      "expected": 1840.8,
+      "p": 0.9646556470879945,
+      "supportable": true
+    },
+    "...(10 more)"
+  ],
+  "provider": {
+    "provider": "INHOUSE",
+    "n_clients": 26,
+    "clients": "[\"BFS-01\", \"BFS-02\", \"BFS-03\", \"BFS-04\", \"BFS-06\", \"GOV-01\", \"GOV-02\", \"GOV-06\", \"HLT-01\", \"HLT-05\", \"PWR-01\", \"PWR-02\", \"PWR-04\", \"PWR-05\", \"PWR-06\", \"SPE-01\", \"SPE-02\", \"SPE-03\", \"TEL-01\", \"TEL-02\", \"TEL-04\", \"TEL-05\", \"TRN-01\", \"TRN-02\", \"TRN-03\", \"TRN-06\"]",
+    "sectors": "[\"BFS\", \"GOV\", \"HLT\", \"PWR\", \"SPE\", \"TEL\", \"TRN\"]",
+    "rate": 0.07054659794110468,
+    "others_rate": 0.05809224284138249,
+    "p_value": null,
+    "client_rates": "{\"BFS-01\": 0.03483032814424908, \"BFS-02\": 0.31132738035517205, \"BFS-03\": 0.05825672831985824, \"BFS-04\": 0.032090199479618386, \"BFS-06\": 0.02928071292170592, \"GOV-01\": 0.02914077565888151, \"GOV-02\": 0.02383367139959432, \"GOV-06\": 0.03152941176470588, \"HLT-01\": 0.024719101123595506, \"HLT-05\": 0.033590558329550615, \"PWR-01\": 0.20178883071553227, \"PWR-02\": 0.028503021320259947, \"PWR-04\": 0.03119621342512909, \"PWR-05\": 0.07576080017024898, \"PWR-06\": 0.032589285714285716, \"SPE-01\": 0.03003452243958573, \"SPE-02\": 0.02894387980556783, \"SPE-03\": 0.03023758099352052, \"TEL-01\": 0.030184896413455113, \"TEL-02\": 0.1893173850278408, \"TEL-04\": 0.02910958904109589, \"TEL-05\": 0.03300970873786408, \"TRN-01\": 0.028265524625267664, \"TRN-02\": 0.03278688524590164, \"TRN-03\": 0.058993997102049264, \"TRN-06\": 0.16471816283924842}"
+  }
+}
