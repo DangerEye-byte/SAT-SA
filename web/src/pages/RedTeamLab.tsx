@@ -54,7 +54,9 @@ export default function RedTeamLab() {
               series: [
                 { name: "true superficial rate", type: "line", data: t.trace.map((x: any) => x.true_rate), itemStyle: { color: "#f06a6a" } },
                 { name: "rate in what was submitted", type: "line", data: t.trace.map((x: any) => x.submitted_rate), itemStyle: { color: "#f5b544" }, lineStyle: { type: "dashed" } },
-                { name: "SAT-SA evidence (e)", type: "line", yAxisIndex: 1, data: t.trace.map((x: any) => Math.max(0.1, x.cum_e)), itemStyle: { color: "#2dd4bf" } },
+                ...(sel[1].startsWith("satsa") ? [{ name: "SAT-SA evidence (e)", type: "line", yAxisIndex: 1,
+                  data: t.trace.map((x: any) => Math.max(0.1, x.cum_e)), itemStyle: { color: "#2dd4bf" },
+                  markLine: { symbol: "none", data: [{ yAxis: 100 }], lineStyle: { color: "#8fa3bf", type: "dashed" } } }] : []),
               ],
             }} />
             <table><thead><tr><th>Month</th><th>Reviews so far</th><th>Superficial found</th><th>Missing records</th><th>Signal</th></tr></thead>

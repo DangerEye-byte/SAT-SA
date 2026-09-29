@@ -96,7 +96,7 @@ One file per table, or one SQLite / JSON file containing several. Column names a
 | PS use case | Detector(s) | Method |
 |---|---|---|
 | (i) High-severity alerts closed unusually quickly | EG1, EG4 | Leave-one-entity-out conformal p-value per case → beta-binomial vs peers |
-| (ii) Repeat alerts without remediation | EG7 | Recurrence within 30 days → beta-binomial |
+| (ii) Repeat alerts without remediation | EG7 | The same rule fires again as a true positive on the same asset within 14 days → beta-binomial |
 | (iii) Critical alerts closed without escalation | EG2, EG5 | Case-mix-standardised rate test; declarative workflow conformance |
 | (iv) Critical systems with little or no telemetry | NS1 | Negative-binomial silence vs peer asset classes and the asset's own history |
 | (v) Deviations from peers | all statistical detectors, TW1 | Robust peer baselines; synthetic-control twin with placebo inference |

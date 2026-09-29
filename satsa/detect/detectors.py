@@ -49,7 +49,7 @@ DETECTORS = {
     "EG6": ("SLA-threshold bunching (metric gaming)", "Execution gap", "Operational Discipline",
             "Bunching estimator: excess mass of critical closures just below the SLA vs a polynomial counterfactual (Chetty et al. 2011; Kleven 2016)"),
     "EG7": ("Repeat alerts without remediation", "Execution gap", "Incident Response",
-            "Share of true-positive cases whose asset+alert type recurs within 30 days; beta-binomial vs peers"),
+            "Share of closed high/critical true positives followed within 14 days by the same rule firing again as a true positive on the same asset; beta-binomial vs peers"),
     "EG11": ("24x7 claim vs night-time reality", "Execution gap", "Security Operations",
              "Share of night-opened (00-06h) high/critical cases acknowledged after > 60 min, for entities that declare 24x7 monitoring"),
     "EG12": ("Regulatory reporting beyond 6 hours", "Execution gap", "Governance & Oversight",
@@ -306,19 +306,23 @@ def bunching_ci(ttc: np.ndarray, sla: float, n_boot: int = 200, seed: int = 0) -
     return [float(np.quantile(ex, 0.05)), float(np.quantile(ex, 0.95))] if len(ex) >= 50 else None
 
 
-def eg7(ctx):
+def eg7(ctx, days: int = 14):
+    """Unremediated root cause: after a high/critical true positive is closed, the same
+    detection rule fires again as a true positive on the same asset within `days`."""
     cf, al = ctx.cf, ctx.alerts
-    tp = cf[cf.closed & (cf.disposition == "TP") & ~cf.redteam][["case_id", "entity_id", "asset_id", "category", "closed_ts"]]
-    a = al[["asset_id", "category", "ts"]].sort_values("ts")
+    tp = cf[cf.closed & (cf.disposition == "TP") & ~cf.redteam & cf.severity.isin(["high", "critical"])][
+        ["case_id", "entity_id", "asset_id", "detector_id", "closed_ts"]]
+    a = al[al.disposition == "TP"][["asset_id", "detector_id", "ts"]].sort_values("ts")
     tp = tp.sort_values("closed_ts")
     tp["search_from"] = tp.closed_ts + pd.Timedelta(days=1)
     m = pd.merge_asof(tp.sort_values("search_from"), a.rename(columns={"ts": "next_ts"}), left_on="search_from",
-                      right_on="next_ts", by=["asset_id", "category"], direction="forward")
-    m["recur"] = (m.next_ts - m.closed_ts) <= pd.Timedelta(days=30)
+                      right_on="next_ts", by=["asset_id", "detector_id"], direction="forward")
+    m["recur"] = (m.next_ts - m.closed_ts) <= pd.Timedelta(days=days)
     m = m.set_index("case_id").reindex(tp.case_id).reset_index()
     return _rate_detector("EG7", ctx, m, m.recur.fillna(False), "upper",
-                          "{k} of {n} closed true-positive cases ({rate:.0%}) saw the same alert type return on the same "
-                          "asset within 30 days - evidence the root cause was not remediated; peer median {pr:.0%}.")
+                          "{k} of {n} closed high/critical true positives ({rate:.0%}) were followed within 14 days by the "
+                          "same detection rule firing again as a true positive on the same asset - evidence the root cause "
+                          "was not remediated; peer median {pr:.0%}.")
 
 
 def eg11(ctx):
@@ -547,6 +551,17 @@ def ns2(ctx, tm):
         m = len(g2)
         pmin = acat(g2.p.to_numpy())
         quiet = g2[g2.state == "quiet"].sort_values("p")
+        low = g2[(g2.p < 0.01) & (g2.observed < g2.expected)].sort_values("p")
+        if not len(quiet) and pmin < 0.01 and len(low):
+            out.append(_row(e, "NS2", p=pmin, n=m, k=len(low), evidence=low.tactic.tolist(), evidence_type="tactic",
+                            effect=f"{len(low)} visible tactic(s) under-represented",
+                            reason=("No visible tactic is missing outright, but "
+                                    + ", ".join(f"{t} ({o} alerts vs ~{x:.0f} expected)" for t, o, x in
+                                                zip(low.tactic, low.observed, low.expected))
+                                    + (" runs" if len(low) == 1 else " run")
+                                    + " well below what the entity's assets and log sources predict from peers. "
+                                      "Thinned coverage of a tactic is consistent with suppressed or failing detections.")))
+            continue
         out.append(_row(e, "NS2", p=pmin, n=m, k=len(quiet), evidence=quiet.tactic.tolist(), evidence_type="tactic",
                         effect=f"{len(quiet)} visible tactic(s) unexpectedly absent" if len(quiet) else "tactic mix normal",
                         reason=("The entity's log sources can see " + ", ".join(quiet.tactic) + ", but it reported "
