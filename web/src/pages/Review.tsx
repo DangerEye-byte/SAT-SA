@@ -72,7 +72,7 @@ export default function ReviewPage() {
             <li><b>Blind-first:</b> the model's score stays hidden until the examiner records a verdict (cognitive forcing, Buçinca et al. CSCW 2021).</li>
             <li><b>Valid even if the model is wrong:</b> examiner labels correct the model's bias (Angelopoulos et al., <i>Science</i> 2023).</li>
             <li><b>Random floor:</b> the interval uses only the uniform random sample, so an entity cannot predict which cases get reviewed.</li>
-            <li><b>Priority sample:</b> 10 extra cases where the model is least certain — reviewed to find weaknesses fast, reported separately.</li>
+            <li><b>Priority sample:</b> 10 extra cases the model rates most likely to be superficial, reviewed to confirm weaknesses fast. Reported separately and never used in the estimate.</li>
             <li>Every verdict is written to the tamper-evident ledger.</li>
           </ul>
         </div>
