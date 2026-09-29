@@ -14,6 +14,7 @@ Every flag carries its evidence (record ids), a calibrated p-value or a document
 |---|---|---|
 | Planted weaknesses recovered (5 independently seeded panels, 14 weakness types) | **100%** at 10% FDR; **0** hard negatives and **0** healthy entities flagged | synthetic |
 | False alarms on 40 panels where every entity is healthy (promise: ≤ 10%) | **5%** realised (95% CI 0.6–17%) | synthetic |
+| Re-testing the same healthy entities every quarter (40 panels, 4 looks) | naive re-testing: **55%** false alarms; SAT-SA anytime-valid e-BH: **2.5%** | synthetic |
 | Superficially handled cases found per 100 examiner reviews | **54** with SAT-SA vs **7** with random sampling | synthetic |
 | Examiner labels saved by prediction-powered inference, at equal confidence | **69%** at 30 labels, coverage 99% (target 90%) | synthetic |
 | Expert top-20 incidents among the first 10 reviewed, in 499 real SOC queues | **84%** SAT-SA vs **14%** random, **39%** "most alerts first" | **real** (GUIDE) |
@@ -21,7 +22,7 @@ Every flag carries its evidence (record ids), a calibrated p-value or a document
 | A silently suppressed alert category in real orgs | **92%** caught at **93%** precision | **real** + planted |
 | PPI interval coverage on real analyst verdicts | **98%**, 41% fewer labels | **real** |
 | Gaming: a SOC that behaves well only in audit months | fixed audits catch it **0–2%** of the time; SAT-SA catches it **100%** | synthetic simulation |
-| Full analysis of 453k alerts / 215k cases / 1.4M workflow events | **~2.5 min**, 1.3 GB RAM, CPU only; API p95 < 50 ms | this laptop |
+| Full analysis of 453k alerts / 215k cases / 1.4M workflow events | **~3 min**, 1.3 GB RAM, CPU only; API p95 < 70 ms | this laptop |
 
 Every number above is produced by one command (see *Reproduce the validation*) and is shown on the **Validation** page. Synthetic numbers come from seeded panels with a hidden answer key. Real-data numbers come from [Microsoft GUIDE](https://arxiv.org/abs/2407.09017) (1.03M triage-graded incidents from 6,115 organisations, CDLA-Permissive-2.0), including the expert queue rankings released with it (Freitas et al., 2026).
 

@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-29T06:38:56",
+ "generated": "2026-09-29T10:21:17",
  "synthetic": true,
  "disclaimer": "All numbers in this report are measured on SYNTHETIC, seeded panels with a hidden answer key. Real-data results (Microsoft GUIDE) are in reports/guide.json.",
  "V1_recovery": {
@@ -54,9 +54,9 @@
      "max": 2.0
     },
     "statistical_flags": {
-     "mean": 11.0,
+     "mean": 11.2,
      "min": 11.0,
-     "max": 11.0
+     "max": 12.0
     },
     "false_discovery_proportion": {
      "mean": 0.0,
@@ -81,7 +81,7 @@
      "max": 1.0
     },
     "weak_provider_client_recall": {
-     "mean": 0.0286,
+     "mean": 0.0571,
      "min": 0.0,
      "max": 0.1429
     },
@@ -101,7 +101,7 @@
      "max": 2.0
     },
     "statistical_flags": {
-     "mean": 11.4,
+     "mean": 11.8,
      "min": 11.0,
      "max": 12.0
     },
@@ -129,8 +129,8 @@
     },
     "weak_provider_client_recall": {
      "mean": 0.4286,
-     "min": 0.1429,
-     "max": 0.7143
+     "min": 0.2857,
+     "max": 0.5714
     },
     "hard_negative_flags": {
      "mean": 0.0,
@@ -148,8 +148,8 @@
      "max": 2.0
     },
     "statistical_flags": {
-     "mean": 14.6,
-     "min": 12.0,
+     "mean": 14.8,
+     "min": 13.0,
      "max": 16.0
     },
     "false_discovery_proportion": {
@@ -231,11 +231,11 @@
     "planted_statistical_recall": 1.0,
     "planted_deterministic_recall": 1.0,
     "planted_recall_any_lane": 1.0,
-    "weak_provider_client_recall": 0.7143,
+    "weak_provider_client_recall": 0.5714,
     "hard_negative_flags": 0,
     "healthy_statistical_flags": 0,
     "healthy_deterministic_flags": 0,
-    "statistical_flags": 16,
+    "statistical_flags": 15,
     "false_discovery_proportion": 0.0
    },
    {
@@ -296,11 +296,11 @@
     "planted_statistical_recall": 1.0,
     "planted_deterministic_recall": 1.0,
     "planted_recall_any_lane": 1.0,
-    "weak_provider_client_recall": 0.0,
+    "weak_provider_client_recall": 0.1429,
     "hard_negative_flags": 0,
     "healthy_statistical_flags": 0,
     "healthy_deterministic_flags": 0,
-    "statistical_flags": 11,
+    "statistical_flags": 12,
     "false_discovery_proportion": 0.0
    },
    {
@@ -309,11 +309,11 @@
     "planted_statistical_recall": 1.0,
     "planted_deterministic_recall": 1.0,
     "planted_recall_any_lane": 1.0,
-    "weak_provider_client_recall": 0.1429,
+    "weak_provider_client_recall": 0.2857,
     "hard_negative_flags": 0,
     "healthy_statistical_flags": 0,
     "healthy_deterministic_flags": 0,
-    "statistical_flags": 12,
+    "statistical_flags": 13,
     "false_discovery_proportion": 0.0
    },
    {
@@ -326,7 +326,7 @@
     "hard_negative_flags": 0,
     "healthy_statistical_flags": 0,
     "healthy_deterministic_flags": 1,
-    "statistical_flags": 11,
+    "statistical_flags": 12,
     "false_discovery_proportion": 0.0
    },
    {
@@ -339,7 +339,7 @@
     "hard_negative_flags": 0,
     "healthy_statistical_flags": 0,
     "healthy_deterministic_flags": 1,
-    "statistical_flags": 11,
+    "statistical_flags": 12,
     "false_discovery_proportion": 0.0
    },
    {
@@ -352,7 +352,7 @@
     "hard_negative_flags": 0,
     "healthy_statistical_flags": 0,
     "healthy_deterministic_flags": 1,
-    "statistical_flags": 14,
+    "statistical_flags": 15,
     "false_discovery_proportion": 0.0
    }
   ],
@@ -370,7 +370,7 @@
     "class": "planted_deterministic",
     "entities": 5,
     "detected": 1.0,
-    "median_rank": 12.0,
+    "median_rank": 11.0,
     "expected_detectors_fired": 1.0
    },
    {
@@ -378,7 +378,7 @@
     "class": "planted_deterministic",
     "entities": 5,
     "detected": 1.0,
-    "median_rank": 11.0,
+    "median_rank": 12.0,
     "expected_detectors_fired": 1.0
    },
    {
@@ -386,7 +386,7 @@
     "class": "hard_negative",
     "entities": 5,
     "detected": 0.0,
-    "median_rank": 29.0,
+    "median_rank": 31.0,
     "expected_detectors_fired": null
    },
    {
@@ -394,14 +394,14 @@
     "class": "hard_negative",
     "entities": 5,
     "detected": 0.0,
-    "median_rank": 40.0,
+    "median_rank": 39.0,
     "expected_detectors_fired": null
    },
    {
     "archetype": "healthy",
     "class": "weak_provider_client",
     "entities": 35,
-    "detected": 0.0286,
+    "detected": 0.0571,
     "median_rank": 19.0,
     "expected_detectors_fired": null
    },
@@ -426,7 +426,7 @@
     "class": "planted_statistical",
     "entities": 5,
     "detected": 1.0,
-    "median_rank": 2.0,
+    "median_rank": 1.0,
     "expected_detectors_fired": 1.0
    },
    {
@@ -490,7 +490,7 @@
     "class": "planted_statistical",
     "entities": 5,
     "detected": 1.0,
-    "median_rank": 1.0,
+    "median_rank": 2.0,
     "expected_detectors_fired": 1.0
    }
   ],
@@ -512,7 +512,7 @@
    },
    {
     "k": 20,
-    "mean": 0.94,
+    "mean": 0.95,
     "min": 0.9
    }
   ],
@@ -614,6 +614,12 @@
     "recall": 1.0,
     "healthy_flags": 0.0,
     "archetypes_lost": []
+   },
+   {
+    "detector": "TW1",
+    "recall": 1.0,
+    "healthy_flags": 0.0,
+    "archetypes_lost": []
    }
   ],
   "note": "Weak-provider (MSSP-3) clients are degraded by only +7 pp superficial handling each, by design individually borderline; they are meant to be caught at provider level (D11, see providers)."
@@ -681,41 +687,41 @@
    {
     "t": 0.005,
     "entity_rate": 0.0024,
-    "detector_rate": 0.0024
+    "detector_rate": 0.0019
    },
    {
     "t": 0.01,
     "entity_rate": 0.0054,
-    "detector_rate": 0.0047
+    "detector_rate": 0.004
    },
    {
     "t": 0.02,
     "entity_rate": 0.0083,
-    "detector_rate": 0.0115
+    "detector_rate": 0.0101
    },
    {
     "t": 0.05,
-    "entity_rate": 0.0256,
-    "detector_rate": 0.036
+    "entity_rate": 0.0232,
+    "detector_rate": 0.0368
    },
    {
     "t": 0.1,
-    "entity_rate": 0.0619,
-    "detector_rate": 0.0767
+    "entity_rate": 0.056,
+    "detector_rate": 0.0779
    },
    {
     "t": 0.2,
-    "entity_rate": 0.1637,
-    "detector_rate": 0.1688
+    "entity_rate": 0.1565,
+    "detector_rate": 0.1693
    },
    {
     "t": 0.5,
-    "entity_rate": 0.519,
-    "detector_rate": 0.4682
+    "entity_rate": 0.5202,
+    "detector_rate": 0.4694
    }
   ],
   "ks_uniform_entity": {
-   "stat": 0.0616,
+   "stat": 0.0561,
    "p": 0.0
   },
   "per_detector_type1": [
@@ -857,17 +863,17 @@
    {
     "detector": "EG7",
     "tests": 1680,
-    "rate_at_0.01": 0.0095,
+    "rate_at_0.01": 0.003,
     "ci_0.01": [
-     0.0055,
-     0.0154
+     0.001,
+     0.0069
     ],
-    "rate_at_0.05": 0.0476,
+    "rate_at_0.05": 0.047,
     "ci_0.05": [
-     0.0379,
-     0.0589
+     0.0374,
+     0.0583
     ],
-    "mean_p": 0.4967
+    "mean_p": 0.4988
    },
    {
     "detector": "NS1",
@@ -928,6 +934,21 @@
      0.0022
     ],
     "mean_p": 0.5768
+   },
+   {
+    "detector": "TW1",
+    "tests": 1680,
+    "rate_at_0.01": 0.0,
+    "ci_0.01": [
+     0.0,
+     0.0022
+    ],
+    "rate_at_0.05": 0.0476,
+    "ci_0.05": [
+     0.0379,
+     0.0589
+    ],
+    "mean_p": 0.5119
    }
   ],
   "qq": {
@@ -1034,208 +1055,208 @@
     0.995
    ],
    "entity": [
-    0.0103,
-    0.0307,
-    0.0494,
-    0.0665,
-    0.0761,
-    0.0897,
-    0.1032,
-    0.1165,
-    0.1275,
-    0.135,
-    0.144,
-    0.1566,
-    0.1664,
-    0.1775,
-    0.1863,
-    0.1925,
-    0.2029,
-    0.2146,
-    0.2231,
-    0.2344,
-    0.2418,
-    0.2492,
-    0.2627,
-    0.2694,
-    0.2785,
-    0.2874,
-    0.2984,
-    0.3053,
-    0.3123,
-    0.3247,
-    0.3315,
-    0.3422,
-    0.3501,
-    0.3573,
-    0.3689,
-    0.3739,
-    0.3807,
-    0.3892,
-    0.3964,
-    0.4027,
-    0.4119,
-    0.4194,
-    0.4234,
-    0.4318,
-    0.4406,
-    0.4487,
-    0.4569,
-    0.464,
-    0.4717,
-    0.4795,
-    0.4854,
-    0.4952,
-    0.5049,
-    0.5144,
-    0.522,
-    0.5278,
-    0.5337,
-    0.5414,
-    0.5515,
-    0.5604,
-    0.5691,
-    0.5769,
-    0.5825,
-    0.5927,
-    0.5995,
-    0.6075,
-    0.6171,
-    0.6272,
-    0.6348,
-    0.6439,
-    0.6505,
-    0.6588,
-    0.666,
-    0.6741,
-    0.6873,
-    0.6985,
-    0.7102,
-    0.7191,
-    0.7274,
-    0.7383,
-    0.7497,
-    0.7557,
-    0.768,
-    0.7799,
-    0.7986,
-    0.8112,
-    0.8237,
-    0.8325,
-    0.8461,
-    0.8594,
-    0.8685,
-    0.8748,
+    0.0109,
+    0.0316,
+    0.0555,
+    0.0737,
+    0.081,
+    0.0996,
+    0.1127,
+    0.1285,
+    0.1399,
+    0.1486,
+    0.1557,
+    0.1635,
+    0.1726,
+    0.1826,
+    0.1891,
+    0.1981,
+    0.2101,
+    0.2188,
+    0.2303,
+    0.2424,
+    0.249,
+    0.2593,
+    0.2678,
+    0.2755,
+    0.2832,
+    0.289,
+    0.2982,
+    0.3095,
+    0.3165,
+    0.3284,
+    0.3387,
+    0.3467,
+    0.3514,
+    0.3587,
+    0.3653,
+    0.3743,
+    0.3799,
+    0.391,
+    0.3965,
+    0.4044,
+    0.4098,
+    0.417,
+    0.4262,
+    0.435,
+    0.4473,
+    0.4518,
+    0.4602,
+    0.4707,
+    0.479,
+    0.4859,
+    0.4916,
+    0.4975,
+    0.5037,
+    0.5132,
+    0.5193,
+    0.5312,
+    0.5392,
+    0.5489,
+    0.5578,
+    0.5667,
+    0.5756,
+    0.5834,
+    0.5912,
+    0.6014,
+    0.6081,
+    0.6147,
+    0.6222,
+    0.6339,
+    0.6412,
+    0.6549,
+    0.6677,
+    0.6765,
+    0.6846,
+    0.6981,
+    0.7078,
+    0.7168,
+    0.7244,
+    0.738,
+    0.7503,
+    0.761,
+    0.7704,
+    0.7812,
+    0.7927,
+    0.8012,
+    0.8108,
+    0.8221,
+    0.835,
+    0.8455,
+    0.8555,
+    0.8645,
+    0.873,
     0.8797,
-    0.8855,
-    0.8907,
-    0.897,
-    0.9066,
-    0.9152,
-    0.9276,
-    0.9414
+    0.8834,
+    0.8889,
+    0.8946,
+    0.9022,
+    0.9098,
+    0.9238,
+    0.9354,
+    0.9479
    ],
    "detector": [
-    0.0106,
-    0.0254,
-    0.0378,
-    0.0492,
-    0.0612,
-    0.0726,
-    0.0867,
-    0.098,
-    0.1097,
-    0.1215,
-    0.1331,
-    0.1445,
-    0.1553,
-    0.1656,
-    0.1757,
+    0.0121,
+    0.0255,
+    0.0383,
+    0.0483,
+    0.0611,
+    0.0714,
+    0.0859,
+    0.0964,
+    0.109,
+    0.1197,
+    0.1325,
+    0.1429,
+    0.1549,
+    0.1658,
+    0.1747,
     0.1863,
-    0.1969,
-    0.2058,
-    0.2161,
-    0.2259,
+    0.1957,
+    0.2053,
+    0.2143,
+    0.225,
     0.2363,
-    0.2481,
-    0.2586,
-    0.2685,
-    0.2788,
-    0.2888,
-    0.2991,
-    0.3084,
-    0.3184,
-    0.3292,
-    0.3402,
-    0.3503,
-    0.36,
-    0.3691,
-    0.3788,
-    0.3877,
-    0.3981,
-    0.4085,
-    0.4171,
-    0.4275,
-    0.4381,
-    0.4475,
-    0.4575,
-    0.4677,
-    0.4771,
-    0.4867,
-    0.4971,
-    0.5078,
-    0.5176,
-    0.5278,
-    0.5351,
+    0.2462,
+    0.2578,
+    0.2672,
+    0.2785,
+    0.2871,
+    0.2983,
+    0.3083,
+    0.3166,
+    0.3283,
+    0.3385,
+    0.3495,
+    0.358,
+    0.3681,
+    0.3785,
+    0.3867,
+    0.3967,
+    0.4065,
+    0.4166,
+    0.4272,
+    0.4369,
+    0.447,
+    0.4564,
+    0.467,
+    0.4762,
+    0.4863,
+    0.4972,
+    0.5068,
+    0.5175,
+    0.5269,
+    0.5349,
     0.5378,
-    0.5465,
-    0.5569,
+    0.5468,
+    0.5559,
     0.566,
-    0.5718,
+    0.5717,
     0.5734,
-    0.5744,
-    0.5753,
-    0.5764,
-    0.5784,
-    0.5862,
-    0.5944,
-    0.6018,
-    0.6093,
-    0.6172,
-    0.6244,
-    0.6274,
-    0.6318,
-    0.6398,
-    0.648,
-    0.6567,
-    0.6653,
-    0.6733,
-    0.6823,
-    0.692,
-    0.7014,
-    0.7127,
-    0.7238,
-    0.7341,
-    0.7456,
-    0.7554,
-    0.7658,
-    0.7779,
-    0.7885,
-    0.8009,
-    0.8125,
-    0.8238,
-    0.8357,
-    0.8481,
-    0.8601,
-    0.8721,
-    0.8857,
-    0.8983,
-    0.9125,
-    0.9258,
-    0.9408,
-    0.9591,
-    0.9787,
-    0.9986
+    0.5745,
+    0.5754,
+    0.5767,
+    0.5796,
+    0.589,
+    0.5959,
+    0.6041,
+    0.6123,
+    0.6201,
+    0.6255,
+    0.6285,
+    0.6355,
+    0.6429,
+    0.6522,
+    0.6617,
+    0.6688,
+    0.6779,
+    0.6873,
+    0.6964,
+    0.7073,
+    0.7175,
+    0.7285,
+    0.7384,
+    0.7496,
+    0.7611,
+    0.7715,
+    0.7828,
+    0.792,
+    0.8056,
+    0.8159,
+    0.8286,
+    0.8393,
+    0.8525,
+    0.8627,
+    0.8771,
+    0.889,
+    0.9034,
+    0.916,
+    0.9293,
+    0.9452,
+    0.9623,
+    0.9797,
+    0.9997
    ]
   },
   "deterministic_on_null": {
@@ -1259,43 +1280,43 @@
   "by_n": [
    {
     "n": 10,
-    "ppi_coverage": 0.9908,
-    "classical_coverage": 0.9529,
-    "ppi_width": 0.1661,
-    "classical_width": 0.2691,
-    "label_saving": 0.6189
+    "ppi_coverage": 0.9905,
+    "classical_coverage": 0.9524,
+    "ppi_width": 0.1665,
+    "classical_width": 0.2701,
+    "label_saving": 0.6201
    },
    {
     "n": 20,
-    "ppi_coverage": 0.9771,
-    "classical_coverage": 0.8993,
-    "ppi_width": 0.1036,
-    "classical_width": 0.1796,
-    "label_saving": 0.6673
+    "ppi_coverage": 0.9762,
+    "classical_coverage": 0.9011,
+    "ppi_width": 0.1039,
+    "classical_width": 0.1801,
+    "label_saving": 0.6672
    },
    {
     "n": 30,
-    "ppi_coverage": 0.9899,
-    "classical_coverage": 0.9258,
-    "ppi_width": 0.0792,
-    "classical_width": 0.1425,
-    "label_saving": 0.6916
+    "ppi_coverage": 0.9902,
+    "classical_coverage": 0.9169,
+    "ppi_width": 0.079,
+    "classical_width": 0.1427,
+    "label_saving": 0.6935
    },
    {
     "n": 50,
-    "ppi_coverage": 0.9964,
-    "classical_coverage": 0.9242,
-    "ppi_width": 0.0583,
-    "classical_width": 0.1071,
-    "label_saving": 0.7039
+    "ppi_coverage": 0.9965,
+    "classical_coverage": 0.924,
+    "ppi_width": 0.0581,
+    "classical_width": 0.1067,
+    "label_saving": 0.7036
    },
    {
     "n": 100,
     "ppi_coverage": 0.9651,
-    "classical_coverage": 0.8971,
-    "ppi_width": 0.0347,
+    "classical_coverage": 0.895,
+    "ppi_width": 0.0346,
     "classical_width": 0.0737,
-    "label_saving": 0.7787
+    "label_saving": 0.7791
    }
   ],
   "by_type": [
@@ -1303,65 +1324,65 @@
     "n": 10,
     "weak": false,
     "ppi_coverage": 1.0,
-    "ppi_width": 0.1632,
-    "classical_width": 0.2532,
-    "label_saving": 0.5847
+    "ppi_width": 0.1634,
+    "classical_width": 0.2541,
+    "label_saving": 0.5866
    },
    {
     "n": 10,
     "weak": true,
-    "ppi_coverage": 0.945,
-    "ppi_width": 0.1806,
-    "classical_width": 0.3481,
-    "label_saving": 0.7308
+    "ppi_coverage": 0.9429,
+    "ppi_width": 0.182,
+    "classical_width": 0.3502,
+    "label_saving": 0.7298
    },
    {
     "n": 20,
     "weak": false,
-    "ppi_coverage": 0.9851,
-    "ppi_width": 0.1018,
-    "classical_width": 0.1648,
-    "label_saving": 0.6185
+    "ppi_coverage": 0.9843,
+    "ppi_width": 0.1022,
+    "classical_width": 0.1654,
+    "label_saving": 0.6183
    },
    {
     "n": 20,
     "weak": true,
-    "ppi_coverage": 0.9371,
-    "ppi_width": 0.1127,
+    "ppi_coverage": 0.9357,
+    "ppi_width": 0.1126,
     "classical_width": 0.2539,
-    "label_saving": 0.8028
+    "label_saving": 0.8031
    },
    {
     "n": 30,
     "weak": false,
-    "ppi_coverage": 0.9916,
-    "ppi_width": 0.0788,
-    "classical_width": 0.1287,
-    "label_saving": 0.6247
+    "ppi_coverage": 0.9917,
+    "ppi_width": 0.0786,
+    "classical_width": 0.1289,
+    "label_saving": 0.6282
    },
    {
     "n": 30,
     "weak": true,
-    "ppi_coverage": 0.9814,
-    "ppi_width": 0.0807,
-    "classical_width": 0.2118,
-    "label_saving": 0.8547
+    "ppi_coverage": 0.9829,
+    "ppi_width": 0.081,
+    "classical_width": 0.2117,
+    "label_saving": 0.8536
    },
    {
     "n": 50,
     "weak": false,
-    "ppi_coverage": 0.9957,
-    "ppi_width": 0.0593,
-    "classical_width": 0.0955,
-    "label_saving": 0.6141
+    "ppi_coverage": 0.9959,
+    "ppi_width": 0.0591,
+    "classical_width": 0.0948,
+    "label_saving": 0.6106
    },
    {
     "n": 50,
     "weak": true,
     "ppi_coverage": 1.0,
-    "ppi_width": 0.053,
-    "classical_width": 0.165,
-    "label_saving": 0.8969
+    "ppi_width": 0.0526,
+    "classical_width": 0.166,
+    "label_saving": 0.8995
    },
    {
     "n": 100,
@@ -1369,269 +1390,269 @@
     "ppi_coverage": 0.9581,
     "ppi_width": 0.0353,
     "classical_width": 0.0648,
-    "label_saving": 0.7023
+    "label_saving": 0.7024
    },
    {
     "n": 100,
     "weak": true,
     "ppi_coverage": 1.0,
-    "ppi_width": 0.0313,
-    "classical_width": 0.1182,
-    "label_saving": 0.93
+    "ppi_width": 0.0312,
+    "classical_width": 0.1185,
+    "label_saving": 0.9306
    }
   ],
   "per_entity_n30": [
    {
     "entity_id": "BFS-02",
-    "theta": 0.3109,
+    "theta": 0.3115,
     "coverage": 1.0,
-    "saving": 0.9655
+    "saving": 0.9634
    },
    {
     "entity_id": "PWR-01",
-    "theta": 0.2024,
+    "theta": 0.2022,
     "coverage": 1.0,
-    "saving": 0.8933
+    "saving": 0.8872
    },
    {
     "entity_id": "TEL-02",
-    "theta": 0.1894,
+    "theta": 0.1895,
     "coverage": 1.0,
-    "saving": 0.886
+    "saving": 0.8843
    },
    {
     "entity_id": "TRN-06",
-    "theta": 0.1649,
-    "coverage": 0.995,
-    "saving": 0.8635
+    "theta": 0.1654,
+    "coverage": 0.985,
+    "saving": 0.8567
    },
    {
     "entity_id": "SPE-04",
-    "theta": 0.1045,
-    "coverage": 0.965,
-    "saving": 0.7411
+    "theta": 0.1061,
+    "coverage": 0.97,
+    "saving": 0.7639
    },
    {
     "entity_id": "GOV-03",
-    "theta": 0.1013,
+    "theta": 0.1016,
     "coverage": 0.955,
-    "saving": 0.7179
+    "saving": 0.7315
    },
    {
     "entity_id": "HLT-04",
-    "theta": 0.1002,
-    "coverage": 0.955,
-    "saving": 0.7218
+    "theta": 0.1005,
+    "coverage": 0.97,
+    "saving": 0.7141
    },
    {
     "entity_id": "HLT-03",
-    "theta": 0.0978,
-    "coverage": 0.95,
-    "saving": 0.7425
+    "theta": 0.0986,
+    "coverage": 0.96,
+    "saving": 0.7114
    },
    {
     "entity_id": "TRN-04",
-    "theta": 0.0975,
-    "coverage": 0.95,
-    "saving": 0.6982
+    "theta": 0.0968,
+    "coverage": 0.975,
+    "saving": 0.7211
    },
    {
     "entity_id": "SPE-05",
-    "theta": 0.0968,
-    "coverage": 0.985,
-    "saving": 0.692
+    "theta": 0.0959,
+    "coverage": 0.955,
+    "saving": 0.6902
    },
    {
     "entity_id": "GOV-04",
-    "theta": 0.0893,
-    "coverage": 0.93,
-    "saving": 0.6736
+    "theta": 0.0904,
+    "coverage": 0.925,
+    "saving": 0.6747
    },
    {
     "entity_id": "PWR-05",
-    "theta": 0.0751,
-    "coverage": 0.89,
-    "saving": 0.6431
+    "theta": 0.075,
+    "coverage": 0.895,
+    "saving": 0.6404
    },
    {
     "entity_id": "TRN-03",
-    "theta": 0.0592,
+    "theta": 0.059,
     "coverage": 1.0,
-    "saving": 0.5483
+    "saving": 0.5732
    },
    {
     "entity_id": "BFS-03",
-    "theta": 0.0582,
+    "theta": 0.0583,
     "coverage": 1.0,
-    "saving": 0.5705
+    "saving": 0.5719
    },
    {
     "entity_id": "BFS-01",
-    "theta": 0.0353,
+    "theta": 0.0346,
     "coverage": 1.0,
-    "saving": 0.5883
+    "saving": 0.6256
+   },
+   {
+    "entity_id": "HLT-05",
+    "theta": 0.0339,
+    "coverage": 1.0,
+    "saving": 0.6084
+   },
+   {
+    "entity_id": "PWR-06",
+    "theta": 0.0339,
+    "coverage": 1.0,
+    "saving": 0.6191
    },
    {
     "entity_id": "TRN-02",
     "theta": 0.0336,
     "coverage": 1.0,
-    "saving": 0.5901
-   },
-   {
-    "entity_id": "HLT-05",
-    "theta": 0.0334,
-    "coverage": 1.0,
-    "saving": 0.5976
-   },
-   {
-    "entity_id": "PWR-06",
-    "theta": 0.0332,
-    "coverage": 1.0,
-    "saving": 0.6039
+    "saving": 0.6006
    },
    {
     "entity_id": "GOV-05",
-    "theta": 0.0324,
+    "theta": 0.0334,
     "coverage": 1.0,
-    "saving": 0.606
+    "saving": 0.6007
    },
    {
     "entity_id": "TEL-05",
-    "theta": 0.0324,
+    "theta": 0.0326,
     "coverage": 1.0,
-    "saving": 0.6043
-   },
-   {
-    "entity_id": "BFS-04",
-    "theta": 0.0318,
-    "coverage": 1.0,
-    "saving": 0.6095
-   },
-   {
-    "entity_id": "PWR-03",
-    "theta": 0.0316,
-    "coverage": 1.0,
-    "saving": 0.627
-   },
-   {
-    "entity_id": "BFS-05",
-    "theta": 0.0316,
-    "coverage": 1.0,
-    "saving": 0.6117
+    "saving": 0.6081
    },
    {
     "entity_id": "GOV-06",
-    "theta": 0.0315,
-    "coverage": 1.0,
-    "saving": 0.6178
-   },
-   {
-    "entity_id": "SPE-03",
-    "theta": 0.0311,
-    "coverage": 1.0,
-    "saving": 0.6003
-   },
-   {
-    "entity_id": "PWR-04",
-    "theta": 0.0309,
-    "coverage": 1.0,
-    "saving": 0.5997
-   },
-   {
-    "entity_id": "TEL-01",
-    "theta": 0.0302,
-    "coverage": 1.0,
-    "saving": 0.6094
-   },
-   {
-    "entity_id": "SPE-01",
-    "theta": 0.0299,
-    "coverage": 1.0,
-    "saving": 0.6054
-   },
-   {
-    "entity_id": "HLT-02",
-    "theta": 0.0295,
+    "theta": 0.0322,
     "coverage": 1.0,
     "saving": 0.6032
    },
    {
-    "entity_id": "BFS-06",
-    "theta": 0.0291,
+    "entity_id": "BFS-04",
+    "theta": 0.0319,
     "coverage": 1.0,
-    "saving": 0.6095
+    "saving": 0.6236
    },
    {
-    "entity_id": "TEL-03",
-    "theta": 0.0291,
+    "entity_id": "PWR-04",
+    "theta": 0.0318,
     "coverage": 1.0,
-    "saving": 0.6309
+    "saving": 0.5989
+   },
+   {
+    "entity_id": "PWR-03",
+    "theta": 0.0314,
+    "coverage": 1.0,
+    "saving": 0.6014
+   },
+   {
+    "entity_id": "BFS-05",
+    "theta": 0.0307,
+    "coverage": 1.0,
+    "saving": 0.621
+   },
+   {
+    "entity_id": "SPE-01",
+    "theta": 0.0304,
+    "coverage": 1.0,
+    "saving": 0.6099
    },
    {
     "entity_id": "GOV-01",
-    "theta": 0.029,
+    "theta": 0.0301,
     "coverage": 1.0,
-    "saving": 0.6291
+    "saving": 0.6228
+   },
+   {
+    "entity_id": "TEL-01",
+    "theta": 0.0299,
+    "coverage": 1.0,
+    "saving": 0.6171
    },
    {
     "entity_id": "TEL-04",
-    "theta": 0.0289,
+    "theta": 0.0291,
     "coverage": 1.0,
-    "saving": 0.6285
+    "saving": 0.6171
    },
    {
-    "entity_id": "PWR-02",
+    "entity_id": "HLT-02",
+    "theta": 0.0291,
+    "coverage": 1.0,
+    "saving": 0.6215
+   },
+   {
+    "entity_id": "BFS-06",
+    "theta": 0.029,
+    "coverage": 1.0,
+    "saving": 0.6161
+   },
+   {
+    "entity_id": "TEL-03",
     "theta": 0.0289,
     "coverage": 1.0,
-    "saving": 0.5968
+    "saving": 0.6142
    },
    {
     "entity_id": "HLT-06",
-    "theta": 0.0289,
+    "theta": 0.0286,
     "coverage": 1.0,
-    "saving": 0.619
-   },
-   {
-    "entity_id": "SPE-02",
-    "theta": 0.0288,
-    "coverage": 1.0,
-    "saving": 0.6134
+    "saving": 0.6305
    },
    {
     "entity_id": "TRN-01",
     "theta": 0.0285,
     "coverage": 1.0,
-    "saving": 0.623
+    "saving": 0.6288
+   },
+   {
+    "entity_id": "PWR-02",
+    "theta": 0.0284,
+    "coverage": 1.0,
+    "saving": 0.6187
+   },
+   {
+    "entity_id": "SPE-02",
+    "theta": 0.0284,
+    "coverage": 1.0,
+    "saving": 0.6216
    },
    {
     "entity_id": "TEL-06",
     "theta": 0.0283,
     "coverage": 1.0,
-    "saving": 0.627
+    "saving": 0.6204
+   },
+   {
+    "entity_id": "SPE-03",
+    "theta": 0.0275,
+    "coverage": 1.0,
+    "saving": 0.6028
    },
    {
     "entity_id": "SPE-06",
-    "theta": 0.0269,
+    "theta": 0.027,
     "coverage": 1.0,
-    "saving": 0.6214
+    "saving": 0.6235
    },
    {
     "entity_id": "HLT-01",
-    "theta": 0.0246,
+    "theta": 0.0251,
     "coverage": 1.0,
-    "saving": 0.6215
-   },
-   {
-    "entity_id": "GOV-02",
-    "theta": 0.0238,
-    "coverage": 1.0,
-    "saving": 0.6246
+    "saving": 0.6285
    },
    {
     "entity_id": "TRN-05",
-    "theta": 0.0233,
+    "theta": 0.0243,
     "coverage": 1.0,
-    "saving": 0.608
+    "saving": 0.6234
+   },
+   {
+    "entity_id": "GOV-02",
+    "theta": 0.024,
+    "coverage": 1.0,
+    "saving": 0.6305
    }
   ],
   "min_labels_shown_in_app": 20
@@ -1643,22 +1664,22 @@
    {
     "budget": 60,
     "strategy": "random_cases",
-    "superficial_found_per_100": 6.75,
-    "weak_entities_confirmed": 0.1,
+    "superficial_found_per_100": 6.8417,
+    "weak_entities_confirmed": 0.075,
     "weak_entities_total": 12
    },
    {
     "budget": 60,
     "strategy": "random_entities",
-    "superficial_found_per_100": 6.1917,
-    "weak_entities_confirmed": 0.365,
+    "superficial_found_per_100": 6.1167,
+    "weak_entities_confirmed": 0.39,
     "weak_entities_total": 12
    },
    {
     "budget": 60,
     "strategy": "severity_first",
-    "superficial_found_per_100": 7.9583,
-    "weak_entities_confirmed": 0.15,
+    "superficial_found_per_100": 7.8917,
+    "weak_entities_confirmed": 0.17,
     "weak_entities_total": 12
    },
    {
@@ -1671,84 +1692,84 @@
    {
     "budget": 120,
     "strategy": "random_cases",
-    "superficial_found_per_100": 6.5417,
-    "weak_entities_confirmed": 0.34,
+    "superficial_found_per_100": 6.8333,
+    "weak_entities_confirmed": 0.365,
     "weak_entities_total": 12
    },
    {
     "budget": 120,
     "strategy": "random_entities",
-    "superficial_found_per_100": 6.2333,
+    "superficial_found_per_100": 6.0917,
     "weak_entities_confirmed": 0.8,
     "weak_entities_total": 12
    },
    {
     "budget": 120,
     "strategy": "severity_first",
-    "superficial_found_per_100": 8.1167,
-    "weak_entities_confirmed": 0.695,
+    "superficial_found_per_100": 7.7125,
+    "weak_entities_confirmed": 0.7,
     "weak_entities_total": 12
    },
    {
     "budget": 120,
     "strategy": "satsa",
-    "superficial_found_per_100": 54.9583,
+    "superficial_found_per_100": 56.0417,
     "weak_entities_confirmed": 3.0,
     "weak_entities_total": 12
    },
    {
     "budget": 240,
     "strategy": "random_cases",
-    "superficial_found_per_100": 6.7333,
-    "weak_entities_confirmed": 1.02,
+    "superficial_found_per_100": 6.6521,
+    "weak_entities_confirmed": 1.07,
     "weak_entities_total": 12
    },
    {
     "budget": 240,
     "strategy": "random_entities",
-    "superficial_found_per_100": 6.1729,
-    "weak_entities_confirmed": 1.635,
+    "superficial_found_per_100": 6.1583,
+    "weak_entities_confirmed": 1.545,
     "weak_entities_total": 12
    },
    {
     "budget": 240,
     "strategy": "severity_first",
-    "superficial_found_per_100": 7.9896,
-    "weak_entities_confirmed": 1.775,
+    "superficial_found_per_100": 8.0188,
+    "weak_entities_confirmed": 1.645,
     "weak_entities_total": 12
    },
    {
     "budget": 240,
     "strategy": "satsa",
-    "superficial_found_per_100": 53.75,
+    "superficial_found_per_100": 54.5625,
     "weak_entities_confirmed": 4.0,
     "weak_entities_total": 12
    },
    {
     "budget": 480,
     "strategy": "random_cases",
-    "superficial_found_per_100": 6.6958,
-    "weak_entities_confirmed": 2.49,
+    "superficial_found_per_100": 6.7448,
+    "weak_entities_confirmed": 2.62,
     "weak_entities_total": 12
    },
    {
     "budget": 480,
     "strategy": "random_entities",
-    "superficial_found_per_100": 6.2583,
-    "weak_entities_confirmed": 3.3,
+    "superficial_found_per_100": 6.2604,
+    "weak_entities_confirmed": 3.205,
     "weak_entities_total": 12
    },
    {
     "budget": 480,
     "strategy": "severity_first",
-    "superficial_found_per_100": 7.9312,
-    "weak_entities_confirmed": 3.08,
+    "superficial_found_per_100": 7.8448,
+    "weak_entities_confirmed": 3.145,
     "weak_entities_total": 12
    },
    {
     "budget": 480,
     "strategy": "satsa",
-    "superficial_found_per_100": 54.0521,
+    "superficial_found_per_100": 54.1771,
     "weak_entities_confirmed": 12.0,
     "weak_entities_total": 12
    }
@@ -1772,7 +1793,7 @@
      1.0,
      1.0,
      1.0,
-     0.333
+     0.167
     ],
     "panels": 6
    },
@@ -1823,7 +1844,7 @@
   "input_hash_equal": true,
   "result_hash_equal": true,
   "input_hash": "523e2ba2fb5294ca",
-  "result_hash": "078c271b795a3c95"
+  "result_hash": "b9f4f20c73f4ac35"
  },
  "D4_gaming": {
   "description": "Red-Team Lab (D4): can a SOC game its regulator?\n\nA stylised, fast simulation (numbers are SYNTHETIC). One entity, 12 monthly\nsubmissions of ~300 human-handled cases (30% medium, 70% high/critical). A healthy SOC\nhandles 3% of cases superficially, a weak one 15%. The auditee picks a strategy to hide\nthe weakness; the auditor picks a policy. Every policy gets the same budget: 60 human\ncase reviews per year. Detection rules are set so an honest SOC is almost never\nflagged (the false-alarm rate is reported for every policy).\n\nStrategies\n  honest           healthy all year (measures false alarms)\n  delay            healthy for six months, weak afterwards\n  drift            slides from healthy to weak over the year\n  cherry_pick      weak only on medium-severity cases, which fixed audits never sample\n  off_audit_drift  weak except in the months it expects to be audited (quarter ends)\n  attrition        weak, but drops 80% of its superficial cases from the submission\n  metadata_masking weak, but pads the paper trail so analytics see nothing unusual\n\nPolicies\n  annual_audit     60 reviews of high/critical cases in month 12\n  quarterly_audit  15 reviews of high/critical cases at each quarter end\n  unannounced      15 reviews in one random month per quarter, all severities\n  satsa_analytics  SAT-SA every month: analytics on all submitted cases (anytime-valid\n                   e-process), completeness check, 5 targeted reviews/month (confirm only)\n  satsa_with_floor SAT-SA analytics + completeness, 2 targeted + 3 uniform-random\n                   reviews per month (the randomised floor)",
@@ -2171,6 +2192,23 @@
    }
   ]
  },
+ "V12_anytime": {
+  "description": "Four quarterly looks at the same entities. Naive: flag when BH on that quarter's p-values flags it at any look (repeated looks inflate false alarms). SAT-SA: e-BH on the running product of quarterly e-values (valid at any look).",
+  "q": 0.1,
+  "null_panels": 40,
+  "naive_realized_fdr": 0.55,
+  "naive_ci95": [
+   0.3849,
+   0.7074
+  ],
+  "ebh_realized_fdr": 0.025,
+  "ebh_ci95": [
+   0.0006,
+   0.1316
+  ],
+  "planted_recall_by_look4_ebh": 0.7273,
+  "planted_recall_any_look_naive": 0.7273
+ },
  "V8_runtime": {
   "machine": {
    "os": "Windows 11",
@@ -2183,89 +2221,89 @@
    "alerts": 453041,
    "cases": 215116,
    "workflow_events": 1405762,
-   "generate_seconds": 145.4818,
-   "analyze_seconds": 158.9073,
-   "peak_memory_gb": 1.3016
+   "generate_seconds": 126.1204,
+   "analyze_seconds": 166.3034,
+   "peak_memory_gb": 1.3153
   },
-  "full_pipeline_seconds_including_generation_and_db_write": 165.8,
+  "full_pipeline_seconds_including_generation_and_db_write": 180.9,
   "api_latency": [
    {
     "path": "/api/meta",
     "status": 200,
-    "p50_ms": 10.7457,
-    "p95_ms": 13.6238
+    "p50_ms": 14.0578,
+    "p95_ms": 17.4495
    },
    {
     "path": "/api/queue?fdr=0.1",
     "status": 200,
-    "p50_ms": 16.4822,
-    "p95_ms": 17.0682
+    "p50_ms": 21.0264,
+    "p95_ms": 23.346
    },
    {
     "path": "/api/entities",
     "status": 200,
-    "p50_ms": 7.6595,
-    "p95_ms": 10.1902
+    "p50_ms": 8.9406,
+    "p95_ms": 9.9283
    },
    {
-    "path": "/api/entities/PWR-01",
+    "path": "/api/entities/BFS-02",
     "status": 200,
-    "p50_ms": 28.1372,
-    "p95_ms": 31.3131
+    "p50_ms": 35.9149,
+    "p95_ms": 49.538
    },
    {
-    "path": "/api/entities/PWR-01/hourly",
+    "path": "/api/entities/BFS-02/hourly",
     "status": 200,
-    "p50_ms": 15.1825,
-    "p95_ms": 22.1844
+    "p50_ms": 16.9409,
+    "p95_ms": 19.76
    },
    {
-    "path": "/api/entities/PWR-01/regulatory",
+    "path": "/api/entities/BFS-02/regulatory",
     "status": 200,
-    "p50_ms": 19.698,
-    "p95_ms": 44.5667
+    "p50_ms": 16.8162,
+    "p95_ms": 18.8211
    },
    {
-    "path": "/api/entities/PWR-01/evidence",
+    "path": "/api/entities/BFS-02/evidence",
     "status": 200,
-    "p50_ms": 12.1237,
-    "p95_ms": 13.54
+    "p50_ms": 11.3209,
+    "p95_ms": 12.874
    },
    {
-    "path": "/api/entities/PWR-01/survival",
+    "path": "/api/entities/BFS-02/survival",
     "status": 200,
-    "p50_ms": 11.2882,
-    "p95_ms": 12.4527
+    "p50_ms": 10.6835,
+    "p95_ms": 11.6484
    },
    {
-    "path": "/api/review/PWR-01",
+    "path": "/api/review/BFS-02",
     "status": 200,
-    "p50_ms": 29.4611,
-    "p95_ms": 34.1231
+    "p50_ms": 60.4294,
+    "p95_ms": 65.698
    },
    {
     "path": "/api/blindspot",
     "status": 200,
-    "p50_ms": 26.0312,
-    "p95_ms": 26.9462
+    "p50_ms": 27.9611,
+    "p95_ms": 31.227
    },
    {
     "path": "/api/providers",
     "status": 200,
-    "p50_ms": 8.9395,
-    "p95_ms": 9.4926
+    "p50_ms": 9.1981,
+    "p95_ms": 9.9797
    },
    {
     "path": "/api/ledger",
     "status": 200,
-    "p50_ms": 6.3859,
-    "p95_ms": 9.6644
+    "p50_ms": 6.8367,
+    "p95_ms": 9.788
    },
    {
     "path": "/api/gaming/run",
     "status": 200,
-    "p50_ms": 8.1701,
-    "p95_ms": 8.628
+    "p50_ms": 8.2185,
+    "p95_ms": 10.4891
    }
   ],
   "note": "CPU only, no GPU, fully offline."
@@ -2282,13 +2320,13 @@
    0.1692
   ],
   "null_panels": 40,
-  "ppi_coverage_n30": 0.9899,
-  "ppi_label_saving_n30": 0.6916,
-  "weak_found_per_100_satsa_b240": 53.75,
-  "weak_found_per_100_random_b240": 6.7333,
+  "ppi_coverage_n30": 0.9902,
+  "ppi_label_saving_n30": 0.6935,
+  "weak_found_per_100_satsa_b240": 54.5625,
+  "weak_found_per_100_random_b240": 6.6521,
   "weak_entities_confirmed_satsa_b240": 4.0,
-  "weak_entities_confirmed_random_b240": 1.02,
+  "weak_entities_confirmed_random_b240": 1.07,
   "weak_entities_total": 12
  },
- "suite_seconds": 291.7
+ "suite_seconds": 3010.5
 }

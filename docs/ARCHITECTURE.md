@@ -62,7 +62,7 @@
 
 ## 6. Validation methodology (PS §8)
 1. **Planted weaknesses** on independently seeded panels with a hidden answer key. Recall is 100% at 10% FDR over 5 seeds; hard negatives are never flagged.
-2. **False-alarm calibration** on 40 all-healthy panels: 5% realised at a 10% promise. **On real data:** 1,286 GUIDE organisations randomly re-split, 5%.
+2. **False-alarm calibration** on 40 all-healthy panels: 5% realised at a 10% promise. Over four quarterly looks, naive re-testing reaches 55% while e-BH stays at 2.5%. **On real data:** 1,286 GUIDE organisations randomly re-split, 5%.
 3. **Against expert manual review** (Microsoft GUIDE, 499 real SOC queues ranked by experts). SAT-SA's targeted sampler puts expert top-20 incidents in **84%** of the first 10 reviews, against 14% for random sampling. PPI intervals on real analyst verdicts cover 98% of the time.
 4. **Versus manual sampling at an equal budget:** 54 vs 7 superficial cases found per 100 reviews.
 5. **Adversarial:** a gaming simulator (7 strategies × 5 audit policies), a power curve for subtle weaknesses, and reproducibility (identical hashes on re-run).
@@ -70,7 +70,7 @@
 **In deployment:** examiners' dispositions on flagged findings, plus a small uniform-random floor of reviews on *unflagged* entities, give a running precision and miss-rate estimate each cycle.
 
 ## 7. Infrastructure, deployment and operations
-- **Hardware.** One server: 8 cores, 16–32 GB RAM, 50 GB SSD. The demo runs on a 4-core laptop: 453k alerts and 215k cases are analysed in about 2.5 min with 1.3 GB RAM.
+- **Hardware.** One server: 8 cores, 16–32 GB RAM, 50 GB SSD. The demo runs on a 4-core laptop: 453k alerts and 215k cases are analysed in about 3 min with 1.3 GB RAM.
     - DuckDB is columnar and embedded, and scales to hundreds of entities on one host.
     - Scale-out means partitioning by sector.
 - **Software.** Python 3.11+, with permissive-licence dependencies only (no GPL/AGPL). A pre-built web UI is served locally.
