@@ -1,0 +1,64 @@
+{
+ "_request": "POST /api/entities/TEL-03/redteam (file)",
+ "response": {
+  "entity_id": "TEL-03",
+  "funnel": {
+   "executed": 8,
+   "alerted": 4,
+   "cased": 3,
+   "escalated": 3
+  },
+  "techniques": [
+   {
+    "technique_id": "T1566",
+    "technique": "Phishing",
+    "tactic": "Initial Access",
+    "target_asset": "TEL-03-A0003",
+    "start_ts": "2026-05-29T11:00:00",
+    "executed": true,
+    "alerted": true,
+    "cased": true,
+    "escalated": true,
+    "matched_alerts": [
+     "TEL-03-AL0006716",
+     "TEL-03-AL0006719",
+     "TEL-03-AL0006729"
+    ]
+   },
+   {
+    "technique_id": "T1003",
+    "technique": "OS Credential Dumping",
+    "tactic": "Credential Access",
+    "target_asset": "TEL-03-A0004",
+    "start_ts": "2026-05-29T13:00:00",
+    "executed": true,
+    "alerted": false,
+    "cased": false,
+    "escalated": false,
+    "matched_alerts": []
+   },
+   {
+    "technique_id": "T1021",
+    "technique": "Remote Services",
+    "tactic": "Lateral Movement",
+    "target_asset": "TEL-03-A0005",
+    "start_ts": "2026-05-29T15:00:00",
+    "executed": true,
+    "alerted": true,
+    "cased": true,
+    "escalated": true,
+    "matched_alerts": [
+     "TEL-03-AL0006742"
+    ]
+   },
+   "...(5 more)"
+  ],
+  "missed": [
+   "OS Credential Dumping",
+   "DNS",
+   "Exfiltration Over Alternative Protocol",
+   "...(1 more)"
+  ],
+  "severity": "high"
+ }
+}

@@ -1,52 +1,44 @@
 {
+ "_request": "GET /api/entities/PWR-05/hourly",
+ "response": {
   "cells": [
-    {
-      "dow": 0,
-      "hour": 0,
-      "cases": 9,
-      "median_ack_min": 524.8833333333333,
-      "slow_ack_share": 1.0
-    },
-    {
-      "dow": 0,
-      "hour": 1,
-      "cases": 8,
-      "median_ack_min": 448.34166666666664,
-      "slow_ack_share": 1.0
-    },
-    {
-      "dow": 0,
-      "hour": 2,
-      "cases": 14,
-      "median_ack_min": 400.79166666666663,
-      "slow_ack_share": 1.0
-    },
-    {
-      "dow": 0,
-      "hour": 3,
-      "cases": 8,
-      "median_ack_min": 344.1916666666667,
-      "slow_ack_share": 1.0
-    },
-    "...(164 more)"
+   {
+    "dow": 0,
+    "hour": 0,
+    "cases": 9,
+    "median_ack_min": 524.8833333333333,
+    "slow_ack_share": 1.0
+   },
+   {
+    "dow": 0,
+    "hour": 1,
+    "cases": 8,
+    "median_ack_min": 448.34166666666664,
+    "slow_ack_share": 1.0
+   },
+   {
+    "dow": 0,
+    "hour": 2,
+    "cases": 14,
+    "median_ack_min": 400.79166666666663,
+    "slow_ack_share": 1.0
+   },
+   "...(165 more)"
   ],
   "peer_by_hour": [
-    {
-      "hour": 0,
-      "peer_median_ack_min": 7.199999999999999
-    },
-    {
-      "hour": 1,
-      "peer_median_ack_min": 7.304166666666667
-    },
-    {
-      "hour": 2,
-      "peer_median_ack_min": 7.533333333333333
-    },
-    {
-      "hour": 3,
-      "peer_median_ack_min": 7.5375
-    },
-    "...(20 more)"
+   {
+    "hour": 0,
+    "peer_median_ack_min": 7.199999999999999
+   },
+   {
+    "hour": 1,
+    "peer_median_ack_min": 7.304166666666667
+   },
+   {
+    "hour": 2,
+    "peer_median_ack_min": 7.533333333333333
+   },
+   "...(21 more)"
   ]
+ }
 }

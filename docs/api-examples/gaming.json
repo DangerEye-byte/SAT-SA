@@ -1,0 +1,51 @@
+{
+ "_request": "GET /api/gaming",
+ "response": {
+  "description": "Red-Team Lab (D4): can a SOC game its regulator?\n\nA stylised, fast simulation (numbers are SYNTHETIC). One entity, 12 monthly\nsubmissions of ~300 human-handled cases (30% medium, 70% high/critical). A healthy SOC\nhandles 3% of cases superficially, a weak one 15%. The auditee picks a strategy to hide\nthe weakness; the auditor picks a policy. Every policy gets the same budget: 60 human\ncase reviews ...(truncated)",
+  "sims_per_cell": 400,
+  "review_budget_per_year": 60,
+  "alpha": 0.01,
+  "strategies": [
+   "honest",
+   "delay",
+   "drift",
+   "...(4 more)"
+  ],
+  "policies": [
+   "annual_audit",
+   "quarterly_audit",
+   "unannounced",
+   "...(2 more)"
+  ],
+  "cells": [
+   {
+    "strategy": "honest",
+    "policy": "annual_audit",
+    "detection_rate": 0.015,
+    "median_months_to_detect": 12.0,
+    "detected_by": {
+     "manual review": 6
+    }
+   },
+   {
+    "strategy": "honest",
+    "policy": "quarterly_audit",
+    "detection_rate": 0.01,
+    "median_months_to_detect": 7.5,
+    "detected_by": {
+     "manual review": 4
+    }
+   },
+   {
+    "strategy": "honest",
+    "policy": "unannounced",
+    "detection_rate": 0.0175,
+    "median_months_to_detect": 5.0,
+    "detected_by": {
+     "manual review": 7
+    }
+   },
+   "...(32 more)"
+  ]
+ }
+}

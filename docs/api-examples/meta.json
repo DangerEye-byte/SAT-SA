@@ -1,116 +1,107 @@
 {
+ "_request": "GET /api/meta",
+ "response": {
   "run": {
-    "run_hash": "5e8eb3d26cc91aafd6804bd910b1c920e69b05d53fbe9ce6e76fb1685f63b281",
-    "input_hash": "ab50787bdef2229f5d71859502115edcd24f2c218002b09449f07557cfd5aa46",
-    "code_hash": "662eb5fb638c4070",
-    "version": "0.1.0",
-    "seed": 7,
-    "counts": {
-      "entities": 42,
-      "assets": 1173,
-      "alerts": 453041,
-      "cases": 215116,
-      "case_events": 1405762,
-      "escalations": 131802,
-      "submissions": 504,
-      "redteam": 69
-    },
-    "n_findings": 83,
-    "seconds": 78.4,
-    "created": "2026-09-29T03:56:02"
+   "run_hash": "a823ee34f94feee2f4e7dbccdb6d1f0f639b4b8be6f673800c6bcbd9eae8c1b0",
+   "input_hash": "ab50787bdef2229f5d71859502115edcd24f2c218002b09449f07557cfd5aa46",
+   "code_hash": "f4963a1b6b501752",
+   "version": "0.1.0",
+   "seed": 7,
+   "counts": {
+    "entities": 42,
+    "assets": 1173,
+    "alerts": 453041,
+    "cases": 215116,
+    "case_events": 1405762,
+    "escalations": 131802,
+    "submissions": 504,
+    "redteam": 69
+   },
+   "n_findings": 51,
+   "seconds": 180.6,
+   "created": "2026-09-29T10:26:03"
   },
   "detectors": [
-    {
-      "detector_id": "EG1",
-      "name": "Unusually fast high-severity closures",
-      "family": "Execution gap",
-      "capability": "Investigation",
-      "method": "Leave-one-entity-out conformal p-value per case vs peer cases of the same severity and alert type; entity count tested with a beta-binomial peer model",
-      "regulations": [
-        "SEBI CSCRF - SOC functional efficacy: Detective Effectiveness",
-        "NCIIPC guidelines - incident handling"
-      ]
-    },
-    {
-      "detector_id": "EG11",
-      "name": "24x7 claim vs night-time reality",
-      "family": "Execution gap",
-      "capability": "Security Operations",
-      "method": "Share of night-opened (00-06h) high/critical cases acknowledged after > 60 min, for entities that declare 24x7 monitoring",
-      "regulations": [
-        "SEBI CSCRF - 'Whether monitoring through SOC is done round-the-clock?'",
-        "RBI IT-GRCA 2023 - 24x7 SOC"
-      ]
-    },
-    {
-      "detector_id": "EG12",
-      "name": "Regulatory reporting beyond 6 hours",
-      "family": "Execution gap",
-      "capability": "Governance & Oversight",
-      "method": "Share of high/critical true positives with no CERT-In report or a report > 6 h after the first alert",
-      "regulations": [
-        "CERT-In Directions 2022 - report incidents within 6 hours",
-        "CEA 2024 - reporting to CERT-In / NCIIPC / CSIRT-Power"
-      ]
-    },
-    {
-      "detector_id": "EG13",
-      "name": "Threat intelligence not applied",
-      "family": "Execution gap",
-      "capability": "Threat Detection",
-      "method": "Share of human-handled cases without IOC / threat-intel enrichment; beta-binomial vs peers",
-      "regulations": [
-        "SEBI CSCRF - 'Whether threat intelligence is received and acted upon?'"
-      ]
-    },
-    "...(14 more)"
+   {
+    "detector_id": "EG1",
+    "name": "Unusually fast high-severity closures",
+    "family": "Execution gap",
+    "capability": "Investigation",
+    "method": "Leave-one-entity-out conformal p-value per case vs peer cases of the same severity and alert type; entity count tested with a beta-binomial peer model",
+    "regulations": [
+     "SEBI CSCRF - SOC functional efficacy: Detective Effectiveness",
+     "NCIIPC guidelines - incident handling"
+    ]
+   },
+   {
+    "detector_id": "EG11",
+    "name": "24x7 claim vs night-time reality",
+    "family": "Execution gap",
+    "capability": "Security Operations",
+    "method": "Share of night-opened (00-06h) high/critical cases acknowledged after > 60 min, for entities that declare 24x7 monitoring",
+    "regulations": [
+     "SEBI CSCRF - 'Whether monitoring through SOC is done round-the-clock?'",
+     "RBI IT-GRCA 2023 - 24x7 SOC"
+    ]
+   },
+   {
+    "detector_id": "EG12",
+    "name": "Regulatory reporting beyond 6 hours",
+    "family": "Execution gap",
+    "capability": "Governance & Oversight",
+    "method": "Share of high/critical true positives with no CERT-In report or a report > 6 h after the first alert",
+    "regulations": [
+     "CERT-In Directions 2022 - report incidents within 6 hours",
+     "CEA 2024 - reporting to CERT-In / NCIIPC / CSIRT-Power"
+    ]
+   },
+   "...(16 more)"
   ],
   "capabilities": [
-    "Threat Detection",
-    "Investigation",
-    "Escalation",
-    "Incident Response",
-    "...(4 more)"
+   "Threat Detection",
+   "Investigation",
+   "Escalation",
+   "...(5 more)"
   ],
   "tactics": [
-    "Reconnaissance",
-    "Resource Development",
-    "Initial Access",
-    "Execution",
-    "...(10 more)"
+   "Reconnaissance",
+   "Resource Development",
+   "Initial Access",
+   "...(11 more)"
   ],
   "sectors": {
-    "PWR": "Power & Energy",
-    "BFS": "Banking, Financial Services & Insurance",
-    "TEL": "Telecom",
-    "TRN": "Transport",
-    "GOV": "Government",
-    "SPE": "Strategic & Public Enterprises",
-    "HLT": "Health"
+   "PWR": "Power & Energy",
+   "BFS": "Banking, Financial Services & Insurance",
+   "TEL": "Telecom",
+   "TRN": "Transport",
+   "GOV": "Government",
+   "SPE": "Strategic & Public Enterprises",
+   "HLT": "Health"
   },
   "log_sources": {
-    "edr": "EDR (process creation, module load, file events)",
-    "av": "Antivirus",
-    "auth_logs": "Authentication / directory logs",
-    "vpn": "VPN logs",
-    "netflow": "Network flow records",
-    "ids": "Network IDS",
-    "firewall": "Firewall logs",
-    "waf": "Web application firewall",
-    "proxy": "Web proxy",
-    "dns": "DNS query logs",
-    "email_gw": "Email gateway",
-    "ot_ids": "OT / ICS network monitoring",
-    "siem_health": "SIEM / agent health telemetry"
+   "edr": "EDR (process creation, module load, file events)",
+   "av": "Antivirus",
+   "auth_logs": "Authentication / directory logs",
+   "vpn": "VPN logs",
+   "netflow": "Network flow records",
+   "ids": "Network IDS",
+   "firewall": "Firewall logs",
+   "waf": "Web application firewall",
+   "proxy": "Web proxy",
+   "dns": "DNS query logs",
+   "email_gw": "Email gateway",
+   "ot_ids": "OT / ICS network monitoring",
+   "siem_health": "SIEM / agent health telemetry"
   },
   "providers": [
-    "INHOUSE",
-    "MSSP-1",
-    "MSSP-2",
-    "MSSP-3"
+   "INHOUSE",
+   "MSSP-1",
+   "MSSP-2",
+   "...(1 more)"
   ],
   "period": {
-    "start": "2025-10-01T00:03:22",
-    "end": "2026-09-30T23:56:52"
+   "start": "2025-10-01T00:03:22",
+   "end": "2026-09-30T23:56:52"
   }
+ }
 }

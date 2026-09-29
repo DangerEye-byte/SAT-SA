@@ -1,0 +1,35 @@
+{
+ "_request": "POST /api/ingest/validate (data/samples/broken)",
+ "response": {
+  "accepted": false,
+  "files": [
+   {
+    "table": "alerts",
+    "rows": 500,
+    "errors": [
+     "Column 'ts': 3 unparseable timestamps (first rows: [5, 19, 44])",
+     "Duplicate alert_id values: 2"
+    ],
+    "warnings": [
+     "Null values in required columns: {'ts': 3}"
+    ],
+    "file": "alerts.csv"
+   },
+   {
+    "table": "cases",
+    "rows": 200,
+    "errors": [],
+    "warnings": [],
+    "file": "cases.jsonl"
+   }
+  ],
+  "integrity": [
+   "A submission must include at least alerts and cases"
+  ],
+  "sha256": {
+   "alerts.csv": "e00a0d09eef571463866865088944ec15cb443e5034afecff3b411a92c87fdf0",
+   "cases.jsonl": "ddc10756e2964ae260e7924989de7068aff4be8fc61fcef2398d975937d9ec97"
+  },
+  "tables": {}
+ }
+}

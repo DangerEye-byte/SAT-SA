@@ -1,0 +1,28 @@
+{
+ "_request": "GET /api/entities/BFS-02/survival",
+ "response": {
+  "entity_id": "BFS-02",
+  "n": 7934,
+  "open": 153,
+  "km_median_min": 127.08333333333333,
+  "naive_median_min": 123.2,
+  "curve": {
+   "t": [
+    15,
+    30,
+    60,
+    120,
+    "...(10 more)"
+   ],
+   "open_share": [
+    0.8559,
+    0.7057,
+    0.6557,
+    0.5175,
+    "...(10 more)"
+   ]
+  },
+  "available": true,
+  "peer_km_median_min": 189.05
+ }
+}

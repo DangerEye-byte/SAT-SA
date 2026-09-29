@@ -1,0 +1,8 @@
+{
+ "_request": "POST /api/ledger/verify",
+ "response": {
+  "ok": true,
+  "entries": 84,
+  "head": "21ee712f5199023fe8100fe0bc68ef8af3e05e8cb0a5229f45476db9929d98d1"
+ }
+}

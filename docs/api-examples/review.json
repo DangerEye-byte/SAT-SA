@@ -1,93 +1,82 @@
 {
+ "_request": "GET /api/review/BFS-02",
+ "response": {
   "entity_id": "BFS-02",
   "sample": [
-    {
-      "case_id": "BFS-02-CS010233",
-      "sample_type": "random",
-      "rank": 1,
-      "severity": "high",
-      "category": "exfil_large_upload",
-      "ttc_min": 153.06666666666666,
-      "notes": "Correlated exfil large upload alert on BFS-02-A0035. Checked change calendar for the window. Confirmed credential misuse: u1589 logged in from 10.179.194.251 outside working hours after 42 failures. Blocked 10.233.94.71 at perimeter.",
-      "yhat": 0.0003838222011165086,
-      "n_investigate": 1,
-      "escalated": true,
-      "label": 0,
-      "reviewer": "simulated-examiner",
-      "blind_first": true
-    },
-    {
-      "case_id": "BFS-02-CS004075",
-      "sample_type": "random",
-      "rank": 2,
-      "severity": "critical",
-      "category": "credential_dump",
-      "ttc_min": 126.31666666666666,
-      "notes": "Examined credential dump alert on BFS-02-A0028. Checked mailbox rules for the recipient. Confirmed unauthorised write command to controller from engineering workstation 10.144.233.199. Collected memory image for forensics.",
-      "yhat": 0.0011913162594446094,
-      "n_investigate": 1,
-      "escalated": true,
-      "label": 0,
-      "reviewer": "simulated-examiner",
-      "blind_first": true
-    },
-    {
-      "case_id": "BFS-02-CS009398",
-      "sample_type": "random",
-      "rank": 3,
-      "severity": "high",
-      "category": "lateral_rdp_smb",
-      "ttc_min": 272.1,
-      "notes": "Examined lateral rdp smb alert on BFS-02-A0030. Checked file hash against internal TI. Confirmed unauthorised write command to controller from engineering workstation 10.68.185.147. Escalated to L2 and informed CISO.",
-      "yhat": 0.0004829087399982091,
-      "n_investigate": 1,
-      "escalated": true,
-      "label": 0,
-      "reviewer": "simulated-examiner",
-      "blind_first": true
-    },
-    {
-      "case_id": "BFS-02-CS006347",
-      "sample_type": "random",
-      "rank": 4,
-      "severity": "medium",
-      "category": "dns_tunnel",
-      "ttc_min": 371.81666666666666,
-      "notes": "Investigated dns tunnel alert on BFS-02-A0012. Checked parent/child process lineage. Activity attributed to authorised admin maintenance by u9032; change ticket CHG28811 matches window. Added context to asset record.",
-      "yhat": 9.914929681368492e-07,
-      "n_investigate": 3,
-      "escalated": false,
-      "label": 0,
-      "reviewer": "simulated-examiner",
-      "blind_first": true
-    },
-    "...(36 more)"
+   {
+    "case_id": "BFS-02-CS010233",
+    "sample_type": "random",
+    "rank": 1,
+    "severity": "high",
+    "category": "exfil_large_upload",
+    "ttc_min": 153.06666666666666,
+    "notes": "Correlated exfil large upload alert on BFS-02-A0035. Checked change calendar for the window. Confirmed credential misuse: u1589 logged in from 10.179.194.251 outside working hours after 42 failures. Blocked 10.233.94.71 at perimeter.",
+    "yhat": 0.0003667494231201553,
+    "n_investigate": 1,
+    "escalated": true,
+    "label": 0,
+    "reviewer": "simulated-examiner",
+    "blind_first": true
+   },
+   {
+    "case_id": "BFS-02-CS004075",
+    "sample_type": "random",
+    "rank": 2,
+    "severity": "critical",
+    "category": "credential_dump",
+    "ttc_min": 126.31666666666666,
+    "notes": "Examined credential dump alert on BFS-02-A0028. Checked mailbox rules for the recipient. Confirmed unauthorised write command to controller from engineering workstation 10.144.233.199. Collected memory image for forensics.",
+    "yhat": 0.0014839567970420617,
+    "n_investigate": 1,
+    "escalated": true,
+    "label": 0,
+    "reviewer": "simulated-examiner",
+    "blind_first": true
+   },
+   {
+    "case_id": "BFS-02-CS009398",
+    "sample_type": "random",
+    "rank": 3,
+    "severity": "high",
+    "category": "lateral_rdp_smb",
+    "ttc_min": 272.1,
+    "notes": "Examined lateral rdp smb alert on BFS-02-A0030. Checked file hash against internal TI. Confirmed unauthorised write command to controller from engineering workstation 10.68.185.147. Escalated to L2 and informed CISO.",
+    "yhat": 0.00043638167613031396,
+    "n_investigate": 1,
+    "escalated": true,
+    "label": 0,
+    "reviewer": "simulated-examiner",
+    "blind_first": true
+   },
+   "...(37 more)"
   ],
   "estimate": {
-    "population": 9967,
-    "n_labeled_random": 30,
-    "n_labeled_active": 0,
-    "n_sampled": 40,
-    "model_mean": 0.31077496541915167,
-    "alpha": 0.1,
-    "status": "ok",
-    "ppi": {
-      "estimate": 0.2605544410579166,
-      "lo": 0.2207441954136515,
-      "hi": 0.30036468670218164,
-      "width": 0.07962049128853013
-    },
-    "classical": {
-      "estimate": 0.16666666666666666,
-      "lo": 0.08356237232284013,
-      "hi": 0.30492049976055935,
-      "width": 0.2213581274377192
-    },
-    "review_saving": 0.8706224980288686,
-    "planner": {
-      "target_half_width": 0.03,
-      "reviews_manual_only": 580,
-      "reviews_with_satsa": 76
-    }
+   "population": 9967,
+   "n_labeled_random": 30,
+   "n_labeled_active": 5,
+   "n_sampled": 40,
+   "model_mean": 0.31099296628949835,
+   "alpha": 0.1,
+   "classical": {
+    "estimate": 0.16666666666666666,
+    "lo": 0.08356237232284013,
+    "hi": 0.30492049976055935,
+    "width": 0.2213581274377192
+   },
+   "status": "ok",
+   "ppi": {
+    "estimate": 0.3114937463009845,
+    "lo": 0.27090549342162706,
+    "hi": 0.3520819991803419,
+    "width": 0.08117650575871482,
+    "lambda": 0.9993421996466122
+   },
+   "review_saving": 0.8655162651144345,
+   "planner": {
+    "target_half_width": 0.03,
+    "reviews_manual_only": 645,
+    "reviews_with_satsa": 87
+   }
   }
+ }
 }

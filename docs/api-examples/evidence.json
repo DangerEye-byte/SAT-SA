@@ -1,0 +1,39 @@
+{
+ "_request": "GET /api/entities/BFS-02/evidence",
+ "response": {
+  "entity_id": "BFS-02",
+  "fdr": 0.1,
+  "n_entities": 42,
+  "looks": [
+   {
+    "look": 1,
+    "quarter": "2025-Q4",
+    "p_value": 4.8231418858790676e-12,
+    "e_value": 227669.56895602564,
+    "cum_e": 227669.56895602564,
+    "ebh_flag": true,
+    "naive_bh_flag": true
+   },
+   {
+    "look": 2,
+    "quarter": "2026-Q1",
+    "p_value": 9.836409464725193e-12,
+    "e_value": 159423.26704077542,
+    "cum_e": 36295826488.73471,
+    "ebh_flag": true,
+    "naive_bh_flag": true
+   },
+   {
+    "look": 3,
+    "quarter": "2026-Q2",
+    "p_value": 3.3330005422271825e-12,
+    "e_value": 273874.9505659928,
+    "cum_e": 9940517685354070.0,
+    "ebh_flag": true,
+    "naive_bh_flag": true
+   },
+   "...(1 more)"
+  ],
+  "note": "Each quarter is analysed on its own data; the running product of e-values keeps its false-alarm guarantee no matter how often the regulator looks (e-BH, Wang & Ramdas 2022)."
+ }
+}

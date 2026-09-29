@@ -172,7 +172,7 @@ def _findings(entity_id: str, include_all: bool = False) -> list[dict]:
             continue
         x.update({"name": det[0], "family": det[1], "capability": det[2], "method": det[3],
                   "regulations": tx.REGMAP.get(x["detector_id"], []), "significant": sig,
-                  "evidence": _j(x["evidence"]), "extra": _j(x["extra"])})
+                  "evidence": _j(x["evidence"]), "extra": clean(_j(x["extra"]))})  # stored JSON may hold NaN
         d_ = disp.get(x["detector_id"])
         x["disposition"] = {k: d_[k] for k in ("status", "reason", "examiner", "ts")} if d_ else {"status": "open"}
         x["score"] = DET_SCORE.get(x["severity"], 0) if x["deterministic"] else (

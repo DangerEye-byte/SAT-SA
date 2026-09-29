@@ -1,230 +1,173 @@
 {
+ "_request": "GET /api/queue?fdr=0.1",
+ "response": {
   "fdr": 0.1,
   "n_entities": 42,
-  "n_flagged": 22,
-  "n_flagged_statistical": 18,
-  "n_flagged_deterministic": 4,
-  "expected_false_discoveries_max": 1.8,
+  "n_flagged": 15,
+  "n_flagged_statistical": 12,
+  "n_flagged_deterministic": 3,
+  "expected_false_discoveries_max": 1.2,
   "entities": [
-    {
-      "entity_id": "BFS-02",
-      "entity_name": "Bank B",
-      "sector": "BFS",
-      "sector_name": "Banking, Financial Services & Insurance",
-      "size_band": "L",
-      "soc_provider": "INHOUSE",
-      "claims_24x7": true,
-      "p_value": 3.1694091795486656e-12,
-      "q_value": 7.3498956920659e-11,
-      "attention": 100.0,
-      "trust_score": 100.0,
-      "n_tests": 14,
-      "n_deterministic": 0,
-      "flagged": true,
-      "flag_basis": "statistical",
-      "top_reasons": [
-        {
-          "detector_id": "EG1",
-          "name": "Unusually fast high-severity closures",
-          "p_value": 1e-12,
-          "effect": "26% vs peer median 3%"
-        },
-        {
-          "detector_id": "EG4",
-          "name": "Acknowledged but not investigated",
-          "p_value": 1e-12,
-          "effect": "32% vs peer median 3%"
-        },
-        {
-          "detector_id": "EG5",
-          "name": "Workflow non-conformance",
-          "p_value": 1e-12,
-          "effect": "27% vs peer median 4%"
-        }
-      ],
-      "capabilities": {
-        "Threat Detection": 100.0,
-        "Investigation": 100.0,
-        "Escalation": 100.0,
-        "Incident Response": 28.888296709228385,
-        "Security Operations": 11.185986585807663,
-        "Governance & Oversight": 100.0,
-        "Operational Discipline": 65.55194325626609,
-        "Cyber Resilience": 0.0
-      },
-      "sparkline": [
-        0.3208,
-        0.3215,
-        0.2891,
-        0.3253,
-        "...(9 more)"
-      ]
+   {
+    "entity_id": "BFS-02",
+    "entity_name": "Bank B",
+    "sector": "BFS",
+    "sector_name": "Banking, Financial Services & Insurance",
+    "size_band": "L",
+    "soc_provider": "INHOUSE",
+    "claims_24x7": true,
+    "p_value": 4.998501612618611e-12,
+    "q_value": 1.0499845437550448e-10,
+    "attention": 100.0,
+    "trust_score": 100.0,
+    "n_tests": 15,
+    "n_deterministic": 0,
+    "flagged": true,
+    "flag_basis": "statistical",
+    "top_reasons": [
+     {
+      "detector_id": "EG2",
+      "name": "Critical cases closed without escalation",
+      "p_value": 1e-12,
+      "effect": "41% vs peer median 10%"
+     },
+     {
+      "detector_id": "EG7",
+      "name": "Repeat alerts without remediation",
+      "p_value": 1e-12,
+      "effect": "49% vs peer median 32%"
+     },
+     {
+      "detector_id": "EG13",
+      "name": "Threat intelligence not applied",
+      "p_value": 1e-12,
+      "effect": "80% vs peer median 30%"
+     }
+    ],
+    "capabilities": {
+     "Threat Detection": 100.0,
+     "Investigation": 100.0,
+     "Escalation": 100.0,
+     "Incident Response": 100.0,
+     "Security Operations": 12.208812999477738,
+     "Governance & Oversight": 100.0,
+     "Operational Discipline": 36.464334957005505,
+     "Cyber Resilience": 0.0
     },
-    {
-      "entity_id": "PWR-01",
-      "entity_name": "Utility P",
-      "sector": "PWR",
-      "sector_name": "Power & Energy",
-      "size_band": "M",
-      "soc_provider": "INHOUSE",
-      "claims_24x7": true,
-      "p_value": 4.2389980414725414e-12,
-      "q_value": 7.3498956920659e-11,
-      "attention": 100.0,
-      "trust_score": 100.0,
-      "n_tests": 14,
-      "n_deterministic": 2,
-      "flagged": true,
-      "flag_basis": "both",
-      "top_reasons": [
-        {
-          "detector_id": "EG2",
-          "name": "Critical cases closed without escalation",
-          "p_value": 1e-12,
-          "effect": "83% vs peer median 10%"
-        },
-        {
-          "detector_id": "EG5",
-          "name": "Workflow non-conformance",
-          "p_value": 1e-12,
-          "effect": "25% vs peer median 4%"
-        },
-        {
-          "detector_id": "EG1",
-          "name": "Unusually fast high-severity closures",
-          "p_value": 1.216915457291634e-12,
-          "effect": "19% vs peer median 3%"
-        },
-        {
-          "detector_id": "RT1",
-          "name": "Red-team techniques missed",
-          "p_value": null,
-          "effect": "6 of 12 red-team techniques never alerted",
-          "deterministic": true,
-          "severity": "high"
-        },
-        "...(1 more)"
-      ],
-      "capabilities": {
-        "Threat Detection": 100.0,
-        "Investigation": 100.0,
-        "Escalation": 100.0,
-        "Incident Response": 100.0,
-        "Security Operations": 14.441358037903274,
-        "Governance & Oversight": 100.0,
-        "Operational Discipline": 100.0,
-        "Cyber Resilience": 70.0
-      },
-      "sparkline": [
-        0.1808,
-        0.1981,
-        0.1916,
-        0.1899,
-        "...(8 more)"
-      ]
+    "sparkline": [
+     0.3208,
+     0.3219,
+     0.2893,
+     0.3256,
+     "...(9 more)"
+    ]
+   },
+   {
+    "entity_id": "PWR-01",
+    "entity_name": "Utility P",
+    "sector": "PWR",
+    "sector_name": "Power & Energy",
+    "size_band": "M",
+    "soc_provider": "INHOUSE",
+    "claims_24x7": true,
+    "p_value": 7.355061004687968e-12,
+    "q_value": 1.0499845437550448e-10,
+    "attention": 100.0,
+    "trust_score": 100.0,
+    "n_tests": 15,
+    "n_deterministic": 2,
+    "flagged": true,
+    "flag_basis": "both",
+    "top_reasons": [
+     {
+      "detector_id": "EG2",
+      "name": "Critical cases closed without escalation",
+      "p_value": 1e-12,
+      "effect": "83% vs peer median 10%"
+     },
+     {
+      "detector_id": "EG7",
+      "name": "Repeat alerts without remediation",
+      "p_value": 1e-12,
+      "effect": "59% vs peer median 32%"
+     },
+     {
+      "detector_id": "NS1",
+      "name": "Silent critical assets",
+      "p_value": 2.541944432721266e-11,
+      "effect": "2 critical asset(s) silent"
+     },
+     {
+      "detector_id": "RT1",
+      "name": "Red-team techniques missed",
+      "p_value": null,
+      "effect": "6 of 12 red-team techniques never alerted",
+      "deterministic": true,
+      "severity": "high"
+     },
+     "...(1 more)"
+    ],
+    "capabilities": {
+     "Threat Detection": 100.0,
+     "Investigation": 95.90001330923104,
+     "Escalation": 100.0,
+     "Incident Response": 100.0,
+     "Security Operations": 16.913452479924608,
+     "Governance & Oversight": 100.0,
+     "Operational Discipline": 42.345712598530426,
+     "Cyber Resilience": 70.0
     },
-    {
-      "entity_id": "TEL-02",
-      "entity_name": "Telecom B",
-      "sector": "TEL",
-      "sector_name": "Telecom",
-      "size_band": "M",
-      "soc_provider": "INHOUSE",
-      "claims_24x7": true,
-      "p_value": 5.324463092648557e-12,
-      "q_value": 7.3498956920659e-11,
-      "attention": 100.0,
-      "trust_score": 100.0,
-      "n_tests": 14,
-      "n_deterministic": 0,
-      "flagged": true,
-      "flag_basis": "statistical",
-      "top_reasons": [
-        {
-          "detector_id": "EG4",
-          "name": "Acknowledged but not investigated",
-          "p_value": 1e-12,
-          "effect": "18% vs peer median 3%"
-        },
-        {
-          "detector_id": "EG5",
-          "name": "Workflow non-conformance",
-          "p_value": 1e-12,
-          "effect": "16% vs peer median 4%"
-        },
-        {
-          "detector_id": "EG1",
-          "name": "Unusually fast high-severity closures",
-          "p_value": 2.393085729579525e-12,
-          "effect": "16% vs peer median 3%"
-        }
-      ],
-      "capabilities": {
-        "Threat Detection": 100.0,
-        "Investigation": 100.0,
-        "Escalation": 100.0,
-        "Incident Response": 5.5212460374630865,
-        "Security Operations": 0.0,
-        "Governance & Oversight": 100.0,
-        "Operational Discipline": 100.0,
-        "Cyber Resilience": 0.0
-      },
-      "sparkline": [
-        0.2153,
-        0.2032,
-        0.1863,
-        0.1977,
-        "...(8 more)"
-      ]
+    "sparkline": [
+     0.1809,
+     0.1982,
+     0.1912,
+     0.1899,
+     "...(8 more)"
+    ]
+   },
+   {
+    "entity_id": "PWR-05",
+    "entity_name": "Power Utility E",
+    "sector": "PWR",
+    "sector_name": "Power & Energy",
+    "size_band": "M",
+    "soc_provider": "INHOUSE",
+    "claims_24x7": true,
+    "p_value": 1.499977919650064e-11,
+    "q_value": 1.0499845437550448e-10,
+    "attention": 100.0,
+    "trust_score": 100.0,
+    "n_tests": 15,
+    "n_deterministic": 0,
+    "flagged": true,
+    "flag_basis": "statistical",
+    "top_reasons": [
+     {
+      "detector_id": "EG11",
+      "name": "24x7 claim vs night-time reality",
+      "p_value": 1e-12,
+      "effect": "100% vs peer median 0%"
+     }
+    ],
+    "capabilities": {
+     "Threat Detection": 10.8257617976132,
+     "Investigation": 16.39818300843868,
+     "Escalation": 19.25889580046923,
+     "Incident Response": 13.399377494211166,
+     "Security Operations": 100.0,
+     "Governance & Oversight": 28.209889614356953,
+     "Operational Discipline": 31.681284521514378,
+     "Cyber Resilience": 0.0
     },
-    {
-      "entity_id": "TRN-03",
-      "entity_name": "Transport C",
-      "sector": "TRN",
-      "sector_name": "Transport",
-      "size_band": "M",
-      "soc_provider": "INHOUSE",
-      "claims_24x7": true,
-      "p_value": 6.999900659110381e-12,
-      "q_value": 7.3498956920659e-11,
-      "attention": 100.0,
-      "trust_score": 100.0,
-      "n_tests": 14,
-      "n_deterministic": 0,
-      "flagged": true,
-      "flag_basis": "statistical",
-      "top_reasons": [
-        {
-          "detector_id": "EG2",
-          "name": "Critical cases closed without escalation",
-          "p_value": 1e-12,
-          "effect": "67% vs peer median 10%"
-        },
-        {
-          "detector_id": "EG5",
-          "name": "Workflow non-conformance",
-          "p_value": 1e-12,
-          "effect": "21% vs peer median 4%"
-        }
-      ],
-      "capabilities": {
-        "Threat Detection": 18.637395004894028,
-        "Investigation": 31.5505905343367,
-        "Escalation": 100.0,
-        "Incident Response": 14.449563270589431,
-        "Security Operations": 0.0,
-        "Governance & Oversight": 100.0,
-        "Operational Discipline": 5.388954738504777,
-        "Cyber Resilience": 0.0
-      },
-      "sparkline": [
-        0.0635,
-        0.0557,
-        0.0626,
-        0.0677,
-        "...(8 more)"
-      ]
-    },
-    "...(38 more)"
+    "sparkline": [
+     0.0694,
+     0.0735,
+     0.0725,
+     0.0803,
+     "...(8 more)"
+    ]
+   },
+   "...(39 more)"
   ]
+ }
 }

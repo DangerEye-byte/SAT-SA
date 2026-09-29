@@ -1,0 +1,83 @@
+{
+ "_request": "GET /api/entities/TRN-06/findings/TW1",
+ "response": {
+  "entity_id": "TRN-06",
+  "detector_id": "TW1",
+  "p_value": 0.024390243902439025,
+  "n": 12,
+  "k": 0,
+  "rate": 0.2868833333333333,
+  "peer_rate": 0.03943333333333333,
+  "effect": "+24.7 pp vs its twin after month 6",
+  "reason": "A blend of peers (TRN-05, TRN-01, HLT-01, GOV-06, PWR-01) matched this entity's monthly share of likely-superficial cases for six months (error 0.0 pp). Afterwards the entity ran +24.7 pp from its twin, larger than 98% of the same gaps computed for every peer (placebo test).",
+  "evidence": [],
+  "evidence_type": "series",
+  "deterministic": false,
+  "severity": null,
+  "extra": {
+   "twin": {
+    "stat": 49.49305247601612,
+    "actual": [
+     0.0372,
+     0.0308,
+     0.0352,
+     0.0321,
+     "...(8 more)"
+    ],
+    "twin": [
+     0.0372,
+     0.0308,
+     0.0352,
+     0.0321,
+     "...(8 more)"
+    ],
+    "gap": [
+     0.0,
+     -0.0,
+     -0.0,
+     -0.0,
+     "...(8 more)"
+    ],
+    "pre_rmse": 1.0124605936239441e-14,
+    "donors": {
+     "TRN-05": 0.401,
+     "TRN-01": 0.244,
+     "HLT-01": 0.148,
+     "GOV-06": 0.061,
+     "PWR-01": 0.06
+    },
+    "p": 0.024390243902439025,
+    "placebo_band": [
+     [
+      -0.0073,
+      -0.0078,
+      -0.0096,
+      -0.0089,
+      "...(8 more)"
+     ],
+     [
+      0.0103,
+      0.01,
+      0.0089,
+      0.0113,
+      "...(8 more)"
+     ]
+    ]
+   }
+  },
+  "name": "Divergence from its synthetic twin",
+  "family": "Execution gap",
+  "capability": "Governance & Oversight",
+  "method": "Synthetic control (Abadie et al. 2010): a weighted blend of peers that tracks the entity's monthly share of likely-superficial cases in the first half-year; the post-period gap is ranked against placebo twins of every peer",
+  "regulations": [
+   "SEBI CSCRF - SOC functional efficacy (sustained performance)",
+   "NCIIPC guidelines - continuous improvement"
+  ],
+  "significant": false,
+  "disposition": {
+   "status": "open"
+  },
+  "score": 32.25567713439471,
+  "records": []
+ }
+}

@@ -1,0 +1,47 @@
+{
+ "_request": "GET /api/gaming/run?strategy=off_audit_drift&policy=satsa_with_floor",
+ "response": {
+  "strategy": "off_audit_drift",
+  "policy": "satsa_with_floor",
+  "onset_month": 1,
+  "detected_month": 1,
+  "why": "analytics (anytime-valid e-process)",
+  "trace": [
+   {
+    "month": 1,
+    "true_rate": 0.16,
+    "submitted_rate": 0.16,
+    "missing": 2,
+    "mean_score": 0.21524724706143925,
+    "cum_e": 15811388.300841896,
+    "reviews": 3,
+    "found": 1,
+    "detected": "analytics (anytime-valid e-process)"
+   },
+   {
+    "month": 2,
+    "true_rate": 0.21,
+    "submitted_rate": 0.21,
+    "missing": 2,
+    "mean_score": 0.2428220404772365,
+    "cum_e": 249999999999999.97,
+    "reviews": 6,
+    "found": 1,
+    "detected": "analytics (anytime-valid e-process)"
+   },
+   {
+    "month": 3,
+    "true_rate": 0.04,
+    "submitted_rate": 0.04,
+    "missing": 2,
+    "mean_score": 0.13706824247950755,
+    "cum_e": 399919562682653.06,
+    "reviews": 9,
+    "found": 1,
+    "detected": "analytics (anytime-valid e-process)"
+   },
+   "...(9 more)"
+  ],
+  "synthetic": true
+ }
+}

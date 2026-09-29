@@ -1,54 +1,47 @@
 {
+ "_request": "GET /api/redteam/PWR-01",
+ "response": {
   "entity_id": "PWR-01",
   "has_report": true,
   "funnel": {
-    "executed": 12,
-    "alerted": 6,
-    "cased": 6,
-    "escalated": 1
+   "executed": 12,
+   "alerted": 6,
+   "cased": 6,
+   "escalated": 1
   },
   "techniques": [
-    {
-      "technique_id": "T1566",
-      "technique": "Phishing",
-      "tactic": "Initial Access",
-      "target_asset": "PWR-01-A0008",
-      "executed": true,
-      "alerted": true,
-      "cased": true,
-      "escalated": false
-    },
-    {
-      "technique_id": "T1059",
-      "technique": "Command and Scripting Interpreter",
-      "tactic": "Execution",
-      "target_asset": "PWR-01-A0006",
-      "executed": true,
-      "alerted": false,
-      "cased": false,
-      "escalated": false
-    },
-    {
-      "technique_id": "T1003",
-      "technique": "OS Credential Dumping",
-      "tactic": "Credential Access",
-      "target_asset": "PWR-01-A0001",
-      "executed": true,
-      "alerted": false,
-      "cased": false,
-      "escalated": false
-    },
-    {
-      "technique_id": "T1021",
-      "technique": "Remote Services",
-      "tactic": "Lateral Movement",
-      "target_asset": "PWR-01-A0003",
-      "executed": true,
-      "alerted": false,
-      "cased": false,
-      "escalated": false
-    },
-    "...(8 more)"
+   {
+    "technique_id": "T1566",
+    "technique": "Phishing",
+    "tactic": "Initial Access",
+    "target_asset": "PWR-01-A0008",
+    "executed": true,
+    "alerted": true,
+    "cased": true,
+    "escalated": false
+   },
+   {
+    "technique_id": "T1059",
+    "technique": "Command and Scripting Interpreter",
+    "tactic": "Execution",
+    "target_asset": "PWR-01-A0006",
+    "executed": true,
+    "alerted": false,
+    "cased": false,
+    "escalated": false
+   },
+   {
+    "technique_id": "T1003",
+    "technique": "OS Credential Dumping",
+    "tactic": "Credential Access",
+    "target_asset": "PWR-01-A0001",
+    "executed": true,
+    "alerted": false,
+    "cased": false,
+    "escalated": false
+   },
+   "...(9 more)"
   ],
   "reason": "The entity's own red-team exercise executed 12 techniques; 6 (Command and Scripting Interpreter, OS Credential Dumping, Remote Services, Data Staged) produced no alert at all. These are known positives the SOC did not see."
+ }
 }

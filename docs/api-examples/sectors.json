@@ -1,0 +1,87 @@
+{
+ "_request": "GET /api/sectors",
+ "response": [
+  {
+   "sector": "BFS",
+   "sector_name": "Banking, Financial Services & Insurance",
+   "entities": 6,
+   "flagged": 3,
+   "mean_attention": 51.599999999999994,
+   "top_detectors": [
+    {
+     "detector_id": "EG12",
+     "entities": 2
+    },
+    {
+     "detector_id": "EG1",
+     "entities": 1
+    },
+    {
+     "detector_id": "EG4",
+     "entities": 1
+    }
+   ],
+   "blind_tactics": [],
+   "entities_blind_somewhere": 0,
+   "systemic_providers": []
+  },
+  {
+   "sector": "PWR",
+   "sector_name": "Power & Energy",
+   "entities": 6,
+   "flagged": 3,
+   "mean_attention": 51.400000000000006,
+   "top_detectors": [
+    {
+     "detector_id": "RT1",
+     "entities": 2
+    },
+    {
+     "detector_id": "NS1",
+     "entities": 2
+    },
+    {
+     "detector_id": "EG3",
+     "entities": 1
+    }
+   ],
+   "blind_tactics": [
+    "Collection",
+    "Impact",
+    "Lateral Movement",
+    "Persistence"
+   ],
+   "entities_blind_somewhere": 1,
+   "systemic_providers": []
+  },
+  {
+   "sector": "TEL",
+   "sector_name": "Telecom",
+   "entities": 6,
+   "flagged": 3,
+   "mean_attention": 41.58333333333333,
+   "top_detectors": [
+    {
+     "detector_id": "EG1",
+     "entities": 1
+    },
+    {
+     "detector_id": "EG2",
+     "entities": 1
+    },
+    {
+     "detector_id": "EG3",
+     "entities": 1
+    }
+   ],
+   "blind_tactics": [
+    "Collection",
+    "Impact",
+    "Persistence"
+   ],
+   "entities_blind_somewhere": 1,
+   "systemic_providers": []
+  },
+  "...(4 more)"
+ ]
+}

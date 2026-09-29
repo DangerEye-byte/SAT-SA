@@ -1,0 +1,9 @@
+{
+ "_request": "GET /api/ai/status",
+ "response": {
+  "available": true,
+  "model": "Qwen3-4B-Instruct-2507 (Q4_K_M, local CPU)",
+  "path": "Qwen3-4B-Instruct-2507-Q4_K_M.gguf",
+  "offline": true
+ }
+}

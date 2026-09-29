@@ -1,39 +1,34 @@
 {
+ "_request": "GET /api/entities/PWR-01/regulatory",
+ "response": {
   "entity_id": "PWR-01",
   "entity_name": "Utility P",
   "items": [
-    {
-      "obligation": "SEBI CSCRF - SOC functional efficacy: Detective Effectiveness",
-      "detector_id": "EG1",
-      "detector": "Unusually fast high-severity closures",
-      "status": "evidence_contradicts",
-      "effect": "19% vs peer median 3%",
-      "reason": "618 of 3339 high/critical cases (19%) were closed faster than 95% of comparable peer cases (same severity and alert type); the peer median is 3%. Automated SOAR closures are excluded."
-    },
-    {
-      "obligation": "NCIIPC guidelines - incident handling",
-      "detector_id": "EG1",
-      "detector": "Unusually fast high-severity closures",
-      "status": "evidence_contradicts",
-      "effect": "19% vs peer median 3%",
-      "reason": "618 of 3339 high/critical cases (19%) were closed faster than 95% of comparable peer cases (same severity and alert type); the peer median is 3%. Automated SOAR closures are excluded."
-    },
-    {
-      "obligation": "SEBI CSCRF - Detective Effectiveness",
-      "detector_id": "EG2",
-      "detector": "Critical cases closed without escalation",
-      "status": "evidence_contradicts",
-      "effect": "83% vs peer median 10%",
-      "reason": "869 of 1044 closed critical cases (83%) show no escalation; peer median 10%."
-    },
-    {
-      "obligation": "CEA 2024 - Cyber Crisis Management Plan escalation",
-      "detector_id": "EG2",
-      "detector": "Critical cases closed without escalation",
-      "status": "evidence_contradicts",
-      "effect": "83% vs peer median 10%",
-      "reason": "869 of 1044 closed critical cases (83%) show no escalation; peer median 10%."
-    },
-    "...(22 more)"
+   {
+    "obligation": "SEBI CSCRF - SOC functional efficacy: Detective Effectiveness",
+    "detector_id": "EG1",
+    "detector": "Unusually fast high-severity closures",
+    "status": "evidence_contradicts",
+    "effect": "19% vs peer median 3%",
+    "reason": "618 of 3339 high/critical cases (19%) were closed faster than 95% of comparable peer cases (same severity and alert type); the peer median is 3%. Automated SOAR closures are excluded."
+   },
+   {
+    "obligation": "NCIIPC guidelines - incident handling",
+    "detector_id": "EG1",
+    "detector": "Unusually fast high-severity closures",
+    "status": "evidence_contradicts",
+    "effect": "19% vs peer median 3%",
+    "reason": "618 of 3339 high/critical cases (19%) were closed faster than 95% of comparable peer cases (same severity and alert type); the peer median is 3%. Automated SOAR closures are excluded."
+   },
+   {
+    "obligation": "SEBI CSCRF - Detective Effectiveness",
+    "detector_id": "EG2",
+    "detector": "Critical cases closed without escalation",
+    "status": "evidence_contradicts",
+    "effect": "83% vs peer median 10%",
+    "reason": "869 of 1044 closed critical cases (83%) show no escalation; peer median 10%."
+   },
+   "...(25 more)"
   ]
+ }
 }
