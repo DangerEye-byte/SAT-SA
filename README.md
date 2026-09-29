@@ -15,7 +15,7 @@ Every flag carries its evidence (record ids), a calibrated p-value or a document
 | Planted weaknesses recovered (5 independently seeded panels, 14 weakness types) | **100%** at 10% FDR; **0** hard negatives and **0** healthy entities flagged | synthetic |
 | False alarms on 40 panels where every entity is healthy (promise: ≤ 10%) | **5%** realised (95% CI 0.6–17%) | synthetic |
 | Re-testing the same healthy entities every quarter (40 panels, 4 looks) | naive re-testing: **55%** false alarms; SAT-SA anytime-valid e-BH: **2.5%** | synthetic |
-| Superficially handled cases found per 100 examiner reviews | **54** with SAT-SA vs **7** with random sampling | synthetic |
+| Superficially handled cases found per 100 examiner reviews | **55** with SAT-SA vs **7** with random sampling | synthetic |
 | Examiner labels saved by prediction-powered inference, at equal confidence | **69%** at 30 labels, coverage 99% (target 90%) | synthetic |
 | Expert top-20 incidents among the first 10 reviewed, in 499 real SOC queues | **84%** SAT-SA vs **14%** random, **39%** "most alerts first" | **real** (GUIDE) |
 | False alarms on 1,286 real organisations re-split at random (nothing changed) | **5%** of runs at 10% FDR | **real** |
@@ -57,7 +57,7 @@ The container needs no network at run time. With `docker run --network none`, th
 ### Air-gapped installation
 1. On a connected machine, run `prepare_offline.bat`. It downloads all wheels to `wheelhouse\` (about 130 MB), the optional local model and a SHA-256 manifest.
 2. Copy the folder to the target machine.
-3. Run `install_offline.bat` there, then `run.bat`. Use the **same Python minor version** on both machines (wheels are version-specific; the reference build is Python 3.13, locked in `requirements.lock`). No network access is used at install or run time. `tests/test_offline.py` proves the analysis runs with every outbound connection blocked.
+3. Run `install_offline.bat` there, then `run.bat`. Use the **same Python minor version** on both machines (wheels are version-specific; the reference build is Python 3.13, locked in `requirements.lock`). No network access is used at install or run time. `tests/test_offline.py` shows the analysis runs with every outbound connection blocked.
 
 ### Optional: local AI explanations
 - `pip install -r requirements-ai.txt`, then place `Qwen3-4B-Instruct-2507-Q4_K_M.gguf` (Apache-2.0, 2.5 GB) in `data/models/`. `prepare_offline.bat` does both.
