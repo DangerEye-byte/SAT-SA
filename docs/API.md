@@ -1,5 +1,13 @@
 # SAT-SA API contract
 
+> **API FROZEN: 29 Sept 2026, 11:32 IST (contract as of commit `be52864`).** No endpoint, parameter or field will change shape from here on; only bug fixes that keep the shape. Every endpoint has a live example in `docs/api-examples/`, and `tests/test_workflow_e2e.py` calls every GET route. Need something else? Add it to `docs/CHANGE_REQUESTS.md`.
+>
+> **Pre-generated local-AI explanations (cached, instant):**
+> - PWR-01 EG2 (hostile note flagged), TEL-02 EG3, BFS-03 EG6, PWR-03 NS5, TRN-06 TW1, BFS-02 EG1;
+> - the top finding of every flagged entity.
+>
+> Any other finding's "Explain" runs the model live (about 2 min on this CPU). `?model=false` gives the instant template version.
+
 Base URL: `http://localhost:8000`. All endpoints return JSON, except `/brief`, which returns HTML. CORS is open (`*`), so a Vite dev server on another port works.
 Interactive docs: `http://localhost:8000/docs` (auto-generated OpenAPI).
 **Real example payloads** (trimmed with `"...(N more)"` markers) are in [`docs/api-examples/`](api-examples/). Read them before you build a screen.
