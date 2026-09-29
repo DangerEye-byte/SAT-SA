@@ -1,0 +1,269 @@
+{
+ "generated": "2026-09-29T05:53:47",
+ "real_data": true,
+ "dataset": {
+  "name": "Microsoft GUIDE",
+  "licence": "CDLA-Permissive-2.0",
+  "citation": "Freitas et al., arXiv 2407.09017",
+  "incidents": 1033998,
+  "orgs": 6115,
+  "graded_incidents": 1010328,
+  "period": [
+   "2023-11-20",
+   "2024-06-17"
+  ]
+ },
+ "tp_model": {
+  "train_incidents": 707108,
+  "test_incidents": 303220,
+  "test_auc": 0.975
+ },
+ "R5_expert_priority": {
+  "description": "Expert priority labels from a full-queue sweep of 499 real org queues (top-20 per queue; Freitas et al. 2026, released with GUIDE). Precision@B = share of the first B incidents reviewed that experts ranked in the org's top 20. 'satsa_learned_from_examiners' is trained on the experts' labels of one half of the orgs and scored on the other half, as SAT-SA's predictor learns from earlier examiner verdicts. For reference, the paper's production ranker (which uses far richer features) reaches P@10 = 92.8%.",
+  "orgs": 499,
+  "incidents": 207450,
+  "median_queue_size": 162.0,
+  "rows": [
+   {
+    "strategy": "random",
+    "budget": 5,
+    "precision": 0.1483
+   },
+   {
+    "strategy": "random",
+    "budget": 10,
+    "precision": 0.1401
+   },
+   {
+    "strategy": "random",
+    "budget": 20,
+    "precision": 0.1453
+   },
+   {
+    "strategy": "arrival_latest_first",
+    "budget": 5,
+    "precision": 0.1407
+   },
+   {
+    "strategy": "arrival_latest_first",
+    "budget": 10,
+    "precision": 0.1369
+   },
+   {
+    "strategy": "arrival_latest_first",
+    "budget": 20,
+    "precision": 0.1376
+   },
+   {
+    "strategy": "most_alerts_first",
+    "budget": 5,
+    "precision": 0.4754
+   },
+   {
+    "strategy": "most_alerts_first",
+    "budget": 10,
+    "precision": 0.3934
+   },
+   {
+    "strategy": "most_alerts_first",
+    "budget": 20,
+    "precision": 0.3058
+   },
+   {
+    "strategy": "satsa_tp_model",
+    "budget": 5,
+    "precision": 0.2601
+   },
+   {
+    "strategy": "satsa_tp_model",
+    "budget": 10,
+    "precision": 0.2168
+   },
+   {
+    "strategy": "satsa_tp_model",
+    "budget": 20,
+    "precision": 0.1887
+   },
+   {
+    "strategy": "satsa_learned_from_examiners",
+    "budget": 5,
+    "precision": 0.8982
+   },
+   {
+    "strategy": "satsa_learned_from_examiners",
+    "budget": 10,
+    "precision": 0.8359
+   },
+   {
+    "strategy": "satsa_learned_from_examiners",
+    "budget": 20,
+    "precision": 0.6996
+   },
+   {
+    "strategy": "satsa_review_lab_half_targeted",
+    "budget": 10,
+    "precision": 0.5122
+   },
+   {
+    "strategy": "satsa_review_lab_half_targeted",
+    "budget": 20,
+    "precision": 0.4636
+   }
+  ]
+ },
+ "R4_ppi_real": {
+  "description": "Target: each real org's true-positive share among its test-split incidents (real analyst verdicts). Random samples of n labels + the model's predictions on the org's other incidents; the model was trained on the train split only. 90% intervals.",
+  "orgs": 338,
+  "reps_per_org": 100,
+  "by_n": [
+   {
+    "n": 20,
+    "ppi_coverage": 0.9776,
+    "classical_coverage": 0.941,
+    "ppi_width": 0.1402,
+    "classical_width": 0.1831,
+    "label_saving": 0.414
+   },
+   {
+    "n": 40,
+    "ppi_coverage": 0.9795,
+    "classical_coverage": 0.9464,
+    "ppi_width": 0.0935,
+    "classical_width": 0.121,
+    "label_saving": 0.4026
+   }
+  ]
+ },
+ "R3_peer_flags": {
+  "description": "Metric: share of an org's graded incidents that analysts called true positive, tested on the low side (possible over-dismissal). Raw: vs peers' rates. Case-mix adjusted: vs what the org's own incident mix predicts (a model of real analyst verdicts, cross-fitted so each half is scored by a model trained on the other half), like a hospital standardised mortality ratio. Each org is tested separately on the two independent halves of its incidents; flags that replicate reflect persistent behaviour, not noise. Flags mean 'unusual, examine', not proven weakness.",
+  "min_graded_incidents": 50,
+  "raw_peer_rate": {
+   "orgs": 763,
+   "flagged_train_half_q10": 0,
+   "flagged_test_half_q10": 0,
+   "flagged_both_q10": 0,
+   "top20_overlap": 16,
+   "top20_overlap_by_chance": 0.52,
+   "spearman_between_halves": 0.9754
+  },
+  "case_mix_adjusted": {
+   "orgs": 763,
+   "flagged_train_half_q10": 0,
+   "flagged_test_half_q10": 0,
+   "flagged_both_q10": 0,
+   "top20_overlap": 15,
+   "top20_overlap_by_chance": 0.52,
+   "spearman_between_halves": 0.9525
+  }
+ },
+ "R1_null_calibration": {
+  "description": "Each org's incidents (train + test pooled) are randomly re-split into baseline and current halves. Nothing changed, so every flag is false. SAT-SA's self-history tests (true-positive share and per-category incidence of the current half vs the org's own baseline, combined with ACAT, BH across orgs).",
+  "repeats": 20,
+  "orgs_tested": 1286,
+  "realized_fdr": {
+   "0.05": {
+    "value": 0.05,
+    "ci95": [
+     0.0013,
+     0.2487
+    ],
+    "mean_false_flags": 0.05
+   },
+   "0.1": {
+    "value": 0.05,
+    "ci95": [
+     0.0013,
+     0.2487
+    ],
+    "mean_false_flags": 0.05
+   },
+   "0.2": {
+    "value": 0.1,
+    "ci95": [
+     0.0123,
+     0.317
+    ],
+    "mean_false_flags": 0.15
+   }
+  },
+  "pvalue_rate": {
+   "0.001": 0.0006,
+   "0.01": 0.0055,
+   "0.05": 0.0283,
+   "0.1": 0.0602
+  },
+  "ks_uniform": 0.0991
+ },
+ "R2_injected_recall": {
+  "description": "Degradations planted into the current half of a random 5% of eligible real orgs. category_suppressed: a share of the incidents of one alert category the org really uses (>= 20 incidents) disappears, as if a detection rule were silently excluded (negative space). tp_regraded_fp: a share of true positives is re-graded as false positive (superficial triage). Detection at q <= 0.10; precision counts every flag on an untouched org as false.",
+  "rows": [
+   {
+    "kind": "category_suppressed",
+    "level": 0.5,
+    "injected": 516,
+    "detected": 59,
+    "false_flags": 1,
+    "flags": 60,
+    "repeats": 10,
+    "recall": 0.1143,
+    "precision": 0.9833
+   },
+   {
+    "kind": "category_suppressed",
+    "level": 0.75,
+    "injected": 419,
+    "detected": 186,
+    "false_flags": 5,
+    "flags": 191,
+    "repeats": 10,
+    "recall": 0.4439,
+    "precision": 0.9738
+   },
+   {
+    "kind": "category_suppressed",
+    "level": 1.0,
+    "injected": 337,
+    "detected": 311,
+    "false_flags": 22,
+    "flags": 333,
+    "repeats": 10,
+    "recall": 0.9228,
+    "precision": 0.9339
+   },
+   {
+    "kind": "tp_regraded_fp",
+    "level": 0.2,
+    "injected": 639,
+    "detected": 54,
+    "false_flags": 6,
+    "flags": 60,
+    "repeats": 10,
+    "recall": 0.0845,
+    "precision": 0.9
+   },
+   {
+    "kind": "tp_regraded_fp",
+    "level": 0.35,
+    "injected": 638,
+    "detected": 120,
+    "false_flags": 4,
+    "flags": 124,
+    "repeats": 10,
+    "recall": 0.1881,
+    "precision": 0.9677
+   },
+   {
+    "kind": "tp_regraded_fp",
+    "level": 0.5,
+    "injected": 638,
+    "detected": 149,
+    "false_flags": 6,
+    "flags": 155,
+    "repeats": 10,
+    "recall": 0.2335,
+    "precision": 0.9613
+   }
+  ]
+ },
+ "seconds": 1056.1
+}
