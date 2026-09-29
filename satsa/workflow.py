@@ -22,7 +22,7 @@ STAGING = DATA / "staging"
 WORKING = DATA / "working"
 RUNS = DATA / "runs"
 GEN_DIR = DATA / "generated"
-KEEP_TABLES = ("review_labels", "review_samples", "dispositions")  # examiner state carried across re-analyses
+KEEP_TABLES = ("review_labels", "review_samples", "dispositions", "explanations")  # examiner state carried across re-analyses
 
 DISPOSITIONS = ("accepted", "dismissed", "escalated", "open")
 

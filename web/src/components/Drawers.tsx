@@ -76,6 +76,39 @@ function Disposition({ f }: { f: any }) {
   );
 }
 
+function Explain({ f }: { f: any }) {
+  const [x, setX] = useState<any>(null);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const run = async (refresh = false) => {
+    setBusy(true); setErr(null);
+    try { setX(await api.explain(f.entity_id, f.detector_id, refresh)); } catch (e) { setErr(String(e)); } finally { setBusy(false); }
+  };
+  return (
+    <div className="card" style={{ marginBottom: 12 }}>
+      <div className="row"><h3 style={{ margin: 0 }}>Plain-language explanation (local AI, verified)</h3><div className="spacer" />
+        {!x && <button className="btn" disabled={busy} onClick={() => run()}>{busy ? "Generating on CPU…" : "Explain this finding"}</button>}
+        {x && <button className="btn" disabled={busy} onClick={() => run(true)}>{busy ? "…" : "Regenerate"}</button>}</div>
+      {err && <div className="bad">{err}</div>}
+      {x && <>
+        <div className="muted" style={{ fontSize: 12, margin: "6px 0" }}>{x.mode === "local_model" ? `${x.model} · ${x.seconds}s · offline` : "Template (local model not installed)"}
+          {x.cached && " · cached"}</div>
+        {x.untrusted_instruction_like_notes?.length > 0 && <div className="pill violet" style={{ marginBottom: 6 }}>
+          ⚠ {x.untrusted_instruction_like_notes.length} evidence note(s) contain instructions aimed at an AI reviewer — shown as data, never followed</div>}
+        {x.summary && <p style={{ lineHeight: 1.5 }}>{x.summary}</p>}
+        {x.verified_claims.map((c: any, i: number) => (
+          <div key={i} style={{ fontSize: 13, marginBottom: 6 }}><span className="good">✓</span> {c.text}
+            <span className="mono muted"> [{c.record_ids.join(", ")}] “{c.quote}”</span></div>))}
+        {x.rejected_claims.length > 0 && <details style={{ marginTop: 6 }}><summary className="muted" style={{ fontSize: 12 }}>
+          {x.rejected_claims.length} claim(s) rejected by the verifier</summary>
+          {x.rejected_claims.map((c: any, i: number) => <div key={i} style={{ fontSize: 12 }} className="muted">✗ {c.text} — <i>{c.rejected_because}</i></div>)}</details>}
+        {x.question_for_entity && <p style={{ fontSize: 13 }}><b>Question for the entity:</b> {x.question_for_entity}</p>}
+        <div className="muted" style={{ fontSize: 11 }}>{x.policy}</div>
+      </>}
+    </div>
+  );
+}
+
 function Records({ f, onCase }: { f: Finding; onCase: (id: string) => void }) {
   const recs = f.records || [];
   if (!recs.length) return null;
@@ -117,6 +150,7 @@ export function FindingDrawer({ entityId, detector, onClose, onCase }: { entityI
             </div>
             <div className="card" style={{ marginBottom: 12 }}><div style={{ lineHeight: 1.55 }}>{f.reason}</div></div>
             <Disposition f={f} />
+            <Explain f={f} />
             {f.extra?.chart && <div className="card" style={{ marginBottom: 12 }}><BunchingChart c={f.extra.chart} />
               {f.extra.chart.excess_ci90 && <div className="muted" style={{ fontSize: 12 }}>Bootstrap 90% interval for the excess: {f.extra.chart.excess_ci90.map((x: number) => x.toFixed(0)).join(" – ")} cases.</div>}</div>}
             {f.extra?.twin && <div className="card" style={{ marginBottom: 12 }}><TwinChart t={f.extra.twin} /></div>}

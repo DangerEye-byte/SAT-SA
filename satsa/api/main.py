@@ -264,6 +264,35 @@ def finding(entity_id: str, detector_id: str, limit: int = 40):
     return f
 
 
+@app.get("/api/entities/{entity_id}/findings/{detector_id}/explain")
+def explain_finding(entity_id: str, detector_id: str, refresh: bool = False, model: bool = True):
+    """Verifier-gated plain-language explanation (local model if present, else template). Cached."""
+    from satsa.ai.explain import explain
+    with _lock:
+        con().execute("CREATE TABLE IF NOT EXISTS explanations (entity_id VARCHAR, detector_id VARCHAR, "
+                      "body VARCHAR, ts TIMESTAMP)")
+        if not refresh:
+            c = q("SELECT body FROM explanations WHERE entity_id = ? AND detector_id = ? ORDER BY ts DESC LIMIT 1",
+                  [entity_id, detector_id])
+            if len(c):
+                return json.loads(c.body.iloc[0]) | {"cached": True}
+    f = finding(entity_id, detector_id, limit=40)
+    out = clean(explain(f, use_model=model))
+    with _lock:
+        con().execute("INSERT INTO explanations VALUES (?, ?, ?, now())", [entity_id, detector_id, json.dumps(out)])
+    ledger.append("explanation_generated", {"entity_id": entity_id, "detector_id": detector_id, "mode": out["mode"],
+                                            "verified": len(out["verified_claims"]),
+                                            "rejected": len(out["rejected_claims"])})
+    return out | {"cached": False}
+
+
+@app.get("/api/ai/status")
+def ai_status():
+    from satsa.ai.explain import MODEL_NAME, MODEL_PATH, model_available
+    return {"available": model_available(), "model": MODEL_NAME if model_available() else None,
+            "path": MODEL_PATH.name, "offline": True}
+
+
 @app.get("/api/entities/{entity_id}/hourly")
 def hourly(entity_id: str):
     _entity_or_404(entity_id)

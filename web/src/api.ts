@@ -73,6 +73,8 @@ export const api = {
     return http<any>(`/api/entities/${id}/redteam`, { method: "POST", body: fd });
   },
   sectors: () => http<any[]>("/api/sectors"),
+  explain: (id: string, det: string, refresh = false) => http<any>(`/api/entities/${id}/findings/${det}/explain?refresh=${refresh}`),
+  aiStatus: () => http<any>("/api/ai/status"),
   gaming: () => http<any>("/api/gaming"),
   gamingRun: (strategy: string, policy: string, seed = 1) => http<any>(`/api/gaming/run?strategy=${strategy}&policy=${policy}&seed=${seed}`),
 };
