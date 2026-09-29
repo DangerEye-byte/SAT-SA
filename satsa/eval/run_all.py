@@ -544,9 +544,14 @@ def main():
     v["D4_gaming"] = matrix(400)
     if all("quarterly" in s for s in null + demo):
         v["V12_anytime"] = v12_anytime(null, demo)
+    REPORTS.mkdir(exist_ok=True)
+    (REPORTS / "validation.json").write_text(json.dumps(_clean(v | {"headline": headline(v)}), indent=1))
     if not a.skip_runtime:
         log("  V8 runtime (reruns the main pipeline) ...")
-        v["V8_runtime"] = v8_runtime(d7, log)
+        try:
+            v["V8_runtime"] = v8_runtime(d7, log)
+        except Exception as e:  # noqa: BLE001 - never lose the other results
+            log("  V8 failed:", e)
     else:
         old = REPORTS / "validation.json"
         if old.exists():

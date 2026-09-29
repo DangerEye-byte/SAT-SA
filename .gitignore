@@ -11,7 +11,7 @@ data/uploads/
 models/
 web/node_modules/
 web/dist/
-satsa/api/static/
+MANIFEST.sha256
 .kaggle/
 kaggle.json
 access_token
@@ -23,3 +23,4 @@ data/working/
 data/runs/
 data/current_db.txt
 data/models/
+wheelhouse/

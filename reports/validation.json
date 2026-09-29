@@ -1,0 +1,2294 @@
+{
+ "generated": "2026-09-29T06:38:56",
+ "synthetic": true,
+ "disclaimer": "All numbers in this report are measured on SYNTHETIC, seeded panels with a hidden answer key. Real-data results (Microsoft GUIDE) are in reports/guide.json.",
+ "V1_recovery": {
+  "description": "Recovery of planted weaknesses on the 42-entity demo roster, repeated over independently seeded panels. Statistical lane: flagged when q <= level. Deterministic lane: documented facts (blind tactic, clock violation, retention gap, red-team miss).",
+  "seeds": [
+   11,
+   23,
+   31,
+   47,
+   7
+  ],
+  "levels": [
+   0.05,
+   0.1,
+   0.2
+  ],
+  "summary": {
+   "0.05": {
+    "planted_statistical_recall": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0
+    },
+    "planted_deterministic_recall": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0
+    },
+    "planted_recall_any_lane": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0
+    },
+    "weak_provider_client_recall": {
+     "mean": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    },
+    "hard_negative_flags": {
+     "mean": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    },
+    "healthy_statistical_flags": {
+     "mean": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    },
+    "healthy_deterministic_flags": {
+     "mean": 0.6,
+     "min": 0.0,
+     "max": 2.0
+    },
+    "statistical_flags": {
+     "mean": 11.0,
+     "min": 11.0,
+     "max": 11.0
+    },
+    "false_discovery_proportion": {
+     "mean": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   },
+   "0.1": {
+    "planted_statistical_recall": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0
+    },
+    "planted_deterministic_recall": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0
+    },
+    "planted_recall_any_lane": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0
+    },
+    "weak_provider_client_recall": {
+     "mean": 0.0286,
+     "min": 0.0,
+     "max": 0.1429
+    },
+    "hard_negative_flags": {
+     "mean": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    },
+    "healthy_statistical_flags": {
+     "mean": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    },
+    "healthy_deterministic_flags": {
+     "mean": 0.6,
+     "min": 0.0,
+     "max": 2.0
+    },
+    "statistical_flags": {
+     "mean": 11.4,
+     "min": 11.0,
+     "max": 12.0
+    },
+    "false_discovery_proportion": {
+     "mean": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   },
+   "0.2": {
+    "planted_statistical_recall": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0
+    },
+    "planted_deterministic_recall": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0
+    },
+    "planted_recall_any_lane": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0
+    },
+    "weak_provider_client_recall": {
+     "mean": 0.4286,
+     "min": 0.1429,
+     "max": 0.7143
+    },
+    "hard_negative_flags": {
+     "mean": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    },
+    "healthy_statistical_flags": {
+     "mean": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    },
+    "healthy_deterministic_flags": {
+     "mean": 0.6,
+     "min": 0.0,
+     "max": 2.0
+    },
+    "statistical_flags": {
+     "mean": 14.6,
+     "min": 12.0,
+     "max": 16.0
+    },
+    "false_discovery_proportion": {
+     "mean": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  "per_seed": [
+   {
+    "seed": 11,
+    "q": 0.05,
+    "planted_statistical_recall": 1.0,
+    "planted_deterministic_recall": 1.0,
+    "planted_recall_any_lane": 1.0,
+    "weak_provider_client_recall": 0.0,
+    "hard_negative_flags": 0,
+    "healthy_statistical_flags": 0,
+    "healthy_deterministic_flags": 2,
+    "statistical_flags": 11,
+    "false_discovery_proportion": 0.0
+   },
+   {
+    "seed": 11,
+    "q": 0.1,
+    "planted_statistical_recall": 1.0,
+    "planted_deterministic_recall": 1.0,
+    "planted_recall_any_lane": 1.0,
+    "weak_provider_client_recall": 0.1429,
+    "hard_negative_flags": 0,
+    "healthy_statistical_flags": 0,
+    "healthy_deterministic_flags": 2,
+    "statistical_flags": 12,
+    "false_discovery_proportion": 0.0
+   },
+   {
+    "seed": 11,
+    "q": 0.2,
+    "planted_statistical_recall": 1.0,
+    "planted_deterministic_recall": 1.0,
+    "planted_recall_any_lane": 1.0,
+    "weak_provider_client_recall": 0.5714,
+    "hard_negative_flags": 0,
+    "healthy_statistical_flags": 0,
+    "healthy_deterministic_flags": 2,
+    "statistical_flags": 16,
+    "false_discovery_proportion": 0.0
+   },
+   {
+    "seed": 23,
+    "q": 0.05,
+    "planted_statistical_recall": 1.0,
+    "planted_deterministic_recall": 1.0,
+    "planted_recall_any_lane": 1.0,
+    "weak_provider_client_recall": 0.0,
+    "hard_negative_flags": 0,
+    "healthy_statistical_flags": 0,
+    "healthy_deterministic_flags": 0,
+    "statistical_flags": 11,
+    "false_discovery_proportion": 0.0
+   },
+   {
+    "seed": 23,
+    "q": 0.1,
+    "planted_statistical_recall": 1.0,
+    "planted_deterministic_recall": 1.0,
+    "planted_recall_any_lane": 1.0,
+    "weak_provider_client_recall": 0.0,
+    "hard_negative_flags": 0,
+    "healthy_statistical_flags": 0,
+    "healthy_deterministic_flags": 0,
+    "statistical_flags": 11,
+    "false_discovery_proportion": 0.0
+   },
+   {
+    "seed": 23,
+    "q": 0.2,
+    "planted_statistical_recall": 1.0,
+    "planted_deterministic_recall": 1.0,
+    "planted_recall_any_lane": 1.0,
+    "weak_provider_client_recall": 0.7143,
+    "hard_negative_flags": 0,
+    "healthy_statistical_flags": 0,
+    "healthy_deterministic_flags": 0,
+    "statistical_flags": 16,
+    "false_discovery_proportion": 0.0
+   },
+   {
+    "seed": 31,
+    "q": 0.05,
+    "planted_statistical_recall": 1.0,
+    "planted_deterministic_recall": 1.0,
+    "planted_recall_any_lane": 1.0,
+    "weak_provider_client_recall": 0.0,
+    "hard_negative_flags": 0,
+    "healthy_statistical_flags": 0,
+    "healthy_deterministic_flags": 0,
+    "statistical_flags": 11,
+    "false_discovery_proportion": 0.0
+   },
+   {
+    "seed": 31,
+    "q": 0.1,
+    "planted_statistical_recall": 1.0,
+    "planted_deterministic_recall": 1.0,
+    "planted_recall_any_lane": 1.0,
+    "weak_provider_client_recall": 0.0,
+    "hard_negative_flags": 0,
+    "healthy_statistical_flags": 0,
+    "healthy_deterministic_flags": 0,
+    "statistical_flags": 12,
+    "false_discovery_proportion": 0.0
+   },
+   {
+    "seed": 31,
+    "q": 0.2,
+    "planted_statistical_recall": 1.0,
+    "planted_deterministic_recall": 1.0,
+    "planted_recall_any_lane": 1.0,
+    "weak_provider_client_recall": 0.4286,
+    "hard_negative_flags": 0,
+    "healthy_statistical_flags": 0,
+    "healthy_deterministic_flags": 0,
+    "statistical_flags": 15,
+    "false_discovery_proportion": 0.0
+   },
+   {
+    "seed": 47,
+    "q": 0.05,
+    "planted_statistical_recall": 1.0,
+    "planted_deterministic_recall": 1.0,
+    "planted_recall_any_lane": 1.0,
+    "weak_provider_client_recall": 0.0,
+    "hard_negative_flags": 0,
+    "healthy_statistical_flags": 0,
+    "healthy_deterministic_flags": 0,
+    "statistical_flags": 11,
+    "false_discovery_proportion": 0.0
+   },
+   {
+    "seed": 47,
+    "q": 0.1,
+    "planted_statistical_recall": 1.0,
+    "planted_deterministic_recall": 1.0,
+    "planted_recall_any_lane": 1.0,
+    "weak_provider_client_recall": 0.0,
+    "hard_negative_flags": 0,
+    "healthy_statistical_flags": 0,
+    "healthy_deterministic_flags": 0,
+    "statistical_flags": 11,
+    "false_discovery_proportion": 0.0
+   },
+   {
+    "seed": 47,
+    "q": 0.2,
+    "planted_statistical_recall": 1.0,
+    "planted_deterministic_recall": 1.0,
+    "planted_recall_any_lane": 1.0,
+    "weak_provider_client_recall": 0.1429,
+    "hard_negative_flags": 0,
+    "healthy_statistical_flags": 0,
+    "healthy_deterministic_flags": 0,
+    "statistical_flags": 12,
+    "false_discovery_proportion": 0.0
+   },
+   {
+    "seed": 7,
+    "q": 0.05,
+    "planted_statistical_recall": 1.0,
+    "planted_deterministic_recall": 1.0,
+    "planted_recall_any_lane": 1.0,
+    "weak_provider_client_recall": 0.0,
+    "hard_negative_flags": 0,
+    "healthy_statistical_flags": 0,
+    "healthy_deterministic_flags": 1,
+    "statistical_flags": 11,
+    "false_discovery_proportion": 0.0
+   },
+   {
+    "seed": 7,
+    "q": 0.1,
+    "planted_statistical_recall": 1.0,
+    "planted_deterministic_recall": 1.0,
+    "planted_recall_any_lane": 1.0,
+    "weak_provider_client_recall": 0.0,
+    "hard_negative_flags": 0,
+    "healthy_statistical_flags": 0,
+    "healthy_deterministic_flags": 1,
+    "statistical_flags": 11,
+    "false_discovery_proportion": 0.0
+   },
+   {
+    "seed": 7,
+    "q": 0.2,
+    "planted_statistical_recall": 1.0,
+    "planted_deterministic_recall": 1.0,
+    "planted_recall_any_lane": 1.0,
+    "weak_provider_client_recall": 0.2857,
+    "hard_negative_flags": 0,
+    "healthy_statistical_flags": 0,
+    "healthy_deterministic_flags": 1,
+    "statistical_flags": 14,
+    "false_discovery_proportion": 0.0
+   }
+  ],
+  "by_archetype": [
+   {
+    "archetype": "attrition",
+    "class": "planted_statistical",
+    "entities": 5,
+    "detected": 1.0,
+    "median_rank": 7.0,
+    "expected_detectors_fired": 1.0
+   },
+   {
+    "archetype": "blind",
+    "class": "planted_deterministic",
+    "entities": 5,
+    "detected": 1.0,
+    "median_rank": 12.0,
+    "expected_detectors_fired": 1.0
+   },
+   {
+    "archetype": "clock_skew",
+    "class": "planted_deterministic",
+    "entities": 5,
+    "detected": 1.0,
+    "median_rank": 11.0,
+    "expected_detectors_fired": 1.0
+   },
+   {
+    "archetype": "hard_neg_small",
+    "class": "hard_negative",
+    "entities": 5,
+    "detected": 0.0,
+    "median_rank": 29.0,
+    "expected_detectors_fired": null
+   },
+   {
+    "archetype": "hard_neg_soar",
+    "class": "hard_negative",
+    "entities": 5,
+    "detected": 0.0,
+    "median_rank": 40.0,
+    "expected_detectors_fired": null
+   },
+   {
+    "archetype": "healthy",
+    "class": "weak_provider_client",
+    "entities": 35,
+    "detected": 0.0286,
+    "median_rank": 19.0,
+    "expected_detectors_fired": null
+   },
+   {
+    "archetype": "late_reporter",
+    "class": "planted_statistical",
+    "entities": 5,
+    "detected": 1.0,
+    "median_rank": 5.0,
+    "expected_detectors_fired": 1.0
+   },
+   {
+    "archetype": "night_gap",
+    "class": "planted_statistical",
+    "entities": 5,
+    "detected": 1.0,
+    "median_rank": 3.0,
+    "expected_detectors_fired": 1.0
+   },
+   {
+    "archetype": "quick_closer",
+    "class": "planted_statistical",
+    "entities": 5,
+    "detected": 1.0,
+    "median_rank": 2.0,
+    "expected_detectors_fired": 1.0
+   },
+   {
+    "archetype": "ratchet",
+    "class": "planted_statistical",
+    "entities": 5,
+    "detected": 1.0,
+    "median_rank": 9.0,
+    "expected_detectors_fired": 1.0
+   },
+   {
+    "archetype": "retention_gap",
+    "class": "planted_deterministic",
+    "entities": 5,
+    "detected": 1.0,
+    "median_rank": 10.0,
+    "expected_detectors_fired": 1.0
+   },
+   {
+    "archetype": "silent_asset",
+    "class": "planted_statistical",
+    "entities": 5,
+    "detected": 1.0,
+    "median_rank": 8.0,
+    "expected_detectors_fired": 1.0
+   },
+   {
+    "archetype": "sla_gamer",
+    "class": "planted_statistical",
+    "entities": 5,
+    "detected": 1.0,
+    "median_rank": 4.0,
+    "expected_detectors_fired": 1.0
+   },
+   {
+    "archetype": "slow_decay",
+    "class": "planted_statistical",
+    "entities": 5,
+    "detected": 1.0,
+    "median_rank": 14.0,
+    "expected_detectors_fired": 0.9
+   },
+   {
+    "archetype": "template_writer",
+    "class": "planted_statistical",
+    "entities": 5,
+    "detected": 1.0,
+    "median_rank": 13.0,
+    "expected_detectors_fired": 1.0
+   },
+   {
+    "archetype": "unescalated",
+    "class": "planted_statistical",
+    "entities": 5,
+    "detected": 1.0,
+    "median_rank": 6.0,
+    "expected_detectors_fired": 1.0
+   },
+   {
+    "archetype": "utility_p",
+    "class": "planted_statistical",
+    "entities": 5,
+    "detected": 1.0,
+    "median_rank": 1.0,
+    "expected_detectors_fired": 1.0
+   }
+  ],
+  "precision_at_k": [
+   {
+    "k": 5,
+    "mean": 1.0,
+    "min": 1.0
+   },
+   {
+    "k": 10,
+    "mean": 1.0,
+    "min": 1.0
+   },
+   {
+    "k": 15,
+    "mean": 0.9733,
+    "min": 0.9333
+   },
+   {
+    "k": 20,
+    "mean": 0.94,
+    "min": 0.9
+   }
+  ],
+  "ablation": [
+   {
+    "detector": "EG11",
+    "recall": 0.9091,
+    "healthy_flags": 0.0,
+    "archetypes_lost": [
+     "night_gap"
+    ]
+   },
+   {
+    "detector": "EG12",
+    "recall": 0.9091,
+    "healthy_flags": 0.0,
+    "archetypes_lost": [
+     "late_reporter"
+    ]
+   },
+   {
+    "detector": "NS7",
+    "recall": 0.9091,
+    "healthy_flags": 0.0,
+    "archetypes_lost": [
+     "attrition"
+    ]
+   },
+   {
+    "detector": "EG6",
+    "recall": 0.9091,
+    "healthy_flags": 0.0,
+    "archetypes_lost": [
+     "sla_gamer"
+    ]
+   },
+   {
+    "detector": "EG2",
+    "recall": 1.0,
+    "healthy_flags": 0.0,
+    "archetypes_lost": []
+   },
+   {
+    "detector": "EG3",
+    "recall": 1.0,
+    "healthy_flags": 0.0,
+    "archetypes_lost": []
+   },
+   {
+    "detector": "EG1",
+    "recall": 1.0,
+    "healthy_flags": 0.0,
+    "archetypes_lost": []
+   },
+   {
+    "detector": "EG13",
+    "recall": 1.0,
+    "healthy_flags": 0.0,
+    "archetypes_lost": []
+   },
+   {
+    "detector": "EG5",
+    "recall": 1.0,
+    "healthy_flags": 0.0,
+    "archetypes_lost": []
+   },
+   {
+    "detector": "EG4",
+    "recall": 1.0,
+    "healthy_flags": 0.0,
+    "archetypes_lost": []
+   },
+   {
+    "detector": "NS1",
+    "recall": 1.0,
+    "healthy_flags": 0.0,
+    "archetypes_lost": []
+   },
+   {
+    "detector": "EG7",
+    "recall": 1.0,
+    "healthy_flags": 0.0,
+    "archetypes_lost": []
+   },
+   {
+    "detector": "NS2",
+    "recall": 1.0,
+    "healthy_flags": 0.0,
+    "archetypes_lost": []
+   },
+   {
+    "detector": "NS5",
+    "recall": 1.0,
+    "healthy_flags": 0.0,
+    "archetypes_lost": []
+   },
+   {
+    "detector": "RT1",
+    "recall": 1.0,
+    "healthy_flags": 0.0,
+    "archetypes_lost": []
+   }
+  ],
+  "note": "Weak-provider (MSSP-3) clients are degraded by only +7 pp superficial handling each, by design individually borderline; they are meant to be caught at provider level (D11, see providers)."
+ },
+ "V2_calibration": {
+  "description": "40 independently seeded null panels of 42 entities where every entity is healthy (hard negatives included). Any statistical flag is a false discovery, so the realized FDR is the share of panels with at least one flag. Mixed panels: the demo-roster seeds, where planted weaknesses are present.",
+  "null_panels": [
+   {
+    "q": 0.05,
+    "panels": 40,
+    "panels_with_any_flag": 2,
+    "realized_fdr": 0.05,
+    "ci95": [
+     0.0061,
+     0.1692
+    ],
+    "mean_false_flags_per_panel": 0.05
+   },
+   {
+    "q": 0.1,
+    "panels": 40,
+    "panels_with_any_flag": 2,
+    "realized_fdr": 0.05,
+    "ci95": [
+     0.0061,
+     0.1692
+    ],
+    "mean_false_flags_per_panel": 0.05
+   },
+   {
+    "q": 0.2,
+    "panels": 40,
+    "panels_with_any_flag": 4,
+    "realized_fdr": 0.1,
+    "ci95": [
+     0.0279,
+     0.2366
+    ],
+    "mean_false_flags_per_panel": 0.15
+   }
+  ],
+  "mixed_panels": [
+   {
+    "q": 0.05,
+    "realized_fdr": 0.0,
+    "max_fdp": 0.0
+   },
+   {
+    "q": 0.1,
+    "realized_fdr": 0.0,
+    "max_fdp": 0.0
+   },
+   {
+    "q": 0.2,
+    "realized_fdr": 0.0,
+    "max_fdp": 0.0
+   }
+  ],
+  "entity_pvalue_ecdf": [
+   {
+    "t": 0.001,
+    "entity_rate": 0.0012,
+    "detector_rate": 0.0004
+   },
+   {
+    "t": 0.005,
+    "entity_rate": 0.0024,
+    "detector_rate": 0.0024
+   },
+   {
+    "t": 0.01,
+    "entity_rate": 0.0054,
+    "detector_rate": 0.0047
+   },
+   {
+    "t": 0.02,
+    "entity_rate": 0.0083,
+    "detector_rate": 0.0115
+   },
+   {
+    "t": 0.05,
+    "entity_rate": 0.0256,
+    "detector_rate": 0.036
+   },
+   {
+    "t": 0.1,
+    "entity_rate": 0.0619,
+    "detector_rate": 0.0767
+   },
+   {
+    "t": 0.2,
+    "entity_rate": 0.1637,
+    "detector_rate": 0.1688
+   },
+   {
+    "t": 0.5,
+    "entity_rate": 0.519,
+    "detector_rate": 0.4682
+   }
+  ],
+  "ks_uniform_entity": {
+   "stat": 0.0616,
+   "p": 0.0
+  },
+  "per_detector_type1": [
+   {
+    "detector": "EG1",
+    "tests": 1680,
+    "rate_at_0.01": 0.006,
+    "ci_0.01": [
+     0.0029,
+     0.0109
+    ],
+    "rate_at_0.05": 0.0452,
+    "ci_0.05": [
+     0.0358,
+     0.0563
+    ],
+    "mean_p": 0.4941
+   },
+   {
+    "detector": "EG11",
+    "tests": 1400,
+    "rate_at_0.01": 0.0071,
+    "ci_0.01": [
+     0.0034,
+     0.0131
+    ],
+    "rate_at_0.05": 0.0736,
+    "ci_0.05": [
+     0.0604,
+     0.0885
+    ],
+    "mean_p": 0.4312
+   },
+   {
+    "detector": "EG12",
+    "tests": 1680,
+    "rate_at_0.01": 0.0054,
+    "ci_0.01": [
+     0.0025,
+     0.0101
+    ],
+    "rate_at_0.05": 0.0435,
+    "ci_0.05": [
+     0.0342,
+     0.0543
+    ],
+    "mean_p": 0.4951
+   },
+   {
+    "detector": "EG13",
+    "tests": 1680,
+    "rate_at_0.01": 0.0036,
+    "ci_0.01": [
+     0.0013,
+     0.0078
+    ],
+    "rate_at_0.05": 0.0339,
+    "ci_0.05": [
+     0.0258,
+     0.0437
+    ],
+    "mean_p": 0.4985
+   },
+   {
+    "detector": "EG2",
+    "tests": 1680,
+    "rate_at_0.01": 0.0024,
+    "ci_0.01": [
+     0.0006,
+     0.0061
+    ],
+    "rate_at_0.05": 0.0417,
+    "ci_0.05": [
+     0.0326,
+     0.0524
+    ],
+    "mean_p": 0.497
+   },
+   {
+    "detector": "EG3",
+    "tests": 1680,
+    "rate_at_0.01": 0.0012,
+    "ci_0.01": [
+     0.0001,
+     0.0043
+    ],
+    "rate_at_0.05": 0.0149,
+    "ci_0.05": [
+     0.0097,
+     0.0219
+    ],
+    "mean_p": 0.519
+   },
+   {
+    "detector": "EG4",
+    "tests": 1680,
+    "rate_at_0.01": 0.0048,
+    "ci_0.01": [
+     0.0021,
+     0.0094
+    ],
+    "rate_at_0.05": 0.0345,
+    "ci_0.05": [
+     0.0263,
+     0.0444
+    ],
+    "mean_p": 0.4953
+   },
+   {
+    "detector": "EG5",
+    "tests": 1680,
+    "rate_at_0.01": 0.0018,
+    "ci_0.01": [
+     0.0004,
+     0.0052
+    ],
+    "rate_at_0.05": 0.0298,
+    "ci_0.05": [
+     0.0222,
+     0.0391
+    ],
+    "mean_p": 0.5001
+   },
+   {
+    "detector": "EG6",
+    "tests": 1680,
+    "rate_at_0.01": 0.0125,
+    "ci_0.01": [
+     0.0078,
+     0.019
+    ],
+    "rate_at_0.05": 0.0494,
+    "ci_0.05": [
+     0.0395,
+     0.0609
+    ],
+    "mean_p": 0.5003
+   },
+   {
+    "detector": "EG7",
+    "tests": 1680,
+    "rate_at_0.01": 0.0095,
+    "ci_0.01": [
+     0.0055,
+     0.0154
+    ],
+    "rate_at_0.05": 0.0476,
+    "ci_0.05": [
+     0.0379,
+     0.0589
+    ],
+    "mean_p": 0.4967
+   },
+   {
+    "detector": "NS1",
+    "tests": 1680,
+    "rate_at_0.01": 0.0071,
+    "ci_0.01": [
+     0.0037,
+     0.0124
+    ],
+    "rate_at_0.05": 0.0393,
+    "ci_0.05": [
+     0.0305,
+     0.0497
+    ],
+    "mean_p": 0.4725
+   },
+   {
+    "detector": "NS2",
+    "tests": 1680,
+    "rate_at_0.01": 0.0012,
+    "ci_0.01": [
+     0.0001,
+     0.0043
+    ],
+    "rate_at_0.05": 0.0286,
+    "ci_0.05": [
+     0.0211,
+     0.0377
+    ],
+    "mean_p": 0.496
+   },
+   {
+    "detector": "NS5",
+    "tests": 1680,
+    "rate_at_0.01": 0.0042,
+    "ci_0.01": [
+     0.0017,
+     0.0086
+    ],
+    "rate_at_0.05": 0.0286,
+    "ci_0.05": [
+     0.0211,
+     0.0377
+    ],
+    "mean_p": 0.4846
+   },
+   {
+    "detector": "NS7",
+    "tests": 1680,
+    "rate_at_0.01": 0.0,
+    "ci_0.01": [
+     0.0,
+     0.0022
+    ],
+    "rate_at_0.05": 0.0,
+    "ci_0.05": [
+     0.0,
+     0.0022
+    ],
+    "mean_p": 0.5768
+   }
+  ],
+  "qq": {
+   "expected": [
+    0.005,
+    0.015,
+    0.025,
+    0.035,
+    0.045,
+    0.055,
+    0.065,
+    0.075,
+    0.085,
+    0.095,
+    0.105,
+    0.115,
+    0.125,
+    0.135,
+    0.145,
+    0.155,
+    0.165,
+    0.175,
+    0.185,
+    0.195,
+    0.205,
+    0.215,
+    0.225,
+    0.235,
+    0.245,
+    0.255,
+    0.265,
+    0.275,
+    0.285,
+    0.295,
+    0.305,
+    0.315,
+    0.325,
+    0.335,
+    0.345,
+    0.355,
+    0.365,
+    0.375,
+    0.385,
+    0.395,
+    0.405,
+    0.415,
+    0.425,
+    0.435,
+    0.445,
+    0.455,
+    0.465,
+    0.475,
+    0.485,
+    0.495,
+    0.505,
+    0.515,
+    0.525,
+    0.535,
+    0.545,
+    0.555,
+    0.565,
+    0.575,
+    0.585,
+    0.595,
+    0.605,
+    0.615,
+    0.625,
+    0.635,
+    0.645,
+    0.655,
+    0.665,
+    0.675,
+    0.685,
+    0.695,
+    0.705,
+    0.715,
+    0.725,
+    0.735,
+    0.745,
+    0.755,
+    0.765,
+    0.775,
+    0.785,
+    0.795,
+    0.805,
+    0.815,
+    0.825,
+    0.835,
+    0.845,
+    0.855,
+    0.865,
+    0.875,
+    0.885,
+    0.895,
+    0.905,
+    0.915,
+    0.925,
+    0.935,
+    0.945,
+    0.955,
+    0.965,
+    0.975,
+    0.985,
+    0.995
+   ],
+   "entity": [
+    0.0103,
+    0.0307,
+    0.0494,
+    0.0665,
+    0.0761,
+    0.0897,
+    0.1032,
+    0.1165,
+    0.1275,
+    0.135,
+    0.144,
+    0.1566,
+    0.1664,
+    0.1775,
+    0.1863,
+    0.1925,
+    0.2029,
+    0.2146,
+    0.2231,
+    0.2344,
+    0.2418,
+    0.2492,
+    0.2627,
+    0.2694,
+    0.2785,
+    0.2874,
+    0.2984,
+    0.3053,
+    0.3123,
+    0.3247,
+    0.3315,
+    0.3422,
+    0.3501,
+    0.3573,
+    0.3689,
+    0.3739,
+    0.3807,
+    0.3892,
+    0.3964,
+    0.4027,
+    0.4119,
+    0.4194,
+    0.4234,
+    0.4318,
+    0.4406,
+    0.4487,
+    0.4569,
+    0.464,
+    0.4717,
+    0.4795,
+    0.4854,
+    0.4952,
+    0.5049,
+    0.5144,
+    0.522,
+    0.5278,
+    0.5337,
+    0.5414,
+    0.5515,
+    0.5604,
+    0.5691,
+    0.5769,
+    0.5825,
+    0.5927,
+    0.5995,
+    0.6075,
+    0.6171,
+    0.6272,
+    0.6348,
+    0.6439,
+    0.6505,
+    0.6588,
+    0.666,
+    0.6741,
+    0.6873,
+    0.6985,
+    0.7102,
+    0.7191,
+    0.7274,
+    0.7383,
+    0.7497,
+    0.7557,
+    0.768,
+    0.7799,
+    0.7986,
+    0.8112,
+    0.8237,
+    0.8325,
+    0.8461,
+    0.8594,
+    0.8685,
+    0.8748,
+    0.8797,
+    0.8855,
+    0.8907,
+    0.897,
+    0.9066,
+    0.9152,
+    0.9276,
+    0.9414
+   ],
+   "detector": [
+    0.0106,
+    0.0254,
+    0.0378,
+    0.0492,
+    0.0612,
+    0.0726,
+    0.0867,
+    0.098,
+    0.1097,
+    0.1215,
+    0.1331,
+    0.1445,
+    0.1553,
+    0.1656,
+    0.1757,
+    0.1863,
+    0.1969,
+    0.2058,
+    0.2161,
+    0.2259,
+    0.2363,
+    0.2481,
+    0.2586,
+    0.2685,
+    0.2788,
+    0.2888,
+    0.2991,
+    0.3084,
+    0.3184,
+    0.3292,
+    0.3402,
+    0.3503,
+    0.36,
+    0.3691,
+    0.3788,
+    0.3877,
+    0.3981,
+    0.4085,
+    0.4171,
+    0.4275,
+    0.4381,
+    0.4475,
+    0.4575,
+    0.4677,
+    0.4771,
+    0.4867,
+    0.4971,
+    0.5078,
+    0.5176,
+    0.5278,
+    0.5351,
+    0.5378,
+    0.5465,
+    0.5569,
+    0.566,
+    0.5718,
+    0.5734,
+    0.5744,
+    0.5753,
+    0.5764,
+    0.5784,
+    0.5862,
+    0.5944,
+    0.6018,
+    0.6093,
+    0.6172,
+    0.6244,
+    0.6274,
+    0.6318,
+    0.6398,
+    0.648,
+    0.6567,
+    0.6653,
+    0.6733,
+    0.6823,
+    0.692,
+    0.7014,
+    0.7127,
+    0.7238,
+    0.7341,
+    0.7456,
+    0.7554,
+    0.7658,
+    0.7779,
+    0.7885,
+    0.8009,
+    0.8125,
+    0.8238,
+    0.8357,
+    0.8481,
+    0.8601,
+    0.8721,
+    0.8857,
+    0.8983,
+    0.9125,
+    0.9258,
+    0.9408,
+    0.9591,
+    0.9787,
+    0.9986
+   ]
+  },
+  "deterministic_on_null": {
+   "entities": 1680,
+   "flags": 71,
+   "by_detector": {
+    "RT1": 71
+   },
+   "by_severity": {
+    "medium": 60,
+    "high": 11
+   },
+   "note": "Deterministic findings are facts, not statistical claims. On healthy panels they are red-team techniques that a healthy SOC missed (5% per-technique miss rate in the simulator): real misses, rated medium."
+  }
+ },
+ "V3_ppi": {
+  "description": "For every entity, repeated uniform random samples of n examiner labels (the hidden answer key plays the examiner). Target: the entity's true share of superficially handled cases. 90% intervals: PPI++ with power tuning and a Wilson-regularised variance (labels + model predictions on all other cases) vs classical Wilson (labels only). Label saving = 1 - (PPI width / classical width)^2, i.e. the share of labels PPI saves for the same precision.",
+  "alpha": 0.1,
+  "reps_per_entity": 200,
+  "entities": 42,
+  "by_n": [
+   {
+    "n": 10,
+    "ppi_coverage": 0.9908,
+    "classical_coverage": 0.9529,
+    "ppi_width": 0.1661,
+    "classical_width": 0.2691,
+    "label_saving": 0.6189
+   },
+   {
+    "n": 20,
+    "ppi_coverage": 0.9771,
+    "classical_coverage": 0.8993,
+    "ppi_width": 0.1036,
+    "classical_width": 0.1796,
+    "label_saving": 0.6673
+   },
+   {
+    "n": 30,
+    "ppi_coverage": 0.9899,
+    "classical_coverage": 0.9258,
+    "ppi_width": 0.0792,
+    "classical_width": 0.1425,
+    "label_saving": 0.6916
+   },
+   {
+    "n": 50,
+    "ppi_coverage": 0.9964,
+    "classical_coverage": 0.9242,
+    "ppi_width": 0.0583,
+    "classical_width": 0.1071,
+    "label_saving": 0.7039
+   },
+   {
+    "n": 100,
+    "ppi_coverage": 0.9651,
+    "classical_coverage": 0.8971,
+    "ppi_width": 0.0347,
+    "classical_width": 0.0737,
+    "label_saving": 0.7787
+   }
+  ],
+  "by_type": [
+   {
+    "n": 10,
+    "weak": false,
+    "ppi_coverage": 1.0,
+    "ppi_width": 0.1632,
+    "classical_width": 0.2532,
+    "label_saving": 0.5847
+   },
+   {
+    "n": 10,
+    "weak": true,
+    "ppi_coverage": 0.945,
+    "ppi_width": 0.1806,
+    "classical_width": 0.3481,
+    "label_saving": 0.7308
+   },
+   {
+    "n": 20,
+    "weak": false,
+    "ppi_coverage": 0.9851,
+    "ppi_width": 0.1018,
+    "classical_width": 0.1648,
+    "label_saving": 0.6185
+   },
+   {
+    "n": 20,
+    "weak": true,
+    "ppi_coverage": 0.9371,
+    "ppi_width": 0.1127,
+    "classical_width": 0.2539,
+    "label_saving": 0.8028
+   },
+   {
+    "n": 30,
+    "weak": false,
+    "ppi_coverage": 0.9916,
+    "ppi_width": 0.0788,
+    "classical_width": 0.1287,
+    "label_saving": 0.6247
+   },
+   {
+    "n": 30,
+    "weak": true,
+    "ppi_coverage": 0.9814,
+    "ppi_width": 0.0807,
+    "classical_width": 0.2118,
+    "label_saving": 0.8547
+   },
+   {
+    "n": 50,
+    "weak": false,
+    "ppi_coverage": 0.9957,
+    "ppi_width": 0.0593,
+    "classical_width": 0.0955,
+    "label_saving": 0.6141
+   },
+   {
+    "n": 50,
+    "weak": true,
+    "ppi_coverage": 1.0,
+    "ppi_width": 0.053,
+    "classical_width": 0.165,
+    "label_saving": 0.8969
+   },
+   {
+    "n": 100,
+    "weak": false,
+    "ppi_coverage": 0.9581,
+    "ppi_width": 0.0353,
+    "classical_width": 0.0648,
+    "label_saving": 0.7023
+   },
+   {
+    "n": 100,
+    "weak": true,
+    "ppi_coverage": 1.0,
+    "ppi_width": 0.0313,
+    "classical_width": 0.1182,
+    "label_saving": 0.93
+   }
+  ],
+  "per_entity_n30": [
+   {
+    "entity_id": "BFS-02",
+    "theta": 0.3109,
+    "coverage": 1.0,
+    "saving": 0.9655
+   },
+   {
+    "entity_id": "PWR-01",
+    "theta": 0.2024,
+    "coverage": 1.0,
+    "saving": 0.8933
+   },
+   {
+    "entity_id": "TEL-02",
+    "theta": 0.1894,
+    "coverage": 1.0,
+    "saving": 0.886
+   },
+   {
+    "entity_id": "TRN-06",
+    "theta": 0.1649,
+    "coverage": 0.995,
+    "saving": 0.8635
+   },
+   {
+    "entity_id": "SPE-04",
+    "theta": 0.1045,
+    "coverage": 0.965,
+    "saving": 0.7411
+   },
+   {
+    "entity_id": "GOV-03",
+    "theta": 0.1013,
+    "coverage": 0.955,
+    "saving": 0.7179
+   },
+   {
+    "entity_id": "HLT-04",
+    "theta": 0.1002,
+    "coverage": 0.955,
+    "saving": 0.7218
+   },
+   {
+    "entity_id": "HLT-03",
+    "theta": 0.0978,
+    "coverage": 0.95,
+    "saving": 0.7425
+   },
+   {
+    "entity_id": "TRN-04",
+    "theta": 0.0975,
+    "coverage": 0.95,
+    "saving": 0.6982
+   },
+   {
+    "entity_id": "SPE-05",
+    "theta": 0.0968,
+    "coverage": 0.985,
+    "saving": 0.692
+   },
+   {
+    "entity_id": "GOV-04",
+    "theta": 0.0893,
+    "coverage": 0.93,
+    "saving": 0.6736
+   },
+   {
+    "entity_id": "PWR-05",
+    "theta": 0.0751,
+    "coverage": 0.89,
+    "saving": 0.6431
+   },
+   {
+    "entity_id": "TRN-03",
+    "theta": 0.0592,
+    "coverage": 1.0,
+    "saving": 0.5483
+   },
+   {
+    "entity_id": "BFS-03",
+    "theta": 0.0582,
+    "coverage": 1.0,
+    "saving": 0.5705
+   },
+   {
+    "entity_id": "BFS-01",
+    "theta": 0.0353,
+    "coverage": 1.0,
+    "saving": 0.5883
+   },
+   {
+    "entity_id": "TRN-02",
+    "theta": 0.0336,
+    "coverage": 1.0,
+    "saving": 0.5901
+   },
+   {
+    "entity_id": "HLT-05",
+    "theta": 0.0334,
+    "coverage": 1.0,
+    "saving": 0.5976
+   },
+   {
+    "entity_id": "PWR-06",
+    "theta": 0.0332,
+    "coverage": 1.0,
+    "saving": 0.6039
+   },
+   {
+    "entity_id": "GOV-05",
+    "theta": 0.0324,
+    "coverage": 1.0,
+    "saving": 0.606
+   },
+   {
+    "entity_id": "TEL-05",
+    "theta": 0.0324,
+    "coverage": 1.0,
+    "saving": 0.6043
+   },
+   {
+    "entity_id": "BFS-04",
+    "theta": 0.0318,
+    "coverage": 1.0,
+    "saving": 0.6095
+   },
+   {
+    "entity_id": "PWR-03",
+    "theta": 0.0316,
+    "coverage": 1.0,
+    "saving": 0.627
+   },
+   {
+    "entity_id": "BFS-05",
+    "theta": 0.0316,
+    "coverage": 1.0,
+    "saving": 0.6117
+   },
+   {
+    "entity_id": "GOV-06",
+    "theta": 0.0315,
+    "coverage": 1.0,
+    "saving": 0.6178
+   },
+   {
+    "entity_id": "SPE-03",
+    "theta": 0.0311,
+    "coverage": 1.0,
+    "saving": 0.6003
+   },
+   {
+    "entity_id": "PWR-04",
+    "theta": 0.0309,
+    "coverage": 1.0,
+    "saving": 0.5997
+   },
+   {
+    "entity_id": "TEL-01",
+    "theta": 0.0302,
+    "coverage": 1.0,
+    "saving": 0.6094
+   },
+   {
+    "entity_id": "SPE-01",
+    "theta": 0.0299,
+    "coverage": 1.0,
+    "saving": 0.6054
+   },
+   {
+    "entity_id": "HLT-02",
+    "theta": 0.0295,
+    "coverage": 1.0,
+    "saving": 0.6032
+   },
+   {
+    "entity_id": "BFS-06",
+    "theta": 0.0291,
+    "coverage": 1.0,
+    "saving": 0.6095
+   },
+   {
+    "entity_id": "TEL-03",
+    "theta": 0.0291,
+    "coverage": 1.0,
+    "saving": 0.6309
+   },
+   {
+    "entity_id": "GOV-01",
+    "theta": 0.029,
+    "coverage": 1.0,
+    "saving": 0.6291
+   },
+   {
+    "entity_id": "TEL-04",
+    "theta": 0.0289,
+    "coverage": 1.0,
+    "saving": 0.6285
+   },
+   {
+    "entity_id": "PWR-02",
+    "theta": 0.0289,
+    "coverage": 1.0,
+    "saving": 0.5968
+   },
+   {
+    "entity_id": "HLT-06",
+    "theta": 0.0289,
+    "coverage": 1.0,
+    "saving": 0.619
+   },
+   {
+    "entity_id": "SPE-02",
+    "theta": 0.0288,
+    "coverage": 1.0,
+    "saving": 0.6134
+   },
+   {
+    "entity_id": "TRN-01",
+    "theta": 0.0285,
+    "coverage": 1.0,
+    "saving": 0.623
+   },
+   {
+    "entity_id": "TEL-06",
+    "theta": 0.0283,
+    "coverage": 1.0,
+    "saving": 0.627
+   },
+   {
+    "entity_id": "SPE-06",
+    "theta": 0.0269,
+    "coverage": 1.0,
+    "saving": 0.6214
+   },
+   {
+    "entity_id": "HLT-01",
+    "theta": 0.0246,
+    "coverage": 1.0,
+    "saving": 0.6215
+   },
+   {
+    "entity_id": "GOV-02",
+    "theta": 0.0238,
+    "coverage": 1.0,
+    "saving": 0.6246
+   },
+   {
+    "entity_id": "TRN-05",
+    "theta": 0.0233,
+    "coverage": 1.0,
+    "saving": 0.608
+   }
+  ],
+  "min_labels_shown_in_app": 20
+ },
+ "V4_effort": {
+  "description": "Equal examiner budgets (cases reviewed across the whole panel). A weak entity is 'confirmed' when the reviewed sample contains >= 3 superficially handled cases from it. Strategies: random cases; random entities (20 cases each); severity-first (critical cases first); SAT-SA (entities in queue order, 20 cases each: 10 highest-risk by the model + 10 uniform random so the PPI estimate stays valid).",
+  "weak_definition": "true superficial-handling rate at least twice the panel median",
+  "rows": [
+   {
+    "budget": 60,
+    "strategy": "random_cases",
+    "superficial_found_per_100": 6.75,
+    "weak_entities_confirmed": 0.1,
+    "weak_entities_total": 12
+   },
+   {
+    "budget": 60,
+    "strategy": "random_entities",
+    "superficial_found_per_100": 6.1917,
+    "weak_entities_confirmed": 0.365,
+    "weak_entities_total": 12
+   },
+   {
+    "budget": 60,
+    "strategy": "severity_first",
+    "superficial_found_per_100": 7.9583,
+    "weak_entities_confirmed": 0.15,
+    "weak_entities_total": 12
+   },
+   {
+    "budget": 60,
+    "strategy": "satsa",
+    "superficial_found_per_100": 61.0,
+    "weak_entities_confirmed": 3.0,
+    "weak_entities_total": 12
+   },
+   {
+    "budget": 120,
+    "strategy": "random_cases",
+    "superficial_found_per_100": 6.5417,
+    "weak_entities_confirmed": 0.34,
+    "weak_entities_total": 12
+   },
+   {
+    "budget": 120,
+    "strategy": "random_entities",
+    "superficial_found_per_100": 6.2333,
+    "weak_entities_confirmed": 0.8,
+    "weak_entities_total": 12
+   },
+   {
+    "budget": 120,
+    "strategy": "severity_first",
+    "superficial_found_per_100": 8.1167,
+    "weak_entities_confirmed": 0.695,
+    "weak_entities_total": 12
+   },
+   {
+    "budget": 120,
+    "strategy": "satsa",
+    "superficial_found_per_100": 54.9583,
+    "weak_entities_confirmed": 3.0,
+    "weak_entities_total": 12
+   },
+   {
+    "budget": 240,
+    "strategy": "random_cases",
+    "superficial_found_per_100": 6.7333,
+    "weak_entities_confirmed": 1.02,
+    "weak_entities_total": 12
+   },
+   {
+    "budget": 240,
+    "strategy": "random_entities",
+    "superficial_found_per_100": 6.1729,
+    "weak_entities_confirmed": 1.635,
+    "weak_entities_total": 12
+   },
+   {
+    "budget": 240,
+    "strategy": "severity_first",
+    "superficial_found_per_100": 7.9896,
+    "weak_entities_confirmed": 1.775,
+    "weak_entities_total": 12
+   },
+   {
+    "budget": 240,
+    "strategy": "satsa",
+    "superficial_found_per_100": 53.75,
+    "weak_entities_confirmed": 4.0,
+    "weak_entities_total": 12
+   },
+   {
+    "budget": 480,
+    "strategy": "random_cases",
+    "superficial_found_per_100": 6.6958,
+    "weak_entities_confirmed": 2.49,
+    "weak_entities_total": 12
+   },
+   {
+    "budget": 480,
+    "strategy": "random_entities",
+    "superficial_found_per_100": 6.2583,
+    "weak_entities_confirmed": 3.3,
+    "weak_entities_total": 12
+   },
+   {
+    "budget": 480,
+    "strategy": "severity_first",
+    "superficial_found_per_100": 7.9312,
+    "weak_entities_confirmed": 3.08,
+    "weak_entities_total": 12
+   },
+   {
+    "budget": 480,
+    "strategy": "satsa",
+    "superficial_found_per_100": 54.0521,
+    "weak_entities_confirmed": 12.0,
+    "weak_entities_total": 12
+   }
+  ]
+ },
+ "V5_power": {
+  "description": "Graded weaknesses planted into otherwise healthy panels (one entity per level per panel); detection = flagged at q <= 0.10. Shows the smallest effect SAT-SA reliably sees, and what it cannot see.",
+  "families": {
+   "escalation": {
+    "parameter": "share of critical cases escalated",
+    "healthy_value": 0.93,
+    "levels": [
+     0.35,
+     0.5,
+     0.65,
+     0.75,
+     0.85
+    ],
+    "detection_rate": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.333
+    ],
+    "panels": 6
+   },
+   "sla_gaming": {
+    "parameter": "share of over-SLA critical closures pulled under the SLA",
+    "healthy_value": 0.0,
+    "levels": [
+     0.1,
+     0.2,
+     0.3,
+     0.5,
+     0.75
+    ],
+    "detection_rate": [
+     0.167,
+     0.833,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "panels": 6
+   },
+   "superficial": {
+    "parameter": "share of cases handled superficially",
+    "healthy_value": 0.03,
+    "levels": [
+     0.05,
+     0.07,
+     0.1,
+     0.14,
+     0.2
+    ],
+    "detection_rate": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "panels": 6
+   }
+  },
+  "healthy_false_flags_per_panel": 0.0,
+  "panels": 6
+ },
+ "V9_reproducibility": {
+  "description": "The demo panel generated and analysed twice from seed 7 in separate processes.",
+  "input_hash_equal": true,
+  "result_hash_equal": true,
+  "input_hash": "523e2ba2fb5294ca",
+  "result_hash": "078c271b795a3c95"
+ },
+ "D4_gaming": {
+  "description": "Red-Team Lab (D4): can a SOC game its regulator?\n\nA stylised, fast simulation (numbers are SYNTHETIC). One entity, 12 monthly\nsubmissions of ~300 human-handled cases (30% medium, 70% high/critical). A healthy SOC\nhandles 3% of cases superficially, a weak one 15%. The auditee picks a strategy to hide\nthe weakness; the auditor picks a policy. Every policy gets the same budget: 60 human\ncase reviews per year. Detection rules are set so an honest SOC is almost never\nflagged (the false-alarm rate is reported for every policy).\n\nStrategies\n  honest           healthy all year (measures false alarms)\n  delay            healthy for six months, weak afterwards\n  drift            slides from healthy to weak over the year\n  cherry_pick      weak only on medium-severity cases, which fixed audits never sample\n  off_audit_drift  weak except in the months it expects to be audited (quarter ends)\n  attrition        weak, but drops 80% of its superficial cases from the submission\n  metadata_masking weak, but pads the paper trail so analytics see nothing unusual\n\nPolicies\n  annual_audit     60 reviews of high/critical cases in month 12\n  quarterly_audit  15 reviews of high/critical cases at each quarter end\n  unannounced      15 reviews in one random month per quarter, all severities\n  satsa_analytics  SAT-SA every month: analytics on all submitted cases (anytime-valid\n                   e-process), completeness check, 5 targeted reviews/month (confirm only)\n  satsa_with_floor SAT-SA analytics + completeness, 2 targeted + 3 uniform-random\n                   reviews per month (the randomised floor)",
+  "sims_per_cell": 400,
+  "review_budget_per_year": 60,
+  "alpha": 0.01,
+  "strategies": [
+   "honest",
+   "delay",
+   "drift",
+   "cherry_pick",
+   "off_audit_drift",
+   "attrition",
+   "metadata_masking"
+  ],
+  "policies": [
+   "annual_audit",
+   "quarterly_audit",
+   "unannounced",
+   "satsa_analytics",
+   "satsa_with_floor"
+  ],
+  "cells": [
+   {
+    "strategy": "honest",
+    "policy": "annual_audit",
+    "detection_rate": 0.015,
+    "median_months_to_detect": 12.0,
+    "detected_by": {
+     "manual review": 6
+    }
+   },
+   {
+    "strategy": "honest",
+    "policy": "quarterly_audit",
+    "detection_rate": 0.01,
+    "median_months_to_detect": 7.5,
+    "detected_by": {
+     "manual review": 4
+    }
+   },
+   {
+    "strategy": "honest",
+    "policy": "unannounced",
+    "detection_rate": 0.0175,
+    "median_months_to_detect": 5.0,
+    "detected_by": {
+     "manual review": 7
+    }
+   },
+   {
+    "strategy": "honest",
+    "policy": "satsa_analytics",
+    "detection_rate": 0.0025,
+    "median_months_to_detect": 8.0,
+    "detected_by": {
+     "analytics (anytime-valid e-process)": 1
+    }
+   },
+   {
+    "strategy": "honest",
+    "policy": "satsa_with_floor",
+    "detection_rate": 0.015,
+    "median_months_to_detect": 5.0,
+    "detected_by": {
+     "random-floor review": 6
+    }
+   },
+   {
+    "strategy": "delay",
+    "policy": "annual_audit",
+    "detection_rate": 0.9175,
+    "median_months_to_detect": 6.0,
+    "detected_by": {
+     "manual review": 367
+    }
+   },
+   {
+    "strategy": "delay",
+    "policy": "quarterly_audit",
+    "detection_rate": 0.455,
+    "median_months_to_detect": 6.0,
+    "detected_by": {
+     "manual review": 182
+    }
+   },
+   {
+    "strategy": "delay",
+    "policy": "unannounced",
+    "detection_rate": 0.4325,
+    "median_months_to_detect": 5.0,
+    "detected_by": {
+     "manual review": 173
+    }
+   },
+   {
+    "strategy": "delay",
+    "policy": "satsa_analytics",
+    "detection_rate": 1.0,
+    "median_months_to_detect": 1.0,
+    "detected_by": {
+     "analytics (anytime-valid e-process)": 399,
+     "completeness: case records missing": 1
+    }
+   },
+   {
+    "strategy": "delay",
+    "policy": "satsa_with_floor",
+    "detection_rate": 1.0,
+    "median_months_to_detect": 1.0,
+    "detected_by": {
+     "analytics (anytime-valid e-process)": 395,
+     "random-floor review": 4,
+     "completeness: case records missing": 1
+    }
+   },
+   {
+    "strategy": "drift",
+    "policy": "annual_audit",
+    "detection_rate": 0.91,
+    "median_months_to_detect": 12.0,
+    "detected_by": {
+     "manual review": 364
+    }
+   },
+   {
+    "strategy": "drift",
+    "policy": "quarterly_audit",
+    "detection_rate": 0.6025,
+    "median_months_to_detect": 12.0,
+    "detected_by": {
+     "manual review": 241
+    }
+   },
+   {
+    "strategy": "drift",
+    "policy": "unannounced",
+    "detection_rate": 0.425,
+    "median_months_to_detect": 11.0,
+    "detected_by": {
+     "manual review": 170
+    }
+   },
+   {
+    "strategy": "drift",
+    "policy": "satsa_analytics",
+    "detection_rate": 1.0,
+    "median_months_to_detect": 5.0,
+    "detected_by": {
+     "analytics (anytime-valid e-process)": 398,
+     "completeness: case records missing": 2
+    }
+   },
+   {
+    "strategy": "drift",
+    "policy": "satsa_with_floor",
+    "detection_rate": 1.0,
+    "median_months_to_detect": 5.0,
+    "detected_by": {
+     "analytics (anytime-valid e-process)": 383,
+     "random-floor review": 16,
+     "completeness: case records missing": 1
+    }
+   },
+   {
+    "strategy": "cherry_pick",
+    "policy": "annual_audit",
+    "detection_rate": 0.01,
+    "median_months_to_detect": 12.0,
+    "detected_by": {
+     "manual review": 4
+    }
+   },
+   {
+    "strategy": "cherry_pick",
+    "policy": "quarterly_audit",
+    "detection_rate": 0.0125,
+    "median_months_to_detect": 12.0,
+    "detected_by": {
+     "manual review": 5
+    }
+   },
+   {
+    "strategy": "cherry_pick",
+    "policy": "unannounced",
+    "detection_rate": 0.675,
+    "median_months_to_detect": 7.0,
+    "detected_by": {
+     "manual review": 270
+    }
+   },
+   {
+    "strategy": "cherry_pick",
+    "policy": "satsa_analytics",
+    "detection_rate": 1.0,
+    "median_months_to_detect": 1.0,
+    "detected_by": {
+     "analytics (anytime-valid e-process)": 400
+    }
+   },
+   {
+    "strategy": "cherry_pick",
+    "policy": "satsa_with_floor",
+    "detection_rate": 1.0,
+    "median_months_to_detect": 1.0,
+    "detected_by": {
+     "analytics (anytime-valid e-process)": 399,
+     "random-floor review": 1
+    }
+   },
+   {
+    "strategy": "off_audit_drift",
+    "policy": "annual_audit",
+    "detection_rate": 0.005,
+    "median_months_to_detect": 12.0,
+    "detected_by": {
+     "manual review": 2
+    }
+   },
+   {
+    "strategy": "off_audit_drift",
+    "policy": "quarterly_audit",
+    "detection_rate": 0.0225,
+    "median_months_to_detect": 3.0,
+    "detected_by": {
+     "manual review": 9
+    }
+   },
+   {
+    "strategy": "off_audit_drift",
+    "policy": "unannounced",
+    "detection_rate": 0.67,
+    "median_months_to_detect": 4.0,
+    "detected_by": {
+     "manual review": 268
+    }
+   },
+   {
+    "strategy": "off_audit_drift",
+    "policy": "satsa_analytics",
+    "detection_rate": 1.0,
+    "median_months_to_detect": 1.0,
+    "detected_by": {
+     "analytics (anytime-valid e-process)": 400
+    }
+   },
+   {
+    "strategy": "off_audit_drift",
+    "policy": "satsa_with_floor",
+    "detection_rate": 1.0,
+    "median_months_to_detect": 1.0,
+    "detected_by": {
+     "analytics (anytime-valid e-process)": 400
+    }
+   },
+   {
+    "strategy": "attrition",
+    "policy": "annual_audit",
+    "detection_rate": 0.0175,
+    "median_months_to_detect": 12.0,
+    "detected_by": {
+     "manual review": 7
+    }
+   },
+   {
+    "strategy": "attrition",
+    "policy": "quarterly_audit",
+    "detection_rate": 0.0275,
+    "median_months_to_detect": 6.0,
+    "detected_by": {
+     "manual review": 11
+    }
+   },
+   {
+    "strategy": "attrition",
+    "policy": "unannounced",
+    "detection_rate": 0.0275,
+    "median_months_to_detect": 11.0,
+    "detected_by": {
+     "manual review": 11
+    }
+   },
+   {
+    "strategy": "attrition",
+    "policy": "satsa_analytics",
+    "detection_rate": 1.0,
+    "median_months_to_detect": 1.0,
+    "detected_by": {
+     "completeness: case records missing": 400
+    }
+   },
+   {
+    "strategy": "attrition",
+    "policy": "satsa_with_floor",
+    "detection_rate": 1.0,
+    "median_months_to_detect": 1.0,
+    "detected_by": {
+     "completeness: case records missing": 400
+    }
+   },
+   {
+    "strategy": "metadata_masking",
+    "policy": "annual_audit",
+    "detection_rate": 0.905,
+    "median_months_to_detect": 12.0,
+    "detected_by": {
+     "manual review": 362
+    }
+   },
+   {
+    "strategy": "metadata_masking",
+    "policy": "quarterly_audit",
+    "detection_rate": 0.9,
+    "median_months_to_detect": 6.0,
+    "detected_by": {
+     "manual review": 360
+    }
+   },
+   {
+    "strategy": "metadata_masking",
+    "policy": "unannounced",
+    "detection_rate": 0.885,
+    "median_months_to_detect": 4.0,
+    "detected_by": {
+     "manual review": 354
+    }
+   },
+   {
+    "strategy": "metadata_masking",
+    "policy": "satsa_analytics",
+    "detection_rate": 0.0075,
+    "median_months_to_detect": 6.0,
+    "detected_by": {
+     "completeness: case records missing": 3
+    }
+   },
+   {
+    "strategy": "metadata_masking",
+    "policy": "satsa_with_floor",
+    "detection_rate": 0.6875,
+    "median_months_to_detect": 5.0,
+    "detected_by": {
+     "random-floor review": 275
+    }
+   }
+  ]
+ },
+ "V8_runtime": {
+  "machine": {
+   "os": "Windows 11",
+   "cpu": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+   "logical_cores": 8,
+   "ram_gb": 17.0,
+   "python": "3.13.5"
+  },
+  "demo_panel": {
+   "alerts": 453041,
+   "cases": 215116,
+   "workflow_events": 1405762,
+   "generate_seconds": 145.4818,
+   "analyze_seconds": 158.9073,
+   "peak_memory_gb": 1.3016
+  },
+  "full_pipeline_seconds_including_generation_and_db_write": 165.8,
+  "api_latency": [
+   {
+    "path": "/api/meta",
+    "status": 200,
+    "p50_ms": 10.7457,
+    "p95_ms": 13.6238
+   },
+   {
+    "path": "/api/queue?fdr=0.1",
+    "status": 200,
+    "p50_ms": 16.4822,
+    "p95_ms": 17.0682
+   },
+   {
+    "path": "/api/entities",
+    "status": 200,
+    "p50_ms": 7.6595,
+    "p95_ms": 10.1902
+   },
+   {
+    "path": "/api/entities/PWR-01",
+    "status": 200,
+    "p50_ms": 28.1372,
+    "p95_ms": 31.3131
+   },
+   {
+    "path": "/api/entities/PWR-01/hourly",
+    "status": 200,
+    "p50_ms": 15.1825,
+    "p95_ms": 22.1844
+   },
+   {
+    "path": "/api/entities/PWR-01/regulatory",
+    "status": 200,
+    "p50_ms": 19.698,
+    "p95_ms": 44.5667
+   },
+   {
+    "path": "/api/entities/PWR-01/evidence",
+    "status": 200,
+    "p50_ms": 12.1237,
+    "p95_ms": 13.54
+   },
+   {
+    "path": "/api/entities/PWR-01/survival",
+    "status": 200,
+    "p50_ms": 11.2882,
+    "p95_ms": 12.4527
+   },
+   {
+    "path": "/api/review/PWR-01",
+    "status": 200,
+    "p50_ms": 29.4611,
+    "p95_ms": 34.1231
+   },
+   {
+    "path": "/api/blindspot",
+    "status": 200,
+    "p50_ms": 26.0312,
+    "p95_ms": 26.9462
+   },
+   {
+    "path": "/api/providers",
+    "status": 200,
+    "p50_ms": 8.9395,
+    "p95_ms": 9.4926
+   },
+   {
+    "path": "/api/ledger",
+    "status": 200,
+    "p50_ms": 6.3859,
+    "p95_ms": 9.6644
+   },
+   {
+    "path": "/api/gaming/run",
+    "status": 200,
+    "p50_ms": 8.1701,
+    "p95_ms": 8.628
+   }
+  ],
+  "note": "CPU only, no GPU, fully offline."
+ },
+ "headline": {
+  "synthetic": true,
+  "planted_statistical_recall_q10": 1.0,
+  "planted_recall_any_lane_q10": 1.0,
+  "hard_negative_flags_q10": 0.0,
+  "healthy_statistical_flags_q10_mean": 0.0,
+  "null_realized_fdr_q10": 0.05,
+  "null_realized_fdr_q10_ci": [
+   0.0061,
+   0.1692
+  ],
+  "null_panels": 40,
+  "ppi_coverage_n30": 0.9899,
+  "ppi_label_saving_n30": 0.6916,
+  "weak_found_per_100_satsa_b240": 53.75,
+  "weak_found_per_100_random_b240": 6.7333,
+  "weak_entities_confirmed_satsa_b240": 4.0,
+  "weak_entities_confirmed_random_b240": 1.02,
+  "weak_entities_total": 12
+ },
+ "suite_seconds": 291.7
+}

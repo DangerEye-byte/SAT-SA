@@ -1,0 +1,3 @@
+# Optional: local explanations (D8). CPU wheel, MIT licence. Model weights go in data/models/ (see README).
+--extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
+llama-cpp-python>=0.3

@@ -141,7 +141,8 @@ def _allowed_numbers(pack: dict) -> set[str]:
 
 def _unquoted(text: str) -> str:
     """Text with quoted passages removed (quoting a note is not the model's own opinion)."""
-    return re.sub(r"(\"[^\"]*\"|'[^']*'|“[^”]*”)", " ", text)
+    text = re.sub(r"(\"[^\"]*\"|'[^']*'|“[^”]*”)", " ", text)
+    return re.sub(r"(\"|'|“)[^\"'”]*$", " ", text)  # a quote cut off by the length limit
 
 
 def verify(out: dict, pack: dict) -> dict:
@@ -157,6 +158,8 @@ def verify(out: dict, pack: dict) -> dict:
             why = f"cites records not in the evidence ({', '.join(x for x in cited if x not in ids)})"
         elif not quote or not any(_norm(quote) in _norm(ids[x]["fields"] + " " + ids[x]["note"]) for x in cited):
             why = "quoted span not found in the cited records"
+        elif any(ids[x]["injection_like"] and _norm(quote) in _norm(ids[x]["note"]) for x in cited):
+            why = "relies on text from an instruction-like (hostile) note, which is never accepted as evidence"
         elif EXONERATE.search(_unquoted(text)):
             why = "tries to clear or dismiss the entity (examiner's decision, not the model's)"
         else:
