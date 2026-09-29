@@ -48,6 +48,17 @@ def prior_labels(cf: pd.DataFrame, frac: float = 0.03, seed: int = 11, truth_dir
     return s.rename(columns={"superficial": "label"})[["case_id", "label"]]
 
 
+def examiner_labels(con) -> pd.DataFrame:
+    """Examiners' verdicts on *targeted* review cases from earlier cycles. Random-sample verdicts
+    are deliberately left out: they are reserved for the prediction-powered estimate, which
+    needs predictions that were not trained on the labels it corrects with."""
+    try:
+        return con.execute("SELECT case_id, label FROM review_labels WHERE sample_type = 'active' "
+                           "QUALIFY row_number() OVER (PARTITION BY case_id ORDER BY ts DESC) = 1").df()
+    except Exception:  # noqa: BLE001 - no review table yet (first cycle or in-memory panels)
+        return pd.DataFrame(columns=["case_id", "label"])
+
+
 def _json(v):
     return json.dumps(v, default=lambda o: o.item() if hasattr(o, "item") else str(o))
 
@@ -248,6 +259,7 @@ def analyze(con, gen_dir: Path = GEN_DIR, log=lambda *a: None, quarters: bool = 
     cf = build_case_features(con)
     log("case features", len(cf), f"{time.time() - t0:.1f}s")
     labels = prior_labels(cf, truth_dir=gen_dir / "_truth")
+    labels = pd.concat([labels, examiner_labels(con)], ignore_index=True).drop_duplicates("case_id", keep="last")
     _, yhat = fit_superficial_model(cf, labels)
     cf["yhat"] = yhat
     log("predictor trained on", len(labels), "prior labels", f"{time.time() - t0:.1f}s")

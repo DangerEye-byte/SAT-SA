@@ -49,7 +49,7 @@ DETECTORS = {
     "EG6": ("SLA-threshold bunching (metric gaming)", "Execution gap", "Operational Discipline",
             "Bunching estimator: excess mass of critical closures just below the SLA vs a polynomial counterfactual (Chetty et al. 2011; Kleven 2016)"),
     "EG7": ("Repeat alerts without remediation", "Execution gap", "Incident Response",
-            "Share of closed high/critical true positives followed within 14 days by the same rule firing again as a true positive on the same asset; beta-binomial vs peers"),
+            "Closed high/critical true positives followed within 14 days by the same rule firing again as a true positive on the same asset; asset-clustered observed-vs-expected test (expected from peers' rates per asset class), read against peers' statistics"),
     "EG11": ("24x7 claim vs night-time reality", "Execution gap", "Security Operations",
              "Share of night-opened (00-06h) high/critical cases acknowledged after > 60 min, for entities that declare 24x7 monitoring"),
     "EG12": ("Regulatory reporting beyond 6 hours", "Execution gap", "Governance & Oversight",
@@ -308,21 +308,69 @@ def bunching_ci(ttc: np.ndarray, sla: float, n_boot: int = 200, seed: int = 0) -
 
 def eg7(ctx, days: int = 14):
     """Unremediated root cause: after a high/critical true positive is closed, the same
-    detection rule fires again as a true positive on the same asset within `days`."""
+    detection rule fires again as a true positive on the same asset within `days`.
+
+    Recurrences cluster on individual assets (a busy mail gateway re-alerts far more than a
+    portal), so the test works at asset level: observed vs expected recurrences per asset
+    (expected from peers' rate for that asset class), with a within-asset correlation
+    estimated from peer assets. The entity z-score is then read against the peers' z-scores
+    (empirical null, never narrower than the model), so a small SOC whose cases sit on a
+    few assets is not over-flagged."""
     cf, al = ctx.cf, ctx.alerts
     tp = cf[cf.closed & (cf.disposition == "TP") & ~cf.redteam & cf.severity.isin(["high", "critical"])][
-        ["case_id", "entity_id", "asset_id", "detector_id", "closed_ts"]]
+        ["case_id", "entity_id", "asset_id", "detector_id", "closed_ts", "ttc_min"]]
     a = al[al.disposition == "TP"][["asset_id", "detector_id", "ts"]].sort_values("ts")
     tp = tp.sort_values("closed_ts")
     tp["search_from"] = tp.closed_ts + pd.Timedelta(days=1)
     m = pd.merge_asof(tp.sort_values("search_from"), a.rename(columns={"ts": "next_ts"}), left_on="search_from",
                       right_on="next_ts", by=["asset_id", "detector_id"], direction="forward")
-    m["recur"] = (m.next_ts - m.closed_ts) <= pd.Timedelta(days=days)
-    m = m.set_index("case_id").reindex(tp.case_id).reset_index()
-    return _rate_detector("EG7", ctx, m, m.recur.fillna(False), "upper",
-                          "{k} of {n} closed high/critical true positives ({rate:.0%}) were followed within 14 days by the "
-                          "same detection rule firing again as a true positive on the same asset - evidence the root cause "
-                          "was not remediated; peer median {pr:.0%}.")
+    m["recur"] = ((m.next_ts - m.closed_ts) <= pd.Timedelta(days=days)).fillna(False)
+    m = m.merge(ctx.assets[["asset_id", "asset_class"]], on="asset_id", how="left")
+    m["asset_class"] = m.asset_class.fillna("unknown")
+    A = m.groupby(["entity_id", "asset_id", "asset_class"]).recur.agg(o="sum", n="size").reset_index()
+    ents = ctx.entities.entity_id.tolist()
+
+    def zscore(eid, peer_ids):
+        P = A[A.entity_id.isin(peer_ids)]
+        cls = P.groupby("asset_class")[["o", "n"]].sum()
+        r = ((cls.o + 0.5) / (cls.n + 1)).clip(1e-4, 1 - 1e-4)
+        P = P.assign(r=P.asset_class.map(r))
+        z2 = (P.o - P.n * P.r) ** 2 / (P.n * P.r * (1 - P.r))
+        rho = float(np.clip(robust_overdispersion(z2.to_numpy(), (P.n - 1).to_numpy()), 1e-4, 0.5))
+        T = A[A.entity_id == eid]
+        rr = T.asset_class.map(r).fillna(float(P.o.sum() / max(P.n.sum(), 1))).clip(1e-4, 1 - 1e-4)
+        e = T.n * rr
+        var = (T.n * rr * (1 - rr) * (1 + (T.n - 1) * rho)).sum()
+        return (float(T.o.sum() - e.sum()) / np.sqrt(var) if var > 0 else 0.0), float(e.sum())
+
+    zs = {}
+    for eid in ents:
+        if (A.entity_id == eid).sum() == 0 or A[A.entity_id == eid].n.sum() < 10:
+            continue
+        zs[eid] = zscore(eid, [x for x in ents if x != eid])
+    out = []
+    g = m.groupby("entity_id").recur.agg(["sum", "count"])
+    for eid in ents:
+        if eid not in zs:
+            out.append(_row(eid, "EG7", reason="Insufficient evidence (fewer than 10 relevant cases)"))
+            continue
+        z, exp_k = zs[eid]
+        peer_z = np.array([v[0] for e2, v in zs.items() if e2 != eid])
+        mu = float(np.median(peer_z))
+        sd = max(1.0, float(np.median(np.abs(peer_z - mu)) * 1.4826)) * np.sqrt(1 + PEER_INFLATE / max(len(peer_z), 1))
+        p = float(np.clip(stats.norm.sf((z - mu) / sd), 1e-12, 1.0))
+        k, n = int(g.loc[eid, "sum"]), int(g.loc[eid, "count"])
+        pr = float(np.median((g.drop(index=eid)["sum"] / g.drop(index=eid)["count"])))
+        ev = m[(m.entity_id == eid) & m.recur].sort_values("ttc_min")
+        out.append(_row(eid, "EG7", p=p, n=n, k=k, rate=k / n, peer_rate=pr,
+                        effect=f"{k / n:.0%} vs peer median {pr:.0%}",
+                        reason=(f"{k} of {n} closed high/critical true positives ({k / n:.0%}) were followed within {days} "
+                                "days by the same detection rule firing again as a true positive on the same asset - "
+                                f"evidence the root cause was not remediated. Its asset mix predicts ~{exp_k:.0f}; "
+                                f"peer median {pr:.0%}."),
+                        evidence=ev.case_id.head(MAX_EVIDENCE).tolist(),
+                        extra={"expected_for_asset_mix": exp_k, "z": z}))
+    return out
 
 
 def eg11(ctx):
