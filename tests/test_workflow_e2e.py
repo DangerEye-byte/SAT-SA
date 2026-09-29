@@ -21,7 +21,10 @@ def client():
         shutil.rmtree(d, ignore_errors=True)
     if store.POINTER.exists():
         store.POINTER.unlink()
-    if not TEST_DB.exists():
+    newest_code = max(p.stat().st_mtime for p in (ROOT / "satsa").rglob("*.py"))
+    if not TEST_DB.exists() or TEST_DB.stat().st_mtime < newest_code:  # never test stale detectors
+        for p in (TEST_DB, TEST_DB.with_suffix(".duckdb.wal")):
+            p.unlink(missing_ok=True)
         pipeline.run(db_path=TEST_DB, verbose=False)
     from fastapi.testclient import TestClient
     from satsa.api import main
@@ -35,6 +38,47 @@ def client():
         shutil.rmtree(d, ignore_errors=True)
     if store.POINTER.exists():
         store.POINTER.unlink()
+
+
+def test_planted_weaknesses_recovered(client):
+    """Regression on the demo panel against the hidden answer key: every planted statistical
+    weakness is flagged at 10% FDR, every planted deterministic fact is raised, and no healthy
+    or hard-negative entity is flagged statistically."""
+    import json
+    from satsa.eval.panels import DET_ARCH, HARD_NEG, STAT_ARCH
+    from satsa.pipeline import TRUTH_DIR
+    gt = json.loads((TRUTH_DIR / "ground_truth.json").read_text())["entities"]
+    q = {e["entity_id"]: e for e in client.get("/api/queue?fdr=0.1").json()["entities"]}
+    assert set(q) == set(gt)
+    missed = [e for e, g in gt.items() if g["archetype"] in STAT_ARCH and not q[e]["q_value"] <= 0.1]
+    assert missed == [], f"planted weaknesses not flagged: {missed}"
+    missed = [e for e, g in gt.items() if g["archetype"] in DET_ARCH and not q[e]["flagged"]]
+    assert missed == [], f"planted deterministic facts not raised: {missed}"
+    false = [e for e, g in gt.items() if (g["archetype"] in HARD_NEG or g["archetype"] == "healthy")
+             and g["provider"] != "MSSP-3" and q[e]["q_value"] <= 0.1]
+    assert false == [], f"healthy or hard-negative entities flagged: {false}"
+
+
+def test_every_get_endpoint_answers(client):
+    """Smoke test: every GET route in the API answers 200 on the demo panel."""
+    from satsa.api.main import app
+    case = client.get("/api/entities/BFS-02/findings/EG1").json()["evidence"][0]
+    fill = {"{entity_id}": "PWR-01", "{detector_id}": "EG2", "{case_id}": case}
+    extra = {"/api/entities/{entity_id}/findings/{detector_id}/explain": "?model=false",
+             "/api/gaming/run": "?strategy=attrition&policy=satsa_analytics"}
+    checked = 0
+    for r in app.routes:
+        path = getattr(r, "path", "")
+        if "GET" not in getattr(r, "methods", ()) or not path.startswith("/api/") or path == "/api/jobs/{job_id}":
+            continue
+        url = path
+        for k, v in fill.items():
+            url = url.replace(k, v)
+        res = client.get(url + extra.get(path, ""))
+        assert res.status_code == 200, f"{url}: {res.status_code} {res.text[:200]}"
+        checked += 1
+    assert checked >= 25
+    assert client.get("/api/jobs/nope").status_code == 404
 
 
 def test_new_endpoints(client):
