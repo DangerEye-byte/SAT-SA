@@ -1,11 +1,12 @@
 import { useState, type ReactNode } from "react";
 import { Link, useParams } from "react-router-dom";
-import { api, fmtP, pct } from "../api";
+import { api, fmtP, pct, type Entity } from "../api";
 import { CaseDrawer, FindingDrawer } from "../components/Drawers";
 import { BasisPill, Chart, ErrorBox, Loading } from "../components/ui";
 import { useData } from "../hooks";
 
-const TABS = ["Findings", "Trends", "24×7 reality", "Regulatory", "Red team", "ATT&CK coverage"];
+const TABS = ["Findings", "Evidence over time", "Trends", "Time to close", "24×7 reality", "Regulatory", "Red team", "ATT&CK coverage"];
+const DISP: Record<string, string> = { accepted: "teal", dismissed: "gray", escalated: "red", open: "amber" };
 const STATE_COLOR: Record<string, string> = { covered: "#1f6a60", quiet: "#b7862b", blind: "#8f2f2f", not_applicable: "#1a2840" };
 
 export default function EntityPage() {
@@ -28,6 +29,7 @@ export default function EntityPage() {
         </div>
         <div className="spacer" />
         <BasisPill basis={basis} />
+        <a className="btn" href={api.briefUrl(e.entity_id)} target="_blank" rel="noreferrer">Examination brief ⎙</a>
         <Link className="btn primary" to={`/review/${e.entity_id}`}>Open review lab →</Link>
       </div>
       <div className="grid g4" style={{ margin: "16px 0" }}>
@@ -51,12 +53,16 @@ export default function EntityPage() {
           {tab === "Findings" && (e.findings.length === 0 ? <div className="muted">No significant findings — this entity's evidence is consistent with its peers.</div> :
             e.findings.map((f) => (
               <div key={f.detector_id} className={`finding ${f.deterministic ? "det" : ""}`} onClick={() => setDet(f.detector_id)}>
-                <div className="row"><span className="t">{f.name}</span><span className="pill gray">{f.family}</span><div className="spacer" />
+                <div className="row"><span className="t">{f.name}</span><span className="pill gray">{f.family}</span>
+                  {f.disposition && f.disposition.status !== "open" && <span className={`pill ${DISP[f.disposition.status]}`}>examiner: {f.disposition.status}</span>}
+                  <div className="spacer" />
                   {f.deterministic ? <span className="pill red">fact · {f.severity}</span> : <span className="mono muted">p={fmtP(f.p_value)}</span>}</div>
                 <div className="r">{f.reason}</div>
                 <div className="muted" style={{ fontSize: 12 }}>Tests: {f.regulations[0]} · click for evidence →</div>
               </div>)))}
+          {tab === "Evidence over time" && <Evidence id={e.entity_id} q={e.quarterly} />}
           {tab === "Trends" && <Trends monthly={e.monthly} />}
+          {tab === "Time to close" && <Survival id={e.entity_id} />}
           {tab === "24×7 reality" && <Hourly id={e.entity_id} />}
           {tab === "Regulatory" && <Regulatory id={e.entity_id} />}
           {tab === "Red team" && <RedTeam id={e.entity_id} />}
@@ -119,11 +125,25 @@ function Regulatory({ id }: { id: string }) {
 }
 
 function RedTeam({ id }: { id: string }) {
-  const { data } = useData(() => api.redteam(id), [id]);
-  if (!data) return <Loading />;
-  if (!data.has_report) return <div className="muted">No red-team report submitted by this entity.</div>;
+  const { data: stored } = useData(() => api.redteam(id), [id]);
+  const [up, setUp] = useState<any>(null);
+  const [err, setErr] = useState<string | null>(null);
+  if (!stored) return <Loading />;
+  const data = up ? { ...up, has_report: true, reason: `Uploaded exercise: ${up.funnel.executed} techniques executed, ${up.funnel.executed - up.funnel.alerted} never alerted${up.missed.length ? ` (${up.missed.join(", ")})` : ""}.` } : stored;
+  const upload = (
+    <div className="row" style={{ marginBottom: 12 }}>
+      <span className="muted" style={{ fontSize: 13 }}>Reconcile a red-team / drill report (CSV/JSON: category or technique_id, start_ts, target_asset):</span>
+      <input type="file" onChange={async (ev) => {
+        const f = ev.target.files?.[0];
+        if (!f) return;
+        try { setErr(null); setUp(await api.redteamUpload(id, f)); } catch (x) { setErr(String(x)); }
+      }} />
+      {err && <span className="bad">{err}</span>}
+    </div>);
+  if (!data.has_report) return <>{upload}<div className="muted">No red-team report submitted by this entity.</div></>;
   const stages = ["executed", "alerted", "cased", "escalated"];
   return <>
+    {upload}
     <p>{data.reason}</p>
     <Chart height={220} option={{
       grid: { left: 90, right: 30, top: 10, bottom: 20 }, xAxis: { type: "value" }, yAxis: { type: "category", data: stages.slice().reverse() },
@@ -132,5 +152,45 @@ function RedTeam({ id }: { id: string }) {
     <table><thead><tr><th>Technique</th><th>Tactic</th><th>Target</th><th>Alerted</th><th>Cased</th><th>Escalated</th></tr></thead>
       <tbody>{data.techniques.map((t: any) => <tr key={t.technique_id}><td><span className="mono">{t.technique_id}</span> {t.technique}</td><td>{t.tactic}</td><td className="mono">{t.target_asset}</td>
         <td>{t.alerted ? "✓" : <b className="bad">missed</b>}</td><td>{t.cased ? "✓" : "—"}</td><td>{t.escalated ? "✓" : "—"}</td></tr>)}</tbody></table>
+  </>;
+}
+
+function Evidence({ id, q }: { id: string; q: Entity["quarterly"] }) {
+  const { data: cyc } = useData(() => api.cycle(id), [id]);
+  if (!q?.length) return <div className="muted">Quarterly monitoring not available for this run.</div>;
+  return <>
+    <p className="muted" style={{ fontSize: 13 }}>Each quarter is analysed on its own data. The running product of e-values is evidence that
+      keeps its false-alarm guarantee however often the regulator looks (anytime-valid e-BH). Above the line = flagged at 10% FDR.</p>
+    <Chart height={260} option={{
+      tooltip: { trigger: "axis" }, grid: { top: 20, left: 60, right: 20, bottom: 30 },
+      xAxis: { type: "category", data: q.map((x) => x.quarter) },
+      yAxis: { type: "log", name: "evidence (e)", min: 0.1 },
+      series: [{ type: "line", name: "cumulative evidence", data: q.map((x) => Math.max(0.1, x.cum_e)), itemStyle: { color: "#f5b544" },
+        markLine: { symbol: "none", data: [{ yAxis: 10, name: "1/FDR" }], lineStyle: { color: "#8fa3bf", type: "dashed" } } },
+        { type: "scatter", name: "flagged (e-BH)", data: q.map((x) => (x.ebh_flag ? Math.max(0.1, x.cum_e) : null)), itemStyle: { color: "#f06a6a" }, symbolSize: 12 }],
+    }} />
+    {cyc?.available && <div className="grid g3" style={{ marginTop: 10 }}>
+      {(["new", "persisting", "resolved"] as const).map((k) => (
+        <div key={k} className="card"><h3>{k} ({cyc.previous} → {cyc.current})</h3>
+          {cyc[k].length ? cyc[k].map((d: any) => <div key={d.detector_id} style={{ fontSize: 13 }}><span className="mono muted">{d.detector_id}</span> {d.name}</div>)
+            : <div className="muted" style={{ fontSize: 13 }}>none</div>}</div>))}
+    </div>}
+  </>;
+}
+
+function Survival({ id }: { id: string }) {
+  const { data } = useData(() => api.survival(id), [id]);
+  if (!data) return <Loading />;
+  if (!data.available) return <div className="muted">Not enough high/critical cases.</div>;
+  return <>
+    <p className="muted" style={{ fontSize: 13 }}>Share of high/critical cases still open after t minutes (Kaplan–Meier; cases still open at the end of the
+      period are counted as censored, not dropped). Median {data.km_median_min?.toFixed(0)} min vs peers {data.peer_km_median_min?.toFixed(0)} min;
+      a closed-cases-only median would say {data.naive_median_min?.toFixed(0)} min ({data.open} cases still open).</p>
+    <Chart height={280} option={{
+      tooltip: { trigger: "axis" }, grid: { top: 20, left: 50, right: 20, bottom: 40 },
+      xAxis: { type: "category", data: data.curve.t, name: "minutes", nameLocation: "middle", nameGap: 26 },
+      yAxis: { type: "value", max: 1, axisLabel: { formatter: (x: number) => `${x * 100}%` } },
+      series: [{ type: "line", step: "end", data: data.curve.open_share, itemStyle: { color: "#60a5fa" }, areaStyle: { color: "rgba(96,165,250,.15)" } }],
+    }} />
   </>;
 }

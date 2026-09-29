@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { api, fmtP, pct } from "../api";
 import type { Finding } from "../api";
 import { useData } from "../hooks";
@@ -27,6 +28,51 @@ function DecayChart({ series }: { series: Record<string, number[]> }) {
       xAxis: { type: "category", data: Array.from({ length: 12 }, (_, i) => `M${i + 1}`) }, yAxis: { type: "value" },
       series: Object.entries(series).map(([k, v]) => ({ name: k, type: "line", data: v, lineStyle: { color: "#f5b544" } })),
     }} />
+  );
+}
+
+function TwinChart({ t }: { t: any }) {
+  const m = t.actual.map((_: number, i: number) => `M${i + 1}`);
+  return (
+    <Chart height={280} option={{
+      title: { text: "Entity vs its synthetic twin (share of likely-superficial cases)", textStyle: { fontSize: 13, color: "#e6edf6" } },
+      tooltip: { trigger: "axis" }, legend: { top: 24, textStyle: { color: "#8fa3bf" } }, grid: { top: 60, left: 45, right: 15, bottom: 30 },
+      xAxis: { type: "category", data: m }, yAxis: { type: "value", axisLabel: { formatter: (x: number) => `${(x * 100).toFixed(0)}%` } },
+      series: [
+        { name: "Entity", type: "line", data: t.actual, lineStyle: { color: "#f06a6a", width: 2 }, itemStyle: { color: "#f06a6a" } },
+        { name: "Synthetic twin", type: "line", data: t.twin, lineStyle: { color: "#2dd4bf", type: "dashed" }, itemStyle: { color: "#2dd4bf" },
+          markArea: { itemStyle: { color: "rgba(143,163,191,.08)" }, data: [[{ xAxis: "M1" }, { xAxis: "M6" }]] } },
+        { name: "Placebo band (5-95%)", type: "line", data: t.twin.map((v: number, i: number) => v + t.placebo_band[1][i]), lineStyle: { opacity: 0 },
+          areaStyle: { color: "rgba(45,212,191,.08)" }, symbol: "none" },
+      ],
+    }} />
+  );
+}
+
+function Disposition({ f }: { f: any }) {
+  const [d, setD] = useState<any>(f.disposition || { status: "open" });
+  const [reason, setReason] = useState("");
+  const [err, setErr] = useState<string | null>(null);
+  const act = async (status: string) => {
+    try { setErr(null); const r = await api.setDisposition(f.entity_id, f.detector_id, status, reason); setD(r); } catch (x) { setErr(String(x)); }
+  };
+  return (
+    <div className="card" style={{ marginBottom: 12 }}>
+      <h3>Examiner disposition</h3>
+      <div className="row">
+        <span>Current: <b>{d.status}</b>{d.reason ? ` — ${d.reason}` : ""}</span>
+        {d.ledger_hash && <span className="mono muted">ledger {d.ledger_hash.slice(0, 12)}…</span>}
+      </div>
+      <div className="row" style={{ marginTop: 8 }}>
+        <input value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Reason (required to dismiss)"
+          style={{ flex: 1, background: "#0b1320", color: "#e6edf6", border: "1px solid #22324d", borderRadius: 8, padding: 8 }} />
+        <button className="btn good" onClick={() => act("accepted")}>Accept</button>
+        <button className="btn" onClick={() => act("dismissed")}>Dismiss</button>
+        <button className="btn bad" onClick={() => act("escalated")}>Escalate</button>
+      </div>
+      {err && <div className="bad" style={{ marginTop: 6 }}>{err}</div>}
+      <div className="muted" style={{ fontSize: 12, marginTop: 6 }}>Every decision is written to the hash-chained audit ledger. SAT-SA flags; the examiner decides.</div>
+    </div>
   );
 }
 
@@ -70,7 +116,10 @@ export function FindingDrawer({ entityId, detector, onClose, onCase }: { entityI
               {f.rate != null && <span className="muted">entity {pct(f.rate)} vs peer median {pct(f.peer_rate)}</span>}
             </div>
             <div className="card" style={{ marginBottom: 12 }}><div style={{ lineHeight: 1.55 }}>{f.reason}</div></div>
-            {f.extra?.chart && <div className="card" style={{ marginBottom: 12 }}><BunchingChart c={f.extra.chart} /></div>}
+            <Disposition f={f} />
+            {f.extra?.chart && <div className="card" style={{ marginBottom: 12 }}><BunchingChart c={f.extra.chart} />
+              {f.extra.chart.excess_ci90 && <div className="muted" style={{ fontSize: 12 }}>Bootstrap 90% interval for the excess: {f.extra.chart.excess_ci90.map((x: number) => x.toFixed(0)).join(" – ")} cases.</div>}</div>}
+            {f.extra?.twin && <div className="card" style={{ marginBottom: 12 }}><TwinChart t={f.extra.twin} /></div>}
             {f.extra?.series && Object.keys(f.extra.series).length > 0 && <div className="card" style={{ marginBottom: 12 }}><DecayChart series={f.extra.series} /></div>}
             {f.extra?.clusters && (
               <div className="card" style={{ marginBottom: 12 }}>

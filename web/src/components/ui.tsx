@@ -2,9 +2,9 @@ import ReactECharts from "echarts-for-react";
 import type { Reason } from "../api";
 import { fmtP } from "../api";
 
-export const Chart = ({ option, height = 280 }: { option: any; height?: number }) => (
+export const Chart = ({ option, height = 280, onEvents }: { option: any; height?: number; onEvents?: Record<string, (p: any) => void> }) => (
   <ReactECharts option={{ backgroundColor: "transparent", textStyle: { color: "#c7d3e3" }, ...option }}
-    style={{ height }} notMerge lazyUpdate theme="dark" />
+    style={{ height }} notMerge lazyUpdate theme="dark" onEvents={onEvents} />
 );
 
 export const Loading = () => <div className="loading">Loading…</div>;

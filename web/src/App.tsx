@@ -7,12 +7,16 @@ import ProvidersPage from "./pages/Providers";
 import ValidationPage from "./pages/Validation";
 import LedgerPage from "./pages/Ledger";
 import IngestPage from "./pages/Ingest";
+import RedTeamLab from "./pages/RedTeamLab";
+import SectorsPage from "./pages/Sectors";
 
 const NAV = [
   ["/", "Supervisory queue"],
+  ["/sectors", "Sector view"],
   ["/blindspots", "Blind-spot matrix"],
   ["/review/BFS-02", "Review lab"],
   ["/providers", "Providers (systemic)"],
+  ["/redteam-lab", "Red-Team Lab (gaming)"],
   ["/validation", "Validation"],
   ["/ledger", "Audit ledger"],
   ["/ingest", "Ingest submission"],
@@ -40,6 +44,8 @@ export default function App() {
           <Route path="/validation" element={<ValidationPage />} />
           <Route path="/ledger" element={<LedgerPage />} />
           <Route path="/ingest" element={<IngestPage />} />
+          <Route path="/sectors" element={<SectorsPage />} />
+          <Route path="/redteam-lab" element={<RedTeamLab />} />
         </Routes>
       </main>
     </div>

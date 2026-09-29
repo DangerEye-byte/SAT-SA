@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { api, fmtP } from "../api";
 import { Attention, BasisPill, ErrorBox, Loading, ReasonList, Sparkline } from "../components/ui";
 import { useData } from "../hooks";
@@ -9,13 +9,15 @@ const LEVELS = [0.05, 0.1, 0.2];
 export default function QueuePage() {
   const [fdr, setFdr] = useState(0.1);
   const [showAll, setShowAll] = useState(false);
-  const { data, error, loading } = useData(() => api.queue(fdr), [fdr]);
+  const [params] = useSearchParams();
+  const sector = params.get("sector") || undefined;
+  const { data, error, loading } = useData(() => api.queue(fdr, sector), [fdr, sector]);
   const nav = useNavigate();
   if (error) return <ErrorBox e={error} />;
   const rows = data ? (showAll ? data.entities : data.entities.filter((e) => e.flagged)) : [];
   return (
     <>
-      <h1>Supervisory review queue</h1>
+      <h1>Supervisory review queue{sector && <span className="pill gray" style={{ marginLeft: 10, fontSize: 12 }}>sector {sector}</span>}</h1>
       <p className="sub">Entities ranked by calibrated evidence from their own SOC paper trail. Statistical flags are controlled at a
         known false-discovery rate; documented facts (blind spots, clock faults, red-team misses) are listed separately.</p>
       <div className="card" style={{ marginBottom: 14 }}>

@@ -15,12 +15,14 @@ export type Finding = {
   regulations: string[]; p_value: number | null; deterministic: boolean; severity: string | null; n: number; k: number;
   rate: number | null; peer_rate: number | null; effect: string; reason: string; evidence: string[]; evidence_type: string;
   score: number; significant: boolean; extra: any; records?: any[];
+  disposition?: { status: string; reason?: string; examiner?: string; ts?: string };
 };
 export type Entity = QueueEntity & {
   declared_log_sources: string[]; n_assets: number; n_analysts: number; sla_critical_min: number;
   trust_completeness: number; trust_temporal: number; trust_timeliness: number; trust_coverage: number;
   findings: Finding[]; monthly: any[]; tactics: { tactic: string; state: string; observed: number; expected: number; p: number | null }[];
   provider: any;
+  quarterly: { look: number; quarter: string; p_value: number; e_value: number; cum_e: number; ebh_flag: boolean; naive_bh_flag: boolean }[];
 };
 
 async function http<T>(path: string, init?: RequestInit): Promise<T> {
@@ -33,7 +35,7 @@ const post = <T,>(path: string, body?: unknown) =>
 
 export const api = {
   meta: () => http<any>("/api/meta"),
-  queue: (fdr: number) => http<Queue>(`/api/queue?fdr=${fdr}`),
+  queue: (fdr: number, sector?: string) => http<Queue>(`/api/queue?fdr=${fdr}${sector ? `&sector=${sector}` : ""}`),
   entity: (id: string) => http<Entity>(`/api/entities/${id}`),
   finding: (id: string, det: string) => http<Finding>(`/api/entities/${id}/findings/${det}`),
   hourly: (id: string) => http<any>(`/api/entities/${id}/hourly`),
@@ -57,6 +59,22 @@ export const api = {
     files.forEach((f) => fd.append("files", f));
     return http<any>("/api/ingest/validate", { method: "POST", body: fd });
   },
+  ingestCommit: (token: string) => post<{ job_id: string }>(`/api/ingest/commit/${token}`),
+  job: (id: string) => http<any>(`/api/jobs/${id}`),
+  evidence: (id: string) => http<any>(`/api/entities/${id}/evidence`),
+  survival: (id: string) => http<any>(`/api/entities/${id}/survival`),
+  cycle: (id: string) => http<any>(`/api/entities/${id}/cycle`),
+  setDisposition: (id: string, det: string, status: string, reason = "") =>
+    post<any>(`/api/entities/${id}/findings/${det}/disposition`, { status, reason, examiner: "examiner" }),
+  briefUrl: (id: string) => `/api/entities/${id}/brief`,
+  redteamUpload: (id: string, file: File) => {
+    const fd = new FormData();
+    fd.append("file", file);
+    return http<any>(`/api/entities/${id}/redteam`, { method: "POST", body: fd });
+  },
+  sectors: () => http<any[]>("/api/sectors"),
+  gaming: () => http<any>("/api/gaming"),
+  gamingRun: (strategy: string, policy: string, seed = 1) => http<any>(`/api/gaming/run?strategy=${strategy}&policy=${policy}&seed=${seed}`),
 };
 
 export const fmtP = (p: number | null | undefined) =>
