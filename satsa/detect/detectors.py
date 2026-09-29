@@ -478,10 +478,19 @@ def ns1(ctx, window_days: int = 90):
                              "earlier in the year) and then went silent - monitoring appears to have broken.")
             parts.append("Silence on a critical system is evidence of a gap, not of safety.")
             reason = " ".join(parts)
+        elif p_ent < 0.01:
+            low = df_[df_.p < 0.01]
+            reason = (f"No critical asset is completely silent, but {len(low)} of {m} alert well below expectation "
+                      f"(together {int(low.obs_quarter.sum())} alerts in the last {window_days} days vs ~"
+                      f"{low.expected_quarter.sum():.0f} expected from peers and their own history). Reduced telemetry "
+                      "on critical systems, for example from suppressed detection rules, weakens coverage.")
+            silent = low
         else:
             reason = f"All {m} critical assets show activity consistent with peers and with their own history."
+        quiet_only = len(silent) and not ((silent.obs_quarter < 0.3 * silent.expected_quarter).any())
         out.append(_row(eid, "NS1", p=p_ent, n=m, k=len(silent), evidence=silent.asset_id.tolist(), evidence_type="asset",
-                        effect=f"{len(silent)} critical asset(s) silent" if len(silent) else "no silent assets",
+                        effect=(f"{len(silent)} critical asset(s) under-alerting" if quiet_only else
+                                f"{len(silent)} critical asset(s) silent" if len(silent) else "no silent assets"),
                         reason=reason, extra={"assets": df_.head(15).to_dict("records")}))
     have = {r["entity_id"] for r in out}
     out += [_row(e, "NS1", reason="No critical assets") for e in ctx.entities.entity_id if e not in have]
