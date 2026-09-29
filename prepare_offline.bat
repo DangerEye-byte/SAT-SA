@@ -2,6 +2,7 @@
 REM Run ONCE on a machine with internet. Produces everything needed to install SAT-SA on an
 REM air-gapped machine: Python wheels (wheelhouse\), the optional local model (data\models\) and
 REM the built web UI (satsa\api\static\). Copy the whole folder across afterwards.
+REM Wheels match THIS machine's Python version: install the same Python minor version on the target.
 setlocal
 cd /d "%~dp0"
 python -m pip download -r requirements.txt -d wheelhouse --only-binary=:all: || goto :err

@@ -49,7 +49,7 @@ python -m uvicorn satsa.api.main:app --port 8000     # UI + API on http://localh
 ### Air-gapped installation
 1. On a connected machine, run `prepare_offline.bat`. It downloads all wheels to `wheelhouse\` (about 130 MB), the optional local model and a SHA-256 manifest.
 2. Copy the folder to the target machine.
-3. Run `install_offline.bat` there, then `run.bat`. No network access is used at install or run time. `tests/test_offline.py` proves the analysis runs with every outbound connection blocked.
+3. Run `install_offline.bat` there, then `run.bat`. Use the **same Python minor version** on both machines (wheels are version-specific; the reference build is Python 3.13, locked in `requirements.lock`). No network access is used at install or run time. `tests/test_offline.py` proves the analysis runs with every outbound connection blocked.
 
 ### Optional: local AI explanations
 - `pip install -r requirements-ai.txt`, then place `Qwen3-4B-Instruct-2507-Q4_K_M.gguf` (Apache-2.0, 2.5 GB) in `data/models/`. `prepare_offline.bat` does both.

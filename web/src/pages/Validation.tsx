@@ -240,9 +240,16 @@ function RealData({ G }: { G: any }) {
 function Runtime({ V }: { V: any }) {
   const r = V.V8_runtime;
   const rep = V.V9_reproducibility;
+  const a = V.V12_anytime;
   if (!r && !rep) return null;
   return (
     <div className="grid g2" style={{ marginTop: 14 }}>
+      {a && <div className="card" style={{ gridColumn: "1 / -1" }}>
+        <h2>Re-checking every quarter without inflating false alarms <Syn /></h2>
+        <p style={{ fontSize: 13 }}>Four quarterly looks at {a.null_panels} all-healthy panels. Naive re-testing each quarter raised a false alarm in
+          {" "}<b className="bad">{pc(a.naive_realized_fdr)}</b> of panels; SAT-SA's anytime-valid e-values in <b className="good">{pc(a.ebh_realized_fdr)}</b> (promise ≤ {pc(a.q)}).
+          Planted weaknesses caught by the fourth look: {pc(a.planted_recall_by_look4_ebh)}.</p>
+      </div>}
       {r && <div className="card">
         <h2>Runs on a laptop, offline</h2>
         <table><tbody>
