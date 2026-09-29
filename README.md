@@ -47,6 +47,13 @@ python -m satsa.pipeline                             # generate the demo panel +
 python -m uvicorn satsa.api.main:app --port 8000     # UI + API on http://localhost:8000 (UI is pre-built)
 ```
 
+With Docker (Linux image; the demo panel and its analysis are built into the image):
+```bash
+docker build -t satsa .                  # ~6 min, needs internet once
+docker run --rm -p 8000:8000 satsa       # ready immediately on http://localhost:8000
+```
+The container needs no network at run time. With `docker run --network none`, the full API still answers from inside the container, and the results match the Windows build exactly. The image does not include the optional local model; explanations use the verified template path.
+
 ### Air-gapped installation
 1. On a connected machine, run `prepare_offline.bat`. It downloads all wheels to `wheelhouse\` (about 130 MB), the optional local model and a SHA-256 manifest.
 2. Copy the folder to the target machine.
