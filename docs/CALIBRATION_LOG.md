@@ -249,6 +249,46 @@ The model is Qwen3-4B-Instruct-2507 Q4_K_M running on the CPU. Its output is sch
 | 1 (CPU contended) | 239 s, 229 s | TEL-02 JSON truncated at max_tokens 420, so unparseable. A summary was falsely rejected as "exonerating" because it quoted a note saying "no issue" / "benign". | maxLength limits in the schema (summary 240, claim 170, quote 90, 1 to 3 claims, 1 to 2 record ids), max_tokens 700, 3 evidence records, `_unquoted()` strips quoted text before the exoneration check, and a rejected summary falls back to the detector reason |
 | 2 (CPU free) | 112.6 s, 117.9 s | Both came from the local model: 3 claims verified, 1 rejected. The summary was rejected because a truncated quote with no closing mark contained "benign". | `_unquoted()` also strips an unclosed trailing quote. Claims that quote text from an instruction-like (hostile) note are rejected, with a test in `tests/test_core.py`. |
 
+### Warm-up round 3 (29 Sept, 18 demo findings)
+
+The first pass produced 0 verified claims out of 3 for **PWR-03 NS5** and **TRN-06 TW1**.
+- **NS5:** "quoted span not found" three times. Its records were bare rule ids (`{"id": "DET-015"}`) with nothing to quote.
+- **TW1:** "cites records not in the evidence (TW1)" three times. It had no records at all, since its evidence is a monthly series.
+- The same gap applied to NS2 and NS3 (tactics), NS8 (periods) and RT1 (techniques).
+
+Fix:
+- Id-only records are now built from the finding's computed `extra`. For example, NS5's DET-015 carries `monthly=42,38,35,42,25,1,0,2,0,1,3,2, ratio=0.0412, peer_ratio=0.9945`.
+- TW1 gets a TWIN record with the entity and twin monthly percentages.
+- Every pack ends with a FINDING record: the computed effect and reason, labelled trusted.
+
+After the fix:
+- NS5: 2 verified, 0 rejected.
+- TW1: 1 verified, 2 rejected.
+- NS8: 1 verified, 0 rejected.
+- RT1: 2 verified, 0 rejected.
+- Overall: **40 verified, 9 rejected over 18 explanations**, and every one of the 18 has at least one verified claim.
+
+Audit of the 9 rejections:
+
+| Finding | Reason | Verdict |
+|---|---|---|
+| PWR-01 EG2 | quoted the "NOTE TO AI REVIEWER" note | correct (the demo behaviour) |
+| GOV-02 NS7 | cited "deterministic reason" as a record id | correct |
+| TEL-02 EG13 | restated the analyst's "benign" closure as fact | correct (conservative) |
+| TRN-02 NS1 ×2 | "numbers not in the evidence (02)": digits of asset ids like TRN-02-A0022 | **false positive** |
+| TEL-03 EG7 | "no further action was taken" read as exoneration | **false positive** |
+| TRN-06 TW1 ×2, PWR-03 NS1 | quote not found | **length-cap artefact** |
+
+The length-cap artefact: every failing quote ended in a garbled word ("gapscomputed", "twin_pct_by_moth", "weakns", "record TWW"). Constrained decoding mangles the last token when a string hits its schema `maxLength` (quote 90, text 170).
+
+Fixes:
+- quote maxLength 150 and text 220, and the prompt asks for quotes of at most 80 characters;
+- the verifier tolerates one garbled final word, as long as at least 20 characters still match verbatim;
+- identifier tokens (`[A-Za-z]+(-[A-Za-z0-9]+)+`) are stripped before the number check;
+- the exoneration regex now needs the clearing sense ("requires no further action", "no action needed", "ignore this finding"), not a factual "no action was taken".
+
+Each fix has a test (`test_verifier_edge_cases_from_live_model_output`). The five affected explanations were regenerated.
+
 ## GUIDE R3 (real data), outcome
 
 No org is flagged, either raw or case-mix adjusted. Between-org heterogeneity is large (rho 0.108), and about 10% of orgs have zero TPs.

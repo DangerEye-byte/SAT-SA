@@ -194,3 +194,27 @@ def test_rule_and_series_findings_are_explainable():
     pack = evidence_pack(tw1)
     assert [r["id"] for r in pack["records"]] == ["TWIN", "FINDING"]
     assert verify(template_explanation(pack), pack)["verified_claims"]
+
+
+def test_verifier_edge_cases_from_live_model_output():
+    """Cases seen in real model output: ids with digits are not invented numbers, stating that
+    no action was taken is not exoneration (saying none is needed is), and a quote whose last
+    word was garbled at the output length cap still verifies on its intact part."""
+    from satsa.ai.explain import verify
+    pack = {"facts": {"detector": "NS1", "name": "Silent assets", "effect": "3 critical asset(s) under-alerting"},
+            "reason": "3 of 17 alert well below expectation (80 alerts in the last 90 days vs ~151 expected).",
+            "records": [{"id": "TRN-02-A0022", "fields": "asset_class=scada_hmi", "note": "", "injection_like": False},
+                        {"id": "FINDING", "fields": "Reduced telemetry on critical systems weakens coverage.",
+                         "note": "", "injection_like": False}]}
+    claims = [
+        {"text": "Asset TRN-02-A0022 is a SCADA HMI.", "record_ids": ["TRN-02-A0022"], "quote": "asset_class=scada_hmi"},
+        {"text": "An alert on TRN-02-A0022 had no investigation, and no further action was taken.",
+         "record_ids": ["TRN-02-A0022"], "quote": "asset_class=scada_hmi"},
+        {"text": "Coverage is weakened.", "record_ids": ["FINDING"], "quote": "Reduced telemetry on critical systems weakns"},
+        {"text": "The asset requires no further action.", "record_ids": ["TRN-02-A0022"], "quote": "asset_class=scada_hmi"},
+        {"text": "Coverage is weakened.", "record_ids": ["FINDING"], "quote": "Reduced telemetry on public systems weakens"},
+    ]
+    v = verify({"summary": "", "question_for_entity": "", "claims": claims}, pack)
+    assert len(v["verified_claims"]) == 3, v["rejected_claims"]
+    assert v["verified_claims"][2]["quote"] == "Reduced telemetry on critical systems"
+    assert [c["rejected_because"][:12] for c in v["rejected_claims"]] == ["tries to cle", "quoted span "]
