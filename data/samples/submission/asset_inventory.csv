@@ -1,0 +1,26 @@
+asset_id,entity_id,asset_class,asset_name,criticality,log_sources,declared_monitored
+HLT-07-A0001,HLT-07,endpoint,Workstation fleet segment #1,2,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0002,HLT-07,endpoint,Workstation fleet segment #2,2,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0003,HLT-07,endpoint,Workstation fleet segment #3,2,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0004,HLT-07,endpoint,Workstation fleet segment #4,2,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0005,HLT-07,endpoint,Workstation fleet segment #5,2,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0006,HLT-07,endpoint,Workstation fleet segment #6,2,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0007,HLT-07,endpoint,Workstation fleet segment #7,2,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0008,HLT-07,endpoint,Workstation fleet segment #8,2,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0009,HLT-07,firewall,Perimeter firewall #9,3,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0010,HLT-07,firewall,Perimeter firewall #10,3,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0011,HLT-07,email_gw,Email gateway #11,3,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0012,HLT-07,web_server,Public web server #12,3,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0013,HLT-07,web_server,Public web server #13,3,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0014,HLT-07,vpn_gw,VPN gateway #14,3,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0015,HLT-07,ad_dc,Active Directory DC #15,4,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0016,HLT-07,ad_dc,Active Directory DC #16,4,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0017,HLT-07,db_server,Database server #17,3,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0018,HLT-07,db_server,Database server #18,3,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0019,HLT-07,db_server,Database server #19,3,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0020,HLT-07,file_server,File server #20,2,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0021,HLT-07,file_server,File server #21,2,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0022,HLT-07,his,Hospital information system #22,4,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0023,HLT-07,his,Hospital information system #23,4,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0024,HLT-07,pacs,PACS imaging #24,3,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True
+HLT-07-A0025,HLT-07,pacs,PACS imaging #25,3,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",True

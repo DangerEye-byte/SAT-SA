@@ -1,0 +1,2 @@
+entity_id,entity_name,sector,sector_name,size_band,soc_provider,claims_24x7,declared_log_sources,n_assets,n_analysts,sla_critical_min
+HLT-07,Hospital Network G,HLT,Health,M,INHOUSE,True,"auth_logs,av,dns,edr,email_gw,firewall,ids,netflow,proxy,siem_health,vpn,waf",25,10,240

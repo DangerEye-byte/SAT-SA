@@ -94,7 +94,7 @@ def validate_table(table: str, df: pd.DataFrame) -> tuple[pd.DataFrame | None, d
         return None, rep
     for c in df.columns:
         if c in TIME_COLS:
-            parsed = pd.to_datetime(df[c], errors="coerce")
+            parsed = pd.to_datetime(df[c], errors="coerce", format="mixed")
             bad = parsed.isna() & df[c].notna() & (df[c].astype(str).str.len() > 0)
             if bad.any():
                 rows = (bad[bad].index[:5] + 2).tolist()

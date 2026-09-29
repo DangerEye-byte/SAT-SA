@@ -19,10 +19,10 @@ from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from satsa import __version__, ledger, review, taxonomy as tx
+from satsa import __version__, brief, ledger, review, taxonomy as tx, workflow
 from satsa.detect.detectors import DETECTORS, DET_SCORE, conformance_violations
 from satsa.ingest.loader import ingest_files
-from satsa.store import DATA, ROOT, connect
+from satsa.store import DATA, ROOT, connect, live_db_path
 
 app = FastAPI(title="SAT-SA API", version=__version__,
               description="Supervisory Analytics Tool for SOC Assessment - offline API")
@@ -35,12 +35,24 @@ _con = None
 def con():
     global _con
     if _con is None:
-        from satsa.store import DB_PATH
-        if not DB_PATH.exists():
+        path = live_db_path()
+        if not path.exists():
             from satsa.pipeline import run
             run(verbose=True)
-        _con = connect()
+        _con = connect(path=path)
+        workflow.ensure_tables(_con)
     return _con
+
+
+def swap_db(new_path: Path) -> None:
+    """Point the API at a freshly built database, carrying examiner state across."""
+    global _con
+    with _lock:
+        workflow.carry_over(con(), new_path)
+        _con.close()
+        _con = connect(path=new_path)
+        workflow.ensure_tables(_con)
+    workflow.cleanup_runs()
 
 
 def q(sql: str, params=None) -> pd.DataFrame:
@@ -150,6 +162,8 @@ def queue(fdr: float = Query(0.10, ge=0.001, le=0.5), sector: str | None = None,
 def _findings(entity_id: str, include_all: bool = False) -> list[dict]:
     r = q("SELECT * FROM detector_results WHERE entity_id = ?", [entity_id])
     meta_ = {d: v for d, v in DETECTORS.items()}
+    with _lock:
+        disp = {x["detector_id"]: x for x in records(workflow.dispositions(con(), entity_id))}
     out = []
     for x in records(r):
         det = meta_[x["detector_id"]]
@@ -159,11 +173,14 @@ def _findings(entity_id: str, include_all: bool = False) -> list[dict]:
         x.update({"name": det[0], "family": det[1], "capability": det[2], "method": det[3],
                   "regulations": tx.REGMAP.get(x["detector_id"], []), "significant": sig,
                   "evidence": _j(x["evidence"]), "extra": _j(x["extra"])})
+        d_ = disp.get(x["detector_id"])
+        x["disposition"] = {k: d_[k] for k in ("status", "reason", "examiner", "ts")} if d_ else {"status": "open"}
         x["score"] = DET_SCORE.get(x["severity"], 0) if x["deterministic"] else (
             min(100, 20 * -math.log10(max(x["p_value"], 1e-12))) if x["p_value"] is not None else 0)
         # keep payloads small in list views; charts are served by /finding
         if not include_all:
-            x["extra"] = {k: v for k, v in (x["extra"] or {}).items() if k not in ("chart", "series", "assets", "rules", "techniques")}
+            x["extra"] = {k: v for k, v in (x["extra"] or {}).items()
+                          if k not in ("chart", "series", "assets", "rules", "techniques", "twin")}
             x["evidence"] = x["evidence"][:10]
         out.append(x)
     out.sort(key=lambda x: -x["score"])
@@ -185,8 +202,43 @@ def entity(entity_id: str, all_detectors: bool = False):
     e["tactics"] = records(q("SELECT tactic, state, observed, expected, p, supportable FROM tactic_matrix WHERE entity_id = ?",
                              [entity_id]))
     prov = q("SELECT * FROM providers WHERE provider = ?", [e["soc_provider"]])
-    e["provider"] = records(prov)[0] if len(prov) else None
+    e["provider"] = _provider_rows(prov)[0] if len(prov) else None
+    e["quarterly"] = _quarterly(entity_id)
     return e
+
+
+def _quarterly(entity_id: str) -> list[dict]:
+    try:
+        return records(q("SELECT look, quarter, p_value, e_value, cum_e, ebh_flag, naive_bh_flag FROM entity_quarterly "
+                         "WHERE entity_id = ? ORDER BY look", [entity_id]))
+    except Exception:  # table absent in databases built before quarterly monitoring
+        return []
+
+
+@app.get("/api/entities/{entity_id}/evidence")
+def evidence(entity_id: str, fdr: float = Query(0.10, ge=0.001, le=0.5)):
+    """Anytime-valid quarterly evidence (e-values). cum_e >= n_entities / (fdr * rank) is the e-BH rule;
+    as a single-entity rule of thumb, cum_e >= 1/fdr is already strong evidence."""
+    _entity_or_404(entity_id)
+    n = int(q("SELECT count(*) AS n FROM entity_scores").n.iloc[0])
+    return {"entity_id": entity_id, "fdr": fdr, "n_entities": n, "looks": _quarterly(entity_id),
+            "note": "Each quarter is analysed on its own data; the running product of e-values keeps its false-alarm "
+                    "guarantee no matter how often the regulator looks (e-BH, Wang & Ramdas 2022)."}
+
+
+@app.get("/api/entities/{entity_id}/survival")
+def entity_survival(entity_id: str):
+    _entity_or_404(entity_id)
+    try:
+        r = q("SELECT * FROM entity_survival WHERE entity_id = ?", [entity_id])
+    except Exception:
+        return {"entity_id": entity_id, "available": False}
+    if r.empty:
+        return {"entity_id": entity_id, "available": False}
+    out = records(r)[0]
+    out["curve"] = _j(out["curve"])
+    peers = q("SELECT median(km_median_min) AS m FROM entity_survival WHERE entity_id <> ?", [entity_id]).m.iloc[0]
+    return out | {"available": True, "peer_km_median_min": clean(peers)}
 
 
 @app.get("/api/entities/{entity_id}/findings/{detector_id}")
@@ -247,6 +299,68 @@ def regulatory():
                           for d, regs in tx.REGMAP.items() if d in DETECTORS]}
 
 
+class DispositionIn(BaseModel):
+    status: str
+    reason: str = ""
+    examiner: str = "examiner"
+
+
+@app.post("/api/entities/{entity_id}/findings/{detector_id}/disposition")
+def set_disposition(entity_id: str, detector_id: str, body: DispositionIn):
+    _entity_or_404(entity_id)
+    if detector_id not in DETECTORS:
+        raise HTTPException(404, "Unknown detector")
+    try:
+        with _lock:
+            return workflow.set_disposition(con(), entity_id, detector_id, body.status, body.reason, body.examiner)
+    except ValueError as e:
+        raise HTTPException(400, str(e)) from e
+
+
+@app.get("/api/dispositions")
+def list_dispositions(entity_id: str | None = None):
+    with _lock:
+        return records(workflow.dispositions(con(), entity_id))
+
+
+@app.get("/api/entities/{entity_id}/cycle")
+def cycle(entity_id: str):
+    _entity_or_404(entity_id)
+    with _lock:
+        return workflow.cycle_comparison(con(), entity_id)
+
+
+@app.post("/api/entities/{entity_id}/redteam")
+async def redteam_upload(entity_id: str, file: UploadFile = File(...)):
+    _entity_or_404(entity_id)
+    from satsa.ingest.loader import read_any
+    try:
+        tables = read_any(file.filename, await file.read())
+        rt = next(iter(tables.values()))
+        with _lock:
+            return clean(workflow.reconcile_redteam(con(), entity_id, rt))
+    except ValueError as e:
+        raise HTTPException(400, str(e)) from e
+
+
+@app.get("/api/entities/{entity_id}/brief", response_class=HTMLResponse)
+def entity_brief(entity_id: str, fdr: float = Query(0.10, ge=0.001, le=0.5)):
+    e = _entity_or_404(entity_id)
+    fs = _findings(entity_id, include_all=True)
+    disp = {f["detector_id"]: f["disposition"] for f in fs}
+    with _lock:
+        est = clean(review.estimate(con(), entity_id))
+    rm = {r["key"]: _j(r["value"]) for r in records(q("SELECT * FROM run_meta"))}
+    led = ledger.read()
+    return HTMLResponse(brief.render(e, fs, disp, est, _quarterly(entity_id), rm, led[-1] if led else None, fdr))
+
+
+@app.get("/api/sectors")
+def sectors(fdr: float = Query(0.10, ge=0.001, le=0.5)):
+    with _lock:
+        return clean(workflow.sector_summary(con(), fdr))
+
+
 # ---------------------------------------------------------------- cases
 @app.get("/api/cases/{case_id}")
 def case(case_id: str):
@@ -279,14 +393,39 @@ def blindspot():
                        "not_applicable": "Not expected for this entity's asset mix"}}
 
 
-@app.get("/api/providers")
-def providers():
-    p = q("SELECT * FROM providers ORDER BY p_value NULLS LAST")
+def _provider_rows(p: pd.DataFrame) -> list[dict]:
     out = records(p)
     for r in out:
-        for k in ("clients", "sectors", "client_rates"):
-            r[k] = _j(r[k])
+        for k in ("clients", "sectors", "client_rates", "effect_ci90"):
+            if k in r:
+                r[k] = _j(r[k])
     return out
+
+
+@app.get("/api/providers")
+def providers():
+    return _provider_rows(q("SELECT * FROM providers ORDER BY p_value NULLS LAST"))
+
+
+# ---------------------------------------------------------------- red-team lab (gaming simulator)
+@app.get("/api/gaming")
+def gaming_matrix():
+    """Detection matrix (strategies x policies). Served from the validation report when present."""
+    f = ROOT / "reports" / "validation.json"
+    if f.exists():
+        v = json.loads(f.read_text())
+        if "D4_gaming" in v:
+            return v["D4_gaming"]
+    from satsa.eval.gaming import matrix
+    return matrix(100)
+
+
+@app.get("/api/gaming/run")
+def gaming_run(strategy: str = "off_audit_drift", policy: str = "quarterly_audit", seed: int = 1):
+    from satsa.eval.gaming import POLICIES, STRATEGIES, timeline
+    if strategy not in STRATEGIES or policy not in POLICIES:
+        raise HTTPException(400, f"strategy in {STRATEGIES}, policy in {POLICIES}")
+    return timeline(strategy, policy, seed)
 
 
 @app.get("/api/redteam/{entity_id}")
@@ -382,9 +521,32 @@ async def ingest_validate(files: list[UploadFile] = File(...)):
     payload = [(f.filename, await f.read()) for f in files]
     tables, report = ingest_files(payload)
     report["tables"] = {k: len(v) for k, v in tables.items()}
+    if report["accepted"]:
+        report["token"] = workflow.stage(tables, report)
+        ents = set()
+        for t in ("entities", "alerts", "cases"):
+            if t in tables and "entity_id" in tables[t].columns:
+                ents |= set(tables[t].entity_id.dropna().astype(str))
+        report["entities"] = sorted(ents)
     ledger.append("submission_validated", {"files": report["sha256"], "accepted": report["accepted"],
                                            "rows": report["tables"]})
     return clean(report)
+
+
+@app.post("/api/ingest/commit/{token}")
+def ingest_commit(token: str):
+    if not (workflow.STAGING / token).exists():
+        raise HTTPException(404, "Unknown or expired submission token")
+    jid = workflow.JOBS.start("ingest_commit", workflow.commit_and_rerun, token, swap_db)
+    return {"job_id": jid, "status": "running"}
+
+
+@app.get("/api/jobs/{job_id}")
+def job(job_id: str):
+    j = workflow.JOBS.get(job_id)
+    if j is None:
+        raise HTTPException(404, "Unknown job")
+    return clean(j)
 
 
 # ---------------------------------------------------------------- validation + static

@@ -18,9 +18,22 @@ CANONICAL = ["entities", "assets", "alerts", "cases", "case_events", "escalation
 _lock = threading.RLock()
 
 
-def connect(read_only: bool = False) -> duckdb.DuckDBPyConnection:
-    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-    return duckdb.connect(str(DB_PATH), read_only=read_only)
+POINTER = DATA / "current_db.txt"  # set when an ingest commit produced a newer database
+
+
+def live_db_path() -> Path:
+    """The database the API should serve: the newest committed run, else the default."""
+    if POINTER.exists():
+        p = Path(POINTER.read_text().strip())
+        if p.exists():
+            return p
+    return DB_PATH
+
+
+def connect(read_only: bool = False, path: Path | None = None) -> duckdb.DuckDBPyConnection:
+    path = Path(path or DB_PATH)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    return duckdb.connect(str(path), read_only=read_only)
 
 
 def write_tables(tables: dict[str, pd.DataFrame], con=None) -> None:
