@@ -139,6 +139,7 @@ CAPABILITIES = [
 
 # Regulatory crosswalk: detector id -> list of obligations it tests
 REGMAP = {
+    "TW1": ["SEBI CSCRF - SOC functional efficacy (sustained performance)", "NCIIPC guidelines - continuous improvement"],
     "EG1": ["SEBI CSCRF - SOC functional efficacy: Detective Effectiveness",
             "NCIIPC guidelines - incident handling"],
     "EG2": ["SEBI CSCRF - Detective Effectiveness", "CEA 2024 - Cyber Crisis Management Plan escalation"],

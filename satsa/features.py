@@ -82,6 +82,7 @@ def build_case_features(con) -> pd.DataFrame:
     for c in ["n_events", "n_investigate", "n_triage", "n_escalate_ev", "n_contain", "n_remediate_ev", "n_automation", "n_close"]:
         cf[c] = cf[c].fillna(0).astype(int)
     cf["closed"] = cf.closed_ts.notna()
+    cf["is_tp"] = cf.disposition == "TP"
     cf["night"] = cf.open_hour < 6
     cf["note_len"] = cf.notes.fillna("").str.len()
     cf["short_note"] = cf.note_len < 40

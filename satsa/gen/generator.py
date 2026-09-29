@@ -408,7 +408,11 @@ def gen_entity(eid, name, arch, size, provider, rng):
                 escalations=es, submissions=pd.DataFrame(subs), redteam=rt_rows, truth=truth)
 
 
-def generate(out_dir: str | Path = "data/generated", seed: int = 7, roster=None) -> dict:
+def generate(out_dir: str | Path = "data/generated", seed: int = 7, roster=None, rate_scale: float = 0.5) -> dict:
+    """Write one panel. `roster` defaults to the demo roster; `rate_scale` scales alert
+    volume (the validation suite uses smaller panels for its many null runs)."""
+    global RATE_SCALE
+    RATE_SCALE = rate_scale
     warnings.filterwarnings("ignore", category=DeprecationWarning)
     out = Path(out_dir)
     (out / "_truth").mkdir(parents=True, exist_ok=True)
@@ -429,8 +433,8 @@ def generate(out_dir: str | Path = "data/generated", seed: int = 7, roster=None)
             df.to_parquet(out / f"{k}.parquet", index=False)
     gt = {eid: {"archetype": arch, "provider": prov, "expected_detectors": ar.EXPECTED[arch]}
           for eid, _, arch, _, prov in roster}
-    meta = {"seed": seed, "start": str(START.date()), "end": str(END.date()), "weak_provider": ar.WEAK_PROVIDER,
-            "entities": gt}
+    meta = {"seed": seed, "rate_scale": rate_scale, "start": str(START.date()), "end": str(END.date()),
+            "weak_provider": ar.WEAK_PROVIDER, "entities": gt}
     (out / "_truth" / "ground_truth.json").write_text(json.dumps(meta, indent=2))
     return tables
 

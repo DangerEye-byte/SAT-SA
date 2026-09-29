@@ -15,7 +15,9 @@ import pandas as pd
 from scipy import stats
 
 from satsa import taxonomy as tx
-from satsa.stats.core import nb_lower_pvalue, nb_size_from_counts, rate_test
+from satsa.stats.core import (PEER_INFLATE, acat, nb_lower_pvalue, nb_size_robust, random_effects_null_p, rate_test,
+                              rate_test_expected,
+                              robust_overdispersion)
 
 MAX_EVIDENCE = 40
 
@@ -68,6 +70,9 @@ DETECTORS = {
             "Deterministic: submitted history shorter than 180 days or containing gaps > 7 days"),
     "NS9": ("Clock integrity violations", "Negative space", "Operational Discipline",
             "Deterministic: acknowledgements timestamped before the case was opened"),
+    "TW1": ("Divergence from its synthetic twin", "Execution gap", "Governance & Oversight",
+            "Synthetic control (Abadie et al. 2010): a weighted blend of peers that tracks the entity's monthly share of "
+            "likely-superficial cases in the first half-year; the post-period gap is ranked against placebo twins of every peer"),
     "RT1": ("Red-team techniques missed", "Negative space", "Threat Detection",
             "Deterministic: techniques executed by the entity's own red-team exercise with no matching alert (known-positive miss)"),
 }
@@ -82,10 +87,38 @@ def _row(eid, did, p=np.nan, n=0, k=0, rate=np.nan, peer_rate=np.nan, effect="",
                 evidence_type=evidence_type, deterministic=deterministic, severity=severity, extra=extra or {})
 
 
+def _strata_expected(tab: pd.DataFrame, target: str, peers: list[str]) -> pd.Series:
+    """Expected flagged count per entity given its case mix: stratum rates pooled over
+    the target's peers, after dropping the peers with the most extreme observed/expected
+    ratio (10% each side) so a few weak peers cannot shift the baseline."""
+    pt = tab[tab.entity_id.isin(peers)]
+
+    def rates(ents):
+        g = pt[pt.entity_id.isin(ents)].groupby("stratum")[["k", "n"]].sum()
+        return (g.k + 0.5) / (g.n + 1)
+
+    r = rates(peers)
+    e_all = tab.assign(e=tab.n * tab.stratum.map(r).fillna(0)).groupby("entity_id")[["k", "n", "e"]].sum()
+    oe = (e_all.k / e_all.e.clip(lower=1e-9)).loc[[x for x in peers if x in e_all.index]]
+    if len(oe) >= 10:
+        lo, hi = oe.quantile([0.1, 0.9])
+        r = rates(oe[(oe >= lo) & (oe <= hi)].index.tolist())
+    e = tab.assign(e=tab.n * tab.stratum.map(r).fillna(0)).groupby("entity_id").e.sum()
+    return e
+
+
 def _rate_detector(did, ctx: Ctx, pop: pd.DataFrame, flag: pd.Series, tail, reason_fmt, order_col=None, ascending=True,
-                   applicable=None):
-    """Generic beta-binomial rate detector over a case population."""
-    g = pd.DataFrame({"entity_id": pop.entity_id, "flag": flag.astype(int)}).groupby("entity_id").flag.agg(["sum", "count"])
+                   applicable=None, strata: list[str] | None = None):
+    """Generic beta-binomial rate detector over a case population. With `strata`, the
+    entity is compared with what its own case mix predicts (indirect standardisation),
+    so an entity is not flagged merely for handling a different mix of cases."""
+    fl = flag.astype(int).to_numpy()
+    g = pd.DataFrame({"entity_id": pop.entity_id.to_numpy(), "flag": fl}).groupby("entity_id").flag.agg(["sum", "count"])
+    tab = None
+    if strata:
+        key = pop[strata].astype(str).agg("|".join, axis=1).to_numpy()
+        tab = (pd.DataFrame({"entity_id": pop.entity_id.to_numpy(), "stratum": key, "flag": fl})
+               .groupby(["entity_id", "stratum"]).flag.agg(k="sum", n="count").reset_index())
     out = []
     for eid in ctx.entities.entity_id:
         if applicable is not None and not applicable(eid):
@@ -98,7 +131,15 @@ def _rate_detector(did, ctx: Ctx, pop: pd.DataFrame, flag: pd.Series, tail, reas
         peers = g.drop(index=eid)
         if applicable is not None:
             peers = peers[[applicable(x) for x in peers.index]]
-        p = rate_test(k, n, peers["sum"].to_numpy(), peers["count"].to_numpy(), tail=tail)
+        extra = {}
+        if tab is not None:
+            e = _strata_expected(tab, eid, peers.index.tolist())
+            pe = e.reindex(peers.index).fillna(0).to_numpy()
+            p = rate_test_expected(k, n, float(e.get(eid, 0.0)), peers["sum"].to_numpy(), peers["count"].to_numpy(), pe,
+                                   tail=tail)
+            extra["expected_rate_for_case_mix"] = float(e.get(eid, 0.0) / n)
+        else:
+            p = rate_test(k, n, peers["sum"].to_numpy(), peers["count"].to_numpy(), tail=tail)
         pr = float(np.median(peers["sum"] / peers["count"]))
         rate = k / n
         ev_df = pop[(pop.entity_id == eid) & flag.to_numpy()]
@@ -107,7 +148,7 @@ def _rate_detector(did, ctx: Ctx, pop: pd.DataFrame, flag: pd.Series, tail, reas
         out.append(_row(eid, did, p=p, n=n, k=k, rate=rate, peer_rate=pr,
                         effect=f"{rate:.0%} vs peer median {pr:.0%}",
                         reason=reason_fmt.format(k=k, n=n, rate=rate, pr=pr),
-                        evidence=ev_df.case_id.head(MAX_EVIDENCE).tolist()))
+                        evidence=ev_df.case_id.head(MAX_EVIDENCE).tolist(), extra=extra))
     return out
 
 
@@ -125,7 +166,7 @@ def eg2(ctx):
     pop = cf[cf.closed & ~cf.auto_closed & (cf.severity == "critical")]
     return _rate_detector("EG2", ctx, pop, ~pop.escalated, "upper",
                           "{k} of {n} closed critical cases ({rate:.0%}) show no escalation; peer median {pr:.0%}.",
-                          order_col="ttc_min")
+                          order_col="ttc_min", strata=["is_tp"])
 
 
 def eg3(ctx):
@@ -133,7 +174,7 @@ def eg3(ctx):
     pop = cf[~cf.auto_closed & cf.notes.notna()]
     out = _rate_detector("EG3", ctx, pop, pop.templated, "upper",
                          "{k} of {n} investigation notes ({rate:.0%}) are near-duplicates of a small set of templates; "
-                         "peer median {pr:.0%}.", order_col="template_cluster", ascending=False)
+                         "peer median {pr:.0%}.", order_col="template_cluster", ascending=False, strata=["severity", "is_tp"])
     for r in out:
         if r["n"]:
             sub = pop[(pop.entity_id == r["entity_id"]) & pop.templated]
@@ -150,7 +191,7 @@ def eg4(ctx):
     pop = cf[cf.closed & ~cf.auto_closed & cf.severity.isin(["high", "critical"])]
     return _rate_detector("EG4", ctx, pop, pop.n_investigate == 0, "upper",
                           "{k} of {n} high/critical cases ({rate:.0%}) were acknowledged and closed with no investigation "
-                          "step recorded; peer median {pr:.0%}.", order_col="ttc_min")
+                          "step recorded; peer median {pr:.0%}.", order_col="ttc_min", strata=["severity", "is_tp"])
 
 
 def conformance_violations(cf: pd.DataFrame) -> pd.DataFrame:
@@ -173,12 +214,18 @@ def eg5(ctx):
     out = _rate_detector("EG5", ctx, pop, nviol > 0, "upper",
                          "{k} of {n} closed cases ({rate:.0%}) break at least one workflow rule "
                          "(triage before close, escalation recorded, containment for true positives, remediation recorded); "
-                         "peer median {pr:.0%}.", order_col="n_viol", ascending=False)
+                         "peer median {pr:.0%}.", order_col="n_viol", ascending=False, strata=["severity", "is_tp"])
     for r in out:
         m = (pop.entity_id == r["entity_id"]).to_numpy()
         if m.any():
             r["extra"]["violations"] = {k: int(v) for k, v in viol[m].sum().items()}
     return out
+
+
+def _fit_var(xb: np.ndarray, cov: np.ndarray, deg: int) -> float:
+    """Variance of the fitted counterfactual summed over the bins xb."""
+    g = np.vander(xb, deg + 1).sum(axis=0)
+    return float(max(g @ cov @ g, 0.0))
 
 
 def bunching(ttc: np.ndarray, sla: float, width: float = 5.0, half: float = 30.0, lo: float = 60.0, hi: float = 720.0,
@@ -192,7 +239,7 @@ def bunching(ttc: np.ndarray, sla: float, width: float = 5.0, half: float = 30.0
     if c[fitm].sum() < 50:
         return None
     x = (mid - sla) / (hi - lo)
-    coef = np.polyfit(x[fitm], c[fitm], deg)
+    coef, cov = np.polyfit(x[fitm], c[fitm], deg, cov=True)
     cf_ = np.clip(np.polyval(coef, x), 0.5, None)
     below = win & (mid < sla)
     above = win & (mid >= sla)
@@ -201,33 +248,62 @@ def bunching(ttc: np.ndarray, sla: float, width: float = 5.0, half: float = 30.0
     phi = max(1.0, float(np.mean(resid)))
     z = (obs_b - exp_b) / np.sqrt(phi * exp_b)
     p = float(max(stats.norm.sf(z), 1e-12))
-    return {"p": p, "excess": float(obs_b - exp_b), "missing_above": float(cf_[above].sum() - c[above].sum()),
+    return {"p": p, "z": float(z), "obs_below": float(obs_b), "exp_below": float(exp_b),
+            "log_ratio": float(np.log((obs_b + 0.5) / exp_b)),
+            "log_ratio_var": float(1 / (obs_b + 0.5) + _fit_var(x[below], cov, deg) / exp_b ** 2),
+            "excess": float(obs_b - exp_b), "missing_above": float(cf_[above].sum() - c[above].sum()),
             "ratio": float(obs_b / exp_b) if exp_b > 0 else np.nan, "phi": phi,
             "bins": mid.tolist(), "observed": c.tolist(), "counterfactual": cf_.round(2).tolist(),
             "sla": sla, "window": [sla - half, sla + half]}
 
 
 def eg6(ctx):
+    """Bunching per entity. The effect is the log ratio of observed to counterfactual
+    closures just below the SLA. Its p-value uses a random-effects empirical null from
+    the peers (common fit bias + between-entity variance, cf. Efron 2004), because the
+    plain z ignores the error of the fitted counterfactual and is over-confident."""
     cf = ctx.cf
-    out = []
+    stats_ = {}
     for eid, sla in zip(ctx.entities.entity_id, ctx.entities.sla_critical_min):
         t = cf[(cf.entity_id == eid) & cf.closed & ~cf.auto_closed & (cf.severity == "critical")].ttc_min.to_numpy()
         if len(t) < 150:
-            out.append(_row(eid, "EG6", reason="Insufficient evidence (fewer than 150 closed critical cases)"))
+            stats_[eid] = "Insufficient evidence (fewer than 150 closed critical cases)"
             continue
         b = bunching(t, float(sla))
-        if b is None:
-            out.append(_row(eid, "EG6", reason="Insufficient evidence"))
+        stats_[eid] = b if b is not None else "Insufficient evidence"
+    eff = {e: (b["log_ratio"], b["log_ratio_var"]) for e, b in stats_.items() if isinstance(b, dict)}
+    out = []
+    for eid, sla in zip(ctx.entities.entity_id, ctx.entities.sla_critical_min):
+        b = stats_[eid]
+        if not isinstance(b, dict):
+            out.append(_row(eid, "EG6", reason=b))
             continue
+        b["p_theoretical"] = b["p"]
+        peers = [v for e, v in eff.items() if e != eid]
+        b["p"] = random_effects_null_p(b["log_ratio"], b["log_ratio_var"], [y for y, _ in peers], [v for _, v in peers])
+        if b["p"] < 0.01:
+            t = cf[(cf.entity_id == eid) & cf.closed & ~cf.auto_closed & (cf.severity == "critical")].ttc_min.to_numpy()
+            b["excess_ci90"] = bunching_ci(t, float(sla))
         near = cf[(cf.entity_id == eid) & cf.closed & ~cf.auto_closed & (cf.severity == "critical")
                   & cf.ttc_min.between(sla - 30, sla)].sort_values("ttc_min", ascending=False)
-        out.append(_row(eid, "EG6", p=b["p"], n=len(t), k=int(max(b["excess"], 0)),
+        out.append(_row(eid, "EG6", p=b["p"], n=int(sum(b["observed"])), k=int(max(b["excess"], 0)),
                         effect=f"{b['excess']:+.0f} closures just under the {sla:.0f}-min SLA ({b['ratio']:.1f}x expected)",
                         reason=f"{int(round(b['excess']))} more critical cases were closed in the 30 minutes before the "
                                f"{sla:.0f}-minute SLA than the smooth counterfactual predicts ({b['ratio']:.1f}x), with "
                                f"~{b['missing_above']:.0f} missing just after it - the signature of closures timed to the metric.",
                         evidence=near.case_id.head(MAX_EVIDENCE).tolist(), extra={"chart": b}))
     return out
+
+
+def bunching_ci(ttc: np.ndarray, sla: float, n_boot: int = 200, seed: int = 0) -> list[float] | None:
+    """Bootstrap 90% interval for the excess mass below the SLA (cases resampled)."""
+    rng = np.random.default_rng(seed)
+    ex = []
+    for _ in range(n_boot):
+        b = bunching(rng.choice(ttc, len(ttc), replace=True), sla)
+        if b is not None:
+            ex.append(b["excess"])
+    return [float(np.quantile(ex, 0.05)), float(np.quantile(ex, 0.95))] if len(ex) >= 50 else None
 
 
 def eg7(ctx):
@@ -279,14 +355,19 @@ def eg13(ctx):
     pop = cf[~cf.auto_closed]
     return _rate_detector("EG13", ctx, pop, ~pop.ioc_enriched, "upper",
                           "{k} of {n} human-handled cases ({rate:.0%}) show no threat-intelligence / IOC enrichment; "
-                          "peer median {pr:.0%}.")
+                          "peer median {pr:.0%}.", strata=["severity", "is_tp"])
 
 
 def _sources(ctx):
     return {e: set(s.split(",")) for e, s in zip(ctx.entities.entity_id, ctx.entities.declared_log_sources)}
 
 
-NB_SIZE_FLOOR = 8.0  # minimum over-dispersion allowed in count models (conservative)
+def _nb_p(obs, lam, r, m):
+    """Lower-tail NB mid-p with the finite-peer variance inflation (1 + 3/m)."""
+    theta = 0.0 if r is None else 1.0 / r
+    mult = (1 + lam * theta) * (1 + PEER_INFLATE / max(m, 1))
+    theta2 = (mult - 1) / lam if lam > 0 else 0.0
+    return nb_lower_pvalue(obs, lam, (1 / theta2) if theta2 > 0 else None)
 
 
 def _exposure(ctx) -> dict:
@@ -313,16 +394,14 @@ def _class_cat_rates(ctx) -> dict:
     return rates
 
 
-def _nb_r(counts) -> float | None:
-    r = nb_size_from_counts(np.asarray(counts))
-    return None if r is None else max(r, NB_SIZE_FLOOR)
-
-
 def ns1(ctx, window_days: int = 90):
     """Silent critical assets: each critical asset is compared with (a) peer assets of
     the same class over the last quarter, (b) peers over the whole observed period and
-    (c) its own history before the quarter. Silence after steady activity is the
-    strongest signal (monitoring broke), silence all year is a coverage gap."""
+    (c) its own history before the quarter. Over-dispersion for (a)/(b) is estimated
+    per asset class from all assets of that class, and for (c) from every asset's own
+    early/late split. Per asset the three p-values are combined with ACAT; per entity
+    the assets are combined with ACAT. Silence after steady activity is the strongest
+    signal (monitoring broke), silence all year is a coverage gap."""
     al, assets = ctx.alerts, ctx.assets
     srcs = _sources(ctx)
     expo = _exposure(ctx)
@@ -331,28 +410,53 @@ def ns1(ctx, window_days: int = 90):
     recent = al[al.ts >= qstart].groupby("asset_id").size()
     prior = al[al.ts < qstart].groupby("asset_id").size()
     total = al.groupby("asset_id").size()
-    assets = assets.assign(obs_q=assets.asset_id.map(recent).fillna(0), obs_prior=assets.asset_id.map(prior).fillna(0),
-                           obs_y=assets.asset_id.map(total).fillna(0))
-    r_cls = {cls: _nb_r(g.obs_y.to_numpy()) for cls, g in assets.groupby("asset_class")}
+    A = assets.assign(obs_q=assets.asset_id.map(recent).fillna(0), obs_prior=assets.asset_id.map(prior).fillna(0),
+                      obs_y=assets.asset_id.map(total).fillna(0))
+    per_day: dict = {}
+    for (cls, cat), v in rates.items():
+        per_day.setdefault(cls, {})[cat] = v
+    A["days"] = A.entity_id.map(expo).fillna(365.0)
+    A["per_day"] = [sum(v for cat, v in per_day.get(c, {}).items() if tx.CATEGORY_SOURCES[cat] & srcs[e])
+                    for c, e in zip(A.asset_class, A.entity_id)]
+    A["lam_y"] = A.per_day * A.days
+    A["lam_q"] = A.per_day * window_days
+    # peer over-dispersion per class (all assets of the class, any criticality)
+    r_cls, m_cls = {}, {}
+    for cls, g in A[A.lam_y >= 5].groupby("asset_class"):
+        if len(g) >= 5:
+            r_cls[cls] = nb_size_robust(g.obs_y.to_numpy(), g.lam_y.to_numpy())
+            m_cls[cls] = len(g)
+    # own-history over-dispersion (share of an asset's alerts falling in the last quarter)
+    H = A[(A.days - window_days >= 180) & (A.obs_prior >= 20)]
+    w_h = window_days / H.days
+    N_h = H.obs_q + H.obs_prior
+    rho_self = robust_overdispersion(((H.obs_q - N_h * w_h) ** 2 / (N_h * w_h * (1 - w_h))).to_numpy(),
+                                     (N_h - 1).to_numpy()) if len(H) >= 10 else 0.0
+    rho_self = float(np.clip(rho_self * (1 + PEER_INFLATE / max(len(H), 1)) + 1e-4, 1e-4, 0.5))
     out = []
-    for eid, g in assets[assets.criticality >= 3].groupby("entity_id"):
+    for eid, g in A[A.criticality >= 3].groupby("entity_id"):
         days = expo.get(eid, 365.0)
         prior_days = max(0.0, days - window_days)
         rows = []
         for a in g.itertuples():
-            per_day = sum(v for (cls, cat), v in rates.items() if cls == a.asset_class and tx.CATEGORY_SOURCES[cat] & srcs[eid])
-            lam_q, lam_y = per_day * window_days, per_day * days
+            lam_q, lam_y = a.lam_q, a.lam_y
             if lam_q < 3:
                 continue
-            r = r_cls.get(a.asset_class)
-            p_q = nb_lower_pvalue(a.obs_q, lam_q, r)
-            p_y = nb_lower_pvalue(a.obs_y, lam_y, r)
-            p_self, lam_self = 1.0, np.nan
+            r, m = r_cls.get(a.asset_class), m_cls.get(a.asset_class, 5)
+            p_q = _nb_p(a.obs_q, lam_q, r, m)
+            p_y = _nb_p(a.obs_y, lam_y, r, m)
+            ps = [p_q, p_y]
+            p_self, lam_self = np.nan, np.nan
             if prior_days >= 180 and a.obs_prior >= 20:
+                w = window_days / days
+                N = int(a.obs_q + a.obs_prior)
                 lam_self = a.obs_prior * window_days / prior_days
-                p_self = nb_lower_pvalue(a.obs_q, lam_self, 20.0)
-            p = min(1.0, 3 * min(p_q, p_y, p_self))
-            why = "stopped" if p_self <= min(p_q, p_y) else "peer"
+                sz = 1 / rho_self - 1
+                bb = stats.betabinom(N, w * sz, (1 - w) * sz)
+                p_self = float(np.clip(bb.cdf(a.obs_q - 1) + 0.5 * bb.pmf(a.obs_q), 1e-12, 1))
+                ps.append(p_self)
+            p = acat(ps)
+            why = "stopped" if np.isfinite(p_self) and p_self <= min(p_q, p_y) else "peer"
             rows.append((a.asset_id, a.asset_class, int(a.obs_q), round(lam_q, 1), int(a.obs_prior),
                          round(lam_self, 1) if np.isfinite(lam_self) else None, p, why))
         if not rows:
@@ -361,8 +465,8 @@ def ns1(ctx, window_days: int = 90):
         df_ = pd.DataFrame(rows, columns=["asset_id", "asset_class", "obs_quarter", "expected_quarter", "obs_prior",
                                           "expected_from_own_history", "p", "basis"]).sort_values("p")
         m = len(df_)
-        p_ent = float(min(1.0, df_.p.iloc[0] * m))
-        silent = df_[df_.p < 0.001]
+        p_ent = acat(df_.p.to_numpy())
+        silent = df_[(df_.p < 0.001) & (df_.obs_quarter < 0.3 * df_.expected_quarter)]
         if len(silent):
             names = sorted({tx.ASSET_CLASSES[c][0] for c in silent.asset_class})
             stopped = silent[silent.basis == "stopped"]
@@ -407,14 +511,21 @@ def tactic_matrix(ctx) -> pd.DataFrame:
                 continue
             lam = days * sum(n * v for cls, n in mix.items() for (c2, cat), v in rates.items()
                              if c2 == cls and tx.TACTIC_OF[cat] == t and tx.CATEGORY_SOURCES[cat] & srcs[e])
-            p = nb_lower_pvalue(o, lam, 10.0) if lam >= 5 else np.nan
-            if np.isfinite(p) and p < 0.001 and o < 0.3 * lam:
-                state = "quiet"
-            else:
-                state = "covered" if (o > 0 or lam >= 1) else "not_applicable"
-            rows.append((e, t, True, o, round(lam, 1), p, state, n_sup[t] / len(sup)))
-    return pd.DataFrame(rows, columns=["entity_id", "tactic", "supportable", "observed", "expected", "p", "state",
-                                       "peer_support_share"])
+            rows.append((e, t, True, o, round(lam, 1), np.nan, None, n_sup[t] / len(sup)))
+    df_ = pd.DataFrame(rows, columns=["entity_id", "tactic", "supportable", "observed", "expected", "p", "state",
+                                      "peer_support_share"])
+    # per-tactic over-dispersion, estimated from every entity that can see the tactic
+    for t, g in df_[df_.supportable & (df_.expected >= 5)].groupby("tactic"):
+        r = nb_size_robust(g.observed.to_numpy(), g.expected.to_numpy()) if len(g) >= 5 else 10.0
+        for i in g.index:
+            df_.at[i, "p"] = _nb_p(int(df_.at[i, "observed"]), float(df_.at[i, "expected"]), r, len(g) - 1)
+    for i in df_.index[df_.supportable]:
+        o, lam, pv = df_.at[i, "observed"], df_.at[i, "expected"], df_.at[i, "p"]
+        if np.isfinite(pv) and pv < 0.001 and o < 0.3 * lam:
+            df_.at[i, "state"] = "quiet"
+        else:
+            df_.at[i, "state"] = "covered" if (o > 0 or lam >= 1) else "not_applicable"
+    return df_
 
 
 def ns2(ctx, tm):
@@ -425,7 +536,7 @@ def ns2(ctx, tm):
             out.append(_row(e, "NS2", reason="Insufficient evidence"))
             continue
         m = len(g2)
-        pmin = float(min(1.0, g2.p.min() * m))
+        pmin = acat(g2.p.to_numpy())
         quiet = g2[g2.state == "quiet"].sort_values("p")
         out.append(_row(e, "NS2", p=pmin, n=m, k=len(quiet), evidence=quiet.tactic.tolist(), evidence_type="tactic",
                         effect=f"{len(quiet)} visible tactic(s) unexpectedly absent" if len(quiet) else "tactic mix normal",
@@ -475,6 +586,7 @@ def ns5(ctx, early=(0, 5), late=(8, 12)):
     L = monthly.loc[:, late[0]:late[1] - 1].sum(axis=1)
     ok = E / e_len >= 15
     ratio = (L / l_len) / (E / e_len)
+    ents = monthly.index.get_level_values(0).unique()
     out = []
     for eid in ctx.entities.entity_id:
         if eid not in monthly.index.get_level_values(0):
@@ -485,25 +597,21 @@ def ns5(ctx, early=(0, 5), late=(8, 12)):
             key = (eid, det)
             if not ok.get(key, False):
                 continue
-            peers = [ratio[(e2, det)] for e2 in monthly.index.get_level_values(0).unique()
-                     if e2 != eid and (e2, det) in ratio.index and ok.get((e2, det), False)]
-            if len(peers) < 5:
+            peer_keys = [(e2, det) for e2 in ents if e2 != eid and ok.get((e2, det), False)]
+            if len(peer_keys) < 5:
                 continue
-            rho = float(np.median(peers))
-            if ratio[key] > 0.3 * rho:
-                rows.append((det, 1.0, ratio[key], rho))
-                continue
-            N = int(E[key] + L[key])
-            pi = (l_len * rho) / (e_len + l_len * rho)
-            p = float(max(stats.binom.cdf(int(L[key]), N, pi), 1e-12))
+            rho = float(np.median([ratio[k2] for k2 in peer_keys]))
+            pk = np.array([L[k2] for k2 in peer_keys])
+            pn = np.array([E[k2] + L[k2] for k2 in peer_keys])
+            p = rate_test(int(L[key]), int(E[key] + L[key]), pk, pn, tail="lower")
             rows.append((det, p, ratio[key], rho))
         if not rows:
             out.append(_row(eid, "NS5", reason="Insufficient evidence"))
             continue
         d = pd.DataFrame(rows, columns=["detector", "p", "ratio", "peer_ratio"]).sort_values("p")
         m = len(d)
-        pe = float(min(1.0, d.p.iloc[0] * m))
-        bad = d[d.p < 0.001]
+        pe = acat(d.p.to_numpy())
+        bad = d[(d.p < 0.001) & (d.ratio < 0.3 * d.peer_ratio)]
         series = {det: monthly.loc[(eid, det)].tolist() for det in bad.detector.head(3)}
         cats = {v: k for k, vs in _det_cats().items() for v in vs}
         out.append(_row(eid, "NS5", p=pe, n=m, k=len(bad), evidence=bad.detector.tolist(), evidence_type="detector",
@@ -615,10 +723,74 @@ def rt1(ctx):
     return out
 
 
+def _synth_weights(y_pre: np.ndarray, donors_pre: np.ndarray) -> np.ndarray:
+    """Non-negative weights summing to one that best reproduce y_pre from the donors
+    (NNLS with a heavily weighted sum-to-one row)."""
+    from scipy.optimize import nnls
+    big = 1e3 * max(1.0, float(np.abs(donors_pre).max()))
+    A = np.vstack([donors_pre, np.full(donors_pre.shape[1], big)])
+    b = np.append(y_pre, big)
+    w, _ = nnls(A, b)
+    return w / w.sum() if w.sum() > 0 else np.full(len(w), 1 / len(w))
+
+
+def synthetic_twins(ctx, split: int = 6):
+    """Monthly share of likely-superficial cases (yhat > 0.5) per entity; each entity's
+    twin is fitted on months [0, split) and the standardised post-period gap is ranked
+    against the same statistic for every peer (placebo inference)."""
+    cf = ctx.cf
+    h = cf[cf.closed & ~cf.auto_closed]
+    m = h.assign(w=h.yhat > 0.5).groupby(["entity_id", "month_idx"]).w.mean().unstack()
+    m = m.reindex(columns=range(12)).dropna()
+    if len(m) < 10:
+        return {}
+    Y = m.to_numpy()
+    ents = m.index.tolist()
+    res = {}
+    for i, e in enumerate(ents):
+        d = np.delete(np.arange(len(ents)), i)
+        w = _synth_weights(Y[i, :split], Y[d, :split].T)
+        twin = Y[d].T @ w
+        gap = Y[i] - twin
+        pre_rmse = float(np.sqrt(np.mean(gap[:split] ** 2)))
+        stat = float(np.mean(gap[split:]) / max(pre_rmse, 0.005))
+        res[e] = {"stat": stat, "actual": Y[i].round(4).tolist(), "twin": twin.round(4).tolist(),
+                  "gap": gap.round(4).tolist(), "pre_rmse": pre_rmse,
+                  "donors": {ents[d[j]]: round(float(w[j]), 3) for j in np.argsort(-w)[:5] if w[j] > 0.01}}
+    stats_all = np.array([r["stat"] for r in res.values()])
+    gaps = np.array([r["gap"] for r in res.values()])
+    band = np.quantile(gaps, [0.05, 0.95], axis=0).round(4).tolist()
+    for e, r in res.items():
+        others = stats_all[[x != e for x in res]]
+        r["p"] = float((1 + np.sum(others >= r["stat"])) / (len(others) + 1))
+        r["placebo_band"] = band
+    return res
+
+
+def tw1(ctx):
+    tw = synthetic_twins(ctx)
+    out = []
+    for eid in ctx.entities.entity_id:
+        r = tw.get(eid)
+        if r is None:
+            out.append(_row(eid, "TW1", reason="Insufficient monthly history"))
+            continue
+        post = float(np.mean(r["gap"][6:]))
+        out.append(_row(eid, "TW1", p=r["p"], n=12, k=0, rate=float(np.mean(r["actual"][6:])),
+                        peer_rate=float(np.mean(r["twin"][6:])),
+                        effect=f"{post * 100:+.1f} pp vs its twin after month 6",
+                        reason=(f"A blend of peers ({', '.join(r['donors'])}) matched this entity's monthly share of "
+                                f"likely-superficial cases for six months (error {r['pre_rmse'] * 100:.1f} pp). Afterwards the "
+                                f"entity ran {post * 100:+.1f} pp from its twin, larger than {100 * (1 - r['p']):.0f}% of the same "
+                                "gaps computed for every peer (placebo test)."),
+                        evidence=[], evidence_type="series", extra={"twin": r}))
+    return out
+
+
 def run_all(ctx: Ctx) -> tuple[pd.DataFrame, pd.DataFrame]:
     tm = tactic_matrix(ctx)
     results = []
-    for fn in (eg1, eg2, eg3, eg4, eg5, eg6, eg7, eg11, eg12, eg13, ns1, ns5, ns7, ns8, ns9, rt1):
+    for fn in (eg1, eg2, eg3, eg4, eg5, eg6, eg7, eg11, eg12, eg13, ns1, ns5, ns7, ns8, ns9, rt1, tw1):
         results += fn(ctx)
     results += ns2(ctx, tm)
     results += ns3(ctx, tm)

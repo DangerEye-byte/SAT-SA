@@ -2,16 +2,17 @@
 
 Population: an entity's closed, human-handled cases. Target: the share handled
 superficially. Examiners label a *uniform random* sample (so the PPI interval is
-valid); an additional *active* sample (highest model uncertainty) is offered to
-find weaknesses faster, and is reported separately. Labels: 1 = superficial."""
+valid); an additional *targeted* sample (the cases the model rates most likely to
+be superficial) is offered to confirm weaknesses faster. It is reported separately
+and never enters the estimate. Labels: 1 = superficial."""
 
 from __future__ import annotations
 
 import numpy as np
 import pandas as pd
-import ppi_py
 
 from satsa import ledger
+from satsa.stats.core import ppi_mean_ci
 from satsa.pipeline import TRUTH_DIR
 
 ALPHA = 0.1  # 90% intervals
@@ -31,8 +32,7 @@ def create_sample(con, entity_id: str, n_random: int = 20, n_active: int = 10, s
     pool = pop[~pop.case_id.isin(existing)]
     rnd = pool.sample(n=min(n_random, len(pool)), random_state=int(rng.integers(1e9)))
     rest = pool[~pool.case_id.isin(rnd.case_id)]
-    unc = (rest.yhat * (1 - rest.yhat)).to_numpy()
-    act = rest.iloc[np.argsort(-unc)[:n_active]]
+    act = rest.nlargest(n_active, "yhat")
     rows = [(entity_id, c, "random") for c in rnd.case_id] + [(entity_id, c, "active") for c in act.case_id]
     start = len(existing)
     for i, (e, c, t) in enumerate(rows):
@@ -93,8 +93,8 @@ def estimate(con, entity_id: str) -> dict:
     Y = lab.label.to_numpy(float)
     Yhat = lab.yhat.to_numpy(float)
     unl = pop[~pop.case_id.isin(lab.case_id)].yhat.to_numpy(float)
-    lo, hi = (float(np.ravel(v)[0]) for v in ppi_py.ppi_mean_ci(Y, Yhat, unl, alpha=ALPHA))
-    point = float(np.ravel(ppi_py.ppi_mean_pointestimate(Y, Yhat, unl))[0])
+    ppi = ppi_mean_ci(Y, Yhat, unl, alpha=ALPHA)
+    lo, hi, point = ppi["lo"], ppi["hi"], ppi["estimate"]
     # classical interval: Wilson score (valid at small n, unlike the normal approximation)
     n, k = len(Y), Y.sum()
     z = 1.6448536269514722
@@ -107,7 +107,7 @@ def estimate(con, entity_id: str) -> dict:
     half = 0.03
     p_ = min(max(point, 0.02), 0.98)
     n_cls = int(np.ceil(z * z * p_ * (1 - p_) / half ** 2))
-    out.update({"status": "ok", "ppi": {"estimate": point, "lo": lo, "hi": hi, "width": w_ppi},
+    out.update({"status": "ok", "ppi": {"estimate": point, "lo": lo, "hi": hi, "width": w_ppi, "lambda": ppi["lambda"]},
                 "classical": {"estimate": float(k / n), "lo": clo, "hi": chi, "width": w_cls},
                 "review_saving": float(max(0.0, 1 - ratio)),
                 "planner": {"target_half_width": half, "reviews_manual_only": n_cls,

@@ -16,3 +16,9 @@ satsa/api/static/
 kaggle.json
 access_token
 *.log
+reports/cache/
+data/tmp_eval/
+data/staging/
+data/working/
+data/runs/
+data/current_db.txt
