@@ -78,7 +78,7 @@ Sorted: flagged first, then attention desc. **Re-query when the FDR slider moves
   - **RT1** `extra.funnel{executed, alerted, cased, escalated}, techniques[]`
   - **TW1** `extra.twin = {actual[12], twin[12], gap[12], pre_rmse, donors{entity: weight}, placebo_band[[12 lo],[12 hi]], stat, p}`. This is the **synthetic twin chart**: months 1–6 are fitted, 7–12 are compared; the band is the placebo 5–95% gap. Star entity: `TRN-06`.
 
-`GET /api/entities/{id}/findings/{detector_id}/explain?refresh=false` returns a **verifier-gated plain-language explanation**:
+`GET /api/entities/{id}/findings/{detector_id}/explain?refresh=false&model=true` returns a **verifier-gated plain-language explanation** (`model=false` forces the instant template path; cached results are returned regardless):
 ```
 {entity_id, detector_id, mode ("local_model"|"template"|...), model, seconds, cached,
  summary, verified_claims: [{text, record_ids[], quote}], rejected_claims: [{text, record_ids[], quote, rejected_because}],

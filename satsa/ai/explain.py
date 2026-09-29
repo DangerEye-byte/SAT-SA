@@ -92,17 +92,43 @@ def _fmt_rec(r: dict) -> str:
     return ", ".join(parts)
 
 
+def _extra_fields(rid: str, extra: dict) -> str:
+    """Fields for an id-only record (a detection rule, tactic or technique), taken from the
+    finding's computed payload: the matching row of a per-item table, or its monthly series."""
+    parts = []
+    for v in (extra or {}).values():
+        if isinstance(v, list):
+            for d in v:
+                if isinstance(d, dict) and rid in [str(x) for x in d.values()]:
+                    parts += [f"{k}={x:g}" if isinstance(x, float) else f"{k}={x}" for k, x in d.items()
+                              if isinstance(x, (int, float, str, bool)) and str(x) != rid]
+                    break
+        elif isinstance(v, dict) and isinstance(v.get(rid), list):
+            parts.append("monthly=" + ",".join(f"{x:g}" if isinstance(x, float) else str(x) for x in v[rid][:12]))
+    return ", ".join(parts)
+
+
 def evidence_pack(f: dict, max_records: int = 3) -> dict:
     """Up to max_records records; records whose notes contain instruction-like text are
-    always included (at most two) so the examiner sees them flagged."""
+    always included (at most two) so the examiner sees them flagged. Findings about rules,
+    tactics or monthly series get their records from the computed payload, and every pack
+    ends with a FINDING record (the computed effect and reason) that claims may also cite."""
     allr = f.get("records") or []
     inj = [r for r in allr if r.get("injection_like")][:2]
     rest = [r for r in allr if not r.get("injection_like")]
     recs = []
     for r in (inj + rest)[:max_records]:
-        rid = r.get("case_id") or r.get("asset_id") or r.get("alert_id") or r.get("id")
-        recs.append({"id": str(rid), "fields": _fmt_rec(r), "note": (r.get("notes") or "")[:160],
-                     "injection_like": bool(r.get("injection_like"))})
+        rid = str(r.get("case_id") or r.get("asset_id") or r.get("alert_id") or r.get("id"))
+        recs.append({"id": rid, "fields": _fmt_rec(r) or _extra_fields(rid, f.get("extra")),
+                     "note": (r.get("notes") or "")[:160], "injection_like": bool(r.get("injection_like"))})
+    tw = (f.get("extra") or {}).get("twin")
+    if isinstance(tw, dict) and tw.get("actual") and tw.get("twin"):
+        pct = lambda xs: ",".join(f"{100 * x:.1f}" for x in xs)  # noqa: E731
+        recs.append({"id": "TWIN", "fields": f"entity_pct_by_month={pct(tw['actual'])}; twin_pct_by_month={pct(tw['twin'])}",
+                     "note": "", "injection_like": False})
+    trusted = "; ".join(str(x) for x in (f.get("effect"), f.get("reason")) if x)
+    if trusted:
+        recs.append({"id": "FINDING", "fields": trusted[:700], "note": "", "injection_like": False})
     facts = {"detector": f["detector_id"], "name": f["name"], "effect": f.get("effect"), "n": f.get("n"),
              "k": f.get("k"), "rate": f.get("rate"), "peer_rate": f.get("peer_rate"), "p_value": f.get("p_value")}
     return {"facts": facts, "reason": f.get("reason", ""), "records": recs}
@@ -113,7 +139,8 @@ def _prompt(pack: dict) -> str:
              f"Computed facts (trusted): {json.dumps({k: v for k, v in pack['facts'].items() if v is not None})}",
              f"Deterministic reason (trusted): {pack['reason']}", "Records:"]
     for r in pack["records"]:
-        lines.append(f"- record {r['id']}: {r['fields']}")
+        label = " (computed by SAT-SA, trusted)" if r["id"] in ("FINDING", "TWIN") else ""
+        lines.append(f"- record {r['id']}{label}: {r['fields']}")
         if r["note"]:
             lines.append(f"  analyst note: <untrusted>{r['note']}</untrusted>")
     lines.append("Write a 1-2 sentence summary, up to 3 claims (each citing record ids + an exact quote), and one "
@@ -179,10 +206,14 @@ def verify(out: dict, pack: dict) -> dict:
 # ------------------------------------------------------------------ explain
 def template_explanation(pack: dict) -> dict:
     claims = []
-    for r in pack["records"][:3]:
+    for r in [r for r in pack["records"] if r["id"] != "FINDING"][:3]:
         if r["fields"]:
-            first = r["fields"].split(", ")[0]
+            first = r["fields"].split(", ")[0].split("; ")[0]
             claims.append({"text": f"Record {r['id']} shows {r['fields']}.", "record_ids": [r["id"]], "quote": first})
+    fin = [r for r in pack["records"] if r["id"] == "FINDING"]
+    if not claims and fin and pack["facts"].get("effect"):
+        claims.append({"text": f"SAT-SA computed: {pack['facts']['effect']}.", "record_ids": ["FINDING"],
+                       "quote": pack["facts"]["effect"]})
     out = {"summary": pack["reason"], "claims": claims,
            "question_for_entity": f"Please provide the investigation records supporting the cases cited for "
                                   f"{pack['facts']['name'].lower()}."}
