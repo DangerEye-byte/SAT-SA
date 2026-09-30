@@ -149,7 +149,7 @@ satsa/eval/       validation suite and gaming simulator
 satsa/guide/      Microsoft GUIDE real-data experiments
 satsa/api/        FastAPI server (serves the built UI from satsa/api/static)
 web/              React + TypeScript + ECharts UI
-docs/             ARCHITECTURE.md, API.md, slide content, video script
+docs/             ARCHITECTURE.md (+ PDF), API.md, calibration log, API examples
 ```
 
 ## Licences
@@ -160,4 +160,3 @@ docs/             ARCHITECTURE.md, API.md, slide content, video script
   - Benjamini & Hochberg (1995); Liu & Xie (2020, ACAT); Wang & Ramdas (2022, e-BH).
   - Angelopoulos et al. (2023, prediction-powered inference and PPI++).
   - Chetty et al. (2011) and Kleven (2016) for bunching; Abadie et al. (2010) for synthetic control; Efron (2004) for empirical null.
-  - Full list: `RESEARCH_PAPERS.md`.

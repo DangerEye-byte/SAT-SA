@@ -1,6 +1,6 @@
 # Calibration log: what we tried on the statistical model, what failed, what we kept
 
-This log covers every change to the detector statistics, with the numbers that drove each decision. It exists so that no reasoning is lost across sessions. All numbers come from **synthetic** panels unless they are marked GUIDE (real data, Microsoft GUIDE).
+This log covers every change to the detector statistics, with the numbers that drove each decision. It exists so that the reasoning behind each choice is on record. All numbers come from **synthetic** panels unless they are marked GUIDE (real data, Microsoft GUIDE).
 
 Null panels are seeded rosters with no planted weakness. Any flag on one is a false flag. The target is realised FDR ≤ 10% at q = 0.1 over 40 null panels, with a detector-level type-I rate close to nominal.
 
