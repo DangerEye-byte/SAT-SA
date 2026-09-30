@@ -1,0 +1,9 @@
+{
+  "captured_at": "2026-09-30T18:07:07.220Z",
+  "api": "http://127.0.0.1:8000",
+  "run_hash": "1674637d92117a86d3304c763ecf7085c9a7d7e3632bfa8a524570fe43ace963",
+  "files": 1815,
+  "entities": 43,
+  "cases": 1234,
+  "explanations": 18
+}

@@ -1,0 +1,1 @@
+{"entity_id":"TRN-03","available":true,"previous":"2026-Q2","current":"2026-Q3","alpha":0.01,"new":[],"resolved":[],"persisting":[{"detector_id":"EG2","name":"Critical cases closed without escalation"},{"detector_id":"EG5","name":"Workflow non-conformance"}]}

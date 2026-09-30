@@ -1,0 +1,1 @@
+{"entity_id":"BFS-06","available":true,"previous":"2026-Q2","current":"2026-Q3","alpha":0.01,"new":[{"detector_id":"EG11","name":"24x7 claim vs night-time reality"}],"resolved":[],"persisting":[{"detector_id":"EG12","name":"Regulatory reporting beyond 6 hours"}]}

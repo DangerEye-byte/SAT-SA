@@ -1,0 +1,49 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Examination brief TEL-02</title>
+<style>
+ body{font-family:Segoe UI,Arial,sans-serif;color:#111;margin:28px;font-size:13px;line-height:1.4}
+ h1{font-size:20px;margin:0} h2{font-size:15px;margin:22px 0 6px;border-bottom:1px solid #999}
+ table{border-collapse:collapse;width:100%} td,th{border:1px solid #bbb;padding:5px 7px;vertical-align:top;text-align:left}
+ th{background:#eee} .m{color:#555;font-size:11px;margin-top:3px} .yes{color:#0a6b3d} .no{color:#a30d0d;font-weight:600} .na{color:#777}
+ .flag{display:inline-block;padding:3px 9px;border:1px solid;border-radius:4px;font-weight:600}
+ .foot{margin-top:26px;color:#555;font-size:11px;border-top:1px solid #999;padding-top:8px}
+ @media print{body{margin:12mm} .noprint{display:none}}
+</style></head><body>
+<div class=noprint style="text-align:right"><button onclick="window.print()">Print / save as PDF</button></div>
+<h1>SAT-SA examination brief: Telecom B (TEL-02)</h1>
+<div class=m>Telecom · SOC: INHOUSE · size M ·
+ generated 30 Sep 2026 23:35 · run 1674637d92117a86</div>
+<p><span class=flag style="color:#a30d0d">FLAGGED FOR EXAMINER REVIEW</span>
+ &nbsp; attention 86/100 · q = 5.3e-05 (FDR level 10%) · data trust 100/100</p>
+<p>These are statistical flags and documented facts for an examiner to verify, not verdicts. Every finding lists the
+records it rests on. The false-discovery rate of the flagged queue is controlled at 10%.</p>
+<h2>Findings (7)</h2>
+<table><tr><th style="width:18%">Finding</th><th style="width:16%">Effect</th><th>Why, evidence, obligation</th><th style="width:14%">Examiner disposition</th></tr>
+<tr><td><b>EG13</b><br>Threat intelligence not applied</td><td>40% vs peer median 30%<br>
+          <span class=m>p = 9.1e-07</span></td><td>1992 of 4953 human-handled cases (40%) show no threat-intelligence / IOC enrichment; peer median 30%.<div class=m>Evidence: TEL-02-CS000001, TEL-02-CS000008, TEL-02-CS000011, TEL-02-CS000014, TEL-02-CS000017, TEL-02-CS000018, TEL-02-CS000019, TEL-02-CS000028</div>
+          <div class=m>SEBI CSCRF - &#x27;Whether threat intelligence is received and acted upon?&#x27;</div></td>
+          <td>open<div class=m></div></td></tr><tr><td><b>EG2</b><br>Critical cases closed without escalation</td><td>23% vs peer median 10%<br>
+          <span class=m>p = 0.00033</span></td><td>269 of 1166 closed critical cases (23%) show no escalation; peer median 10%.<div class=m>Evidence: TEL-02-CS005005, TEL-02-CS003936, TEL-02-CS000876, TEL-02-CS000774, TEL-02-CS000366, TEL-02-CS002764, TEL-02-CS003796, TEL-02-CS000637</div>
+          <div class=m>SEBI CSCRF - Detective Effectiveness; CEA 2024 - Cyber Crisis Management Plan escalation</div></td>
+          <td>open<div class=m></div></td></tr><tr><td><b>EG1</b><br>Unusually fast high-severity closures</td><td>15% vs peer median 2%<br>
+          <span class=m>p = 0.00046</span></td><td>532 of 3645 high/critical cases (15%) were closed faster than 95% of comparable peer cases (same severity and alert type); the peer median is 2%. Automated SOAR closures are excluded.<div class=m>Evidence: TEL-02-CS003854, TEL-02-CS005023, TEL-02-CS004771, TEL-02-CS002316, TEL-02-CS000774, TEL-02-CS003936, TEL-02-CS001457, TEL-02-CS002942</div>
+          <div class=m>SEBI CSCRF - SOC functional efficacy: Detective Effectiveness; NCIIPC guidelines - incident handling</div></td>
+          <td>open<div class=m></div></td></tr><tr><td><b>EG12</b><br>Regulatory reporting beyond 6 hours</td><td>17% vs peer median 10%<br>
+          <span class=m>p = 0.0019</span></td><td>182 of 1070 high/critical true-positive incidents (17%) were reported to CERT-In late (&gt; 6 h after the first alert) or not at all; peer median 10%.<div class=m>Evidence: TEL-02-CS005078, TEL-02-CS005107, TEL-02-CS000215, TEL-02-CS001880, TEL-02-CS003299, TEL-02-CS002572, TEL-02-CS002652, TEL-02-CS005123</div>
+          <div class=m>CERT-In Directions 2022 - report incidents within 6 hours; CEA 2024 - reporting to CERT-In / NCIIPC / CSIRT-Power</div></td>
+          <td>open<div class=m></div></td></tr><tr><td><b>EG5</b><br>Workflow non-conformance</td><td>16% vs peer median 4%<br>
+          <span class=m>p = 0.0019</span></td><td>775 of 4849 closed cases (16%) break at least one workflow rule (triage before close, escalation recorded, containment for true positives, remediation recorded); peer median 4%.<div class=m>Evidence: TEL-02-CS000300, TEL-02-CS000336, TEL-02-CS004145, TEL-02-CS005155, TEL-02-CS005166, TEL-02-CS004481, TEL-02-CS004588, TEL-02-CS004366</div>
+          <div class=m>SEBI CSCRF - Policy Compliance (approved SOPs); RBI IT-GRCA 2023 - SOC process controls</div></td>
+          <td>open<div class=m></div></td></tr><tr><td><b>EG3</b><br>Template / copy-paste investigation notes</td><td>66% vs peer median 4%<br>
+          <span class=m>p = 0.0021</span></td><td>3276 of 4953 investigation notes (66%) are near-duplicates of a small set of templates; peer median 4%.<div class=m>Evidence: TEL-02-CS005104, TEL-02-CS000050, TEL-02-CS005086, TEL-02-CS005085, TEL-02-CS005082, TEL-02-CS001966, TEL-02-CS005055, TEL-02-CS005049</div>
+          <div class=m>SEBI CSCRF - &#x27;Whether qualified personnel are deployed in SOC?&#x27;</div></td>
+          <td>open<div class=m></div></td></tr><tr><td><b>EG4</b><br>Acknowledged but not investigated</td><td>18% vs peer median 3%<br>
+          <span class=m>p = 0.0031</span></td><td>666 of 3645 high/critical cases (18%) were acknowledged and closed with no investigation step recorded; peer median 3%.<div class=m>Evidence: TEL-02-CS005005, TEL-02-CS003936, TEL-02-CS000876, TEL-02-CS000774, TEL-02-CS000366, TEL-02-CS002764, TEL-02-CS001079, TEL-02-CS003796</div>
+          <div class=m>SEBI CSCRF - &#x27;Whether IOCs are processed by SOC?&#x27;; NCIIPC guidelines - incident handling</div></td>
+          <td>open<div class=m></div></td></tr></table>
+<h2>SEBI CSCRF SOC-efficacy questions answered from evidence</h2>
+<table><tr><th>Question</th><th>Answer from the submitted paper trail</th></tr><tr><td>Whether monitoring through SOC is done round-the-clock?</td><td class=yes>Evidence consistent with &#x27;yes&#x27;</td></tr><tr><td>Whether IOCs are processed by SOC?</td><td class=no>Evidence contradicts a &#x27;yes&#x27; (EG4, EG13)</td></tr><tr><td>Whether threat intelligence is received and acted upon?</td><td class=no>Evidence contradicts a &#x27;yes&#x27; (EG13)</td></tr><tr><td>Whether qualified personnel are deployed in SOC (quality of investigation)?</td><td class=no>Evidence contradicts a &#x27;yes&#x27; (EG1, EG3, EG4)</td></tr><tr><td>Whether incidents are escalated as per the approved SOP?</td><td class=no>Evidence contradicts a &#x27;yes&#x27; (EG2, EG5)</td></tr><tr><td>Whether incidents are reported to CERT-In within 6 hours?</td><td class=no>Evidence contradicts a &#x27;yes&#x27; (EG12)</td></tr><tr><td>Whether the SOC covers all critical assets and log sources?</td><td class=yes>Evidence consistent with &#x27;yes&#x27;</td></tr><tr><td>Whether logs are retained for 180 days with synchronised clocks?</td><td class=yes>Evidence consistent with &#x27;yes&#x27;</td></tr><tr><td>Whether known attack techniques (red-team) are detected?</td><td class=na>Insufficient evidence</td></tr></table>
+<h2>Examiner review</h2><p>No examiner reviews recorded yet.</p>
+<h2>Evidence across quarters (anytime-valid)</h2><p>2025-Q4: e = 98.6 2026-Q1: e = 1.97e+03 2026-Q2: e = 4.06e+04 2026-Q3: e = 6.7e+05</p>
+<div class=foot>Audit ledger head: ecc961842278db303fcb3aa2cef3d67a0d9239ba04629ec90c8efa681a994292 (entry 128). Code f19ef93d7885942c,
+ input 93016f1fad31cfba. Produced offline by SAT-SA 0.1.0.</div>
+</body></html>

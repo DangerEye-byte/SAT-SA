@@ -1,0 +1,58 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Examination brief PWR-01</title>
+<style>
+ body{font-family:Segoe UI,Arial,sans-serif;color:#111;margin:28px;font-size:13px;line-height:1.4}
+ h1{font-size:20px;margin:0} h2{font-size:15px;margin:22px 0 6px;border-bottom:1px solid #999}
+ table{border-collapse:collapse;width:100%} td,th{border:1px solid #bbb;padding:5px 7px;vertical-align:top;text-align:left}
+ th{background:#eee} .m{color:#555;font-size:11px;margin-top:3px} .yes{color:#0a6b3d} .no{color:#a30d0d;font-weight:600} .na{color:#777}
+ .flag{display:inline-block;padding:3px 9px;border:1px solid;border-radius:4px;font-weight:600}
+ .foot{margin-top:26px;color:#555;font-size:11px;border-top:1px solid #999;padding-top:8px}
+ @media print{body{margin:12mm} .noprint{display:none}}
+</style></head><body>
+<div class=noprint style="text-align:right"><button onclick="window.print()">Print / save as PDF</button></div>
+<h1>SAT-SA examination brief: Utility P (PWR-01)</h1>
+<div class=m>Power &amp; Energy · SOC: INHOUSE · size M ·
+ generated 30 Sep 2026 23:34 · run 1674637d92117a86</div>
+<p><span class=flag style="color:#a30d0d">FLAGGED FOR EXAMINER REVIEW</span>
+ &nbsp; attention 100/100 · q = 8.1e-11 (FDR level 10%) · data trust 100/100</p>
+<p>These are statistical flags and documented facts for an examiner to verify, not verdicts. Every finding lists the
+records it rests on. The false-discovery rate of the flagged queue is controlled at 10%.</p>
+<h2>Findings (10)</h2>
+<table><tr><th style="width:18%">Finding</th><th style="width:16%">Effect</th><th>Why, evidence, obligation</th><th style="width:14%">Examiner disposition</th></tr>
+<tr><td><b>EG2</b><br>Critical cases closed without escalation</td><td>83% vs peer median 10%<br>
+          <span class=m>p = 1e-12</span></td><td>869 of 1044 closed critical cases (83%) show no escalation; peer median 10%.<div class=m>Evidence: PWR-01-CS004434, PWR-01-CS004355, PWR-01-CS004629, PWR-01-CS004258, PWR-01-CS004352, PWR-01-CS004317, PWR-01-CS004120, PWR-01-CS004677</div>
+          <div class=m>SEBI CSCRF - Detective Effectiveness; CEA 2024 - Cyber Crisis Management Plan escalation</div></td>
+          <td>open<div class=m></div></td></tr><tr><td><b>EG5</b><br>Workflow non-conformance</td><td>25% vs peer median 4%<br>
+          <span class=m>p = 4.6e-06</span></td><td>1125 of 4584 closed cases (25%) break at least one workflow rule (triage before close, escalation recorded, containment for true positives, remediation recorded); peer median 4%.<div class=m>Evidence: PWR-01-CS000021, PWR-01-CS004818, PWR-01-CS003218, PWR-01-CS003219, PWR-01-CS003225, PWR-01-CS003249, PWR-01-CS003263, PWR-01-CS003279</div>
+          <div class=m>SEBI CSCRF - Policy Compliance (approved SOPs); RBI IT-GRCA 2023 - SOC process controls</div></td>
+          <td>open<div class=m></div></td></tr><tr><td><b>EG7</b><br>Repeat alerts without remediation</td><td>59% vs peer median 32%<br>
+          <span class=m>p = 1e-12</span></td><td>783 of 1319 closed high/critical true positives (59%) were followed within 14 days by the same detection rule firing again as a true positive on the same asset - evidence the root cause was not remediated. Its asset mix predicts ~460; peer median 32%.<div class=m>Evidence: PWR-01-CS004355, PWR-01-CS004629, PWR-01-CS004258, PWR-01-CS004352, PWR-01-CS004120, PWR-01-CS004677, PWR-01-CS004807, PWR-01-CS004184</div>
+          <div class=m>CERT-In Directions 2022 - remediation of reported incidents; NCIIPC guidelines - root-cause remediation</div></td>
+          <td>open<div class=m></div></td></tr><tr><td><b>EG12</b><br>Regulatory reporting beyond 6 hours</td><td>21% vs peer median 10%<br>
+          <span class=m>p = 5.5e-06</span></td><td>277 of 1345 high/critical true-positive incidents (21%) were reported to CERT-In late (&gt; 6 h after the first alert) or not at all; peer median 10%.<div class=m>Evidence: PWR-01-CS001403, PWR-01-CS004783, PWR-01-CS001954, PWR-01-CS003115, PWR-01-CS004498, PWR-01-CS001781, PWR-01-CS001661, PWR-01-CS003411</div>
+          <div class=m>CERT-In Directions 2022 - report incidents within 6 hours; CEA 2024 - reporting to CERT-In / NCIIPC / CSIRT-Power</div></td>
+          <td>open<div class=m></div></td></tr><tr><td><b>EG13</b><br>Threat intelligence not applied</td><td>41% vs peer median 30%<br>
+          <span class=m>p = 3e-07</span></td><td>1894 of 4653 human-handled cases (41%) show no threat-intelligence / IOC enrichment; peer median 30%.<div class=m>Evidence: PWR-01-CS000004, PWR-01-CS000008, PWR-01-CS000013, PWR-01-CS000014, PWR-01-CS000016, PWR-01-CS000020, PWR-01-CS000021, PWR-01-CS000022</div>
+          <div class=m>SEBI CSCRF - &#x27;Whether threat intelligence is received and acted upon?&#x27;</div></td>
+          <td>open<div class=m></div></td></tr><tr><td><b>NS1</b><br>Silent critical assets</td><td>2 critical asset(s) silent<br>
+          <span class=m>p = 2.5e-11</span></td><td>2 critical asset(s) (RTU / control-system gateway) produced 0 alerts in the last 90 days where comparable assets at peers produce ~48. 2 of them had been alerting normally (213 alerts earlier in the year) and then went silent - monitoring appears to have broken. Silence on a critical system is evidence of a gap, not of safety.<div class=m>Evidence: PWR-01-A0024, PWR-01-A0025</div>
+          <div class=m>SEBI CSCRF - Environment Coverage (coverage of assets w.r.t. SOC technologies)</div></td>
+          <td>open<div class=m></div></td></tr><tr><td><b>EG1</b><br>Unusually fast high-severity closures</td><td>16% vs peer median 2%<br>
+          <span class=m>p = 0.00022</span></td><td>522 of 3339 high/critical cases (16%) were closed faster than 95% of comparable peer cases (same severity and alert type); the peer median is 2%. Automated SOAR closures are excluded.<div class=m>Evidence: PWR-01-CS004629, PWR-01-CS004352, PWR-01-CS004258, PWR-01-CS004355, PWR-01-CS004317, PWR-01-CS004120, PWR-01-CS004677, PWR-01-CS004354</div>
+          <div class=m>SEBI CSCRF - SOC functional efficacy: Detective Effectiveness; NCIIPC guidelines - incident handling</div></td>
+          <td>open<div class=m></div></td></tr><tr><td><b>EG4</b><br>Acknowledged but not investigated</td><td>24% vs peer median 3%<br>
+          <span class=m>p = 0.00027</span></td><td>808 of 3339 high/critical cases (24%) were acknowledged and closed with no investigation step recorded; peer median 3%.<div class=m>Evidence: PWR-01-CS004434, PWR-01-CS004355, PWR-01-CS004629, PWR-01-CS004258, PWR-01-CS004352, PWR-01-CS004317, PWR-01-CS004120, PWR-01-CS004677</div>
+          <div class=m>SEBI CSCRF - &#x27;Whether IOCs are processed by SOC?&#x27;; NCIIPC guidelines - incident handling</div></td>
+          <td>open<div class=m></div></td></tr><tr><td><b>RT1</b><br>Red-team techniques missed</td><td>6 of 12 red-team techniques never alerted<br>
+          <span class=m>documented fact</span></td><td>The entity&#x27;s own red-team exercise executed 12 techniques; 6 (Command and Scripting Interpreter, OS Credential Dumping, Remote Services, Data Staged) produced no alert at all. These are known positives the SOC did not see.<div class=m>Evidence: T1059, T1003, T1021, T1074, T1053, T0855</div>
+          <div class=m>SEBI CSCRF / CEA 2024 - red-team exercises and drills</div></td>
+          <td>open<div class=m></div></td></tr><tr><td><b>NS3</b><br>Blind ATT&amp;CK tactics (cannot be seen)</td><td>blind to 4 ATT&amp;CK tactic(s)<br>
+          <span class=m>documented fact</span></td><td>The submitted log sources cannot support detection of Persistence, Lateral Movement, Collection, Impact, which most peers can see. Silence here means &#x27;blind&#x27;, not &#x27;safe&#x27;. Missing sources: EDR, Network flow records, OT / ICS network monitoring.<div class=m>Evidence: Persistence, Lateral Movement, Collection, Impact</div>
+          <div class=m>SEBI CSCRF - &#x27;Quality of logs ingested in SOC (source, frequency, verbosity)&#x27;; SEBI CSCRF - monitoring of network traffic and endpoints</div></td>
+          <td>open<div class=m></div></td></tr></table>
+<h2>SEBI CSCRF SOC-efficacy questions answered from evidence</h2>
+<table><tr><th>Question</th><th>Answer from the submitted paper trail</th></tr><tr><td>Whether monitoring through SOC is done round-the-clock?</td><td class=yes>Evidence consistent with &#x27;yes&#x27;</td></tr><tr><td>Whether IOCs are processed by SOC?</td><td class=no>Evidence contradicts a &#x27;yes&#x27; (EG4, EG13)</td></tr><tr><td>Whether threat intelligence is received and acted upon?</td><td class=no>Evidence contradicts a &#x27;yes&#x27; (EG13)</td></tr><tr><td>Whether qualified personnel are deployed in SOC (quality of investigation)?</td><td class=no>Evidence contradicts a &#x27;yes&#x27; (EG1, EG4)</td></tr><tr><td>Whether incidents are escalated as per the approved SOP?</td><td class=no>Evidence contradicts a &#x27;yes&#x27; (EG2, EG5)</td></tr><tr><td>Whether incidents are reported to CERT-In within 6 hours?</td><td class=no>Evidence contradicts a &#x27;yes&#x27; (EG12)</td></tr><tr><td>Whether the SOC covers all critical assets and log sources?</td><td class=no>Evidence contradicts a &#x27;yes&#x27; (NS1, NS3)</td></tr><tr><td>Whether logs are retained for 180 days with synchronised clocks?</td><td class=yes>Evidence consistent with &#x27;yes&#x27;</td></tr><tr><td>Whether known attack techniques (red-team) are detected?</td><td class=no>Evidence contradicts a &#x27;yes&#x27; (RT1)</td></tr></table>
+<h2>Examiner review</h2><p>No examiner reviews recorded yet.</p>
+<h2>Evidence across quarters (anytime-valid)</h2><p>2025-Q4: e = 1.76e+05 2026-Q1: e = 2.79e+10 2026-Q2: e = 4.41e+15 2026-Q3: e = 9.87e+20</p>
+<div class=foot>Audit ledger head: ecc961842278db303fcb3aa2cef3d67a0d9239ba04629ec90c8efa681a994292 (entry 128). Code f19ef93d7885942c,
+ input 93016f1fad31cfba. Produced offline by SAT-SA 0.1.0.</div>
+</body></html>
