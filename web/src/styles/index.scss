@@ -1,0 +1,158 @@
+// SAT-SA UI styles: entry point.
+// Carbon supplies the form widgets (file uploader, text input, select) and the theme tokens they read.
+// Everything else (shell, cards, tables, tabs, buttons) is SAT-SA's own system in app.scss.
+// Fonts are self-hosted through @fontsource (main.tsx); Carbon's @font-face is off (air-gapped).
+@use 'sass:map';
+@use 'sass:meta';
+@use '@carbon/styles/scss/config' with ($css--font-face: false);
+@use '@carbon/styles/scss/themes';
+@use '@carbon/styles/scss/reset';
+@use '@carbon/styles/scss/layer';
+@use '@carbon/styles/scss/components/button';
+@use '@carbon/styles/scss/components/file-uploader';
+@use '@carbon/styles/scss/components/select';
+@use '@carbon/styles/scss/components/text-input';
+@use '@carbon/styles/scss/components/form';
+@use '@carbon/styles/scss/components/popover';
+@use '@carbon/styles/scss/components/tooltip';
+
+// ---------------------------------------------------------------------------
+// Carbon re-tint: g100 / g10 greys become the SAT-SA "Midnight Signal" scale,
+// interactive blue becomes the signal accent, status colours follow the handoff
+// (teal ok, amber review, red confirmed, violet AI).
+// ---------------------------------------------------------------------------
+$sa-dark: (
+  #161616: #070b14, #262626: #0e1626, #292929: #0e1626, #333333: #121c30, #393939: #142036,
+  #474747: #1a2842, #525252: #22314f, #5e5e5e: #283a5c, #636363: #283a5c, #6f6f6f: #3a4d72,
+  #8d8d8d: #5b6b88, #a8a8a8: #8390a6, #c6c6c6: #a9b5c9, #e0e0e0: #d5dde9, #e8e8e8: #d5dde9,
+  #f4f4f4: #e8edf5, #ffffff: #f4f7fb,
+  #4589ff: #5b96ff, #78a9ff: #86b0ff, #a6c8ff: #b3ceff, #0f62fe: #2f6fe6, #0043ce: #2459bd,
+  #001d6c: #13254a, #42be65: #2dd4bf, #24a148: #0f766e, #f1c21b: #f2b84b, #fa4d56: #f87171,
+  #da1e28: #c2383e, #ff8389: #fca5a5, #be95ff: #a78bfa, #8a3ffc: #6d4fc4, #ff832b: #f59e5b,
+);
+$sa-light: (
+  #f4f4f4: #f4f6fa, #ffffff: #ffffff, #e8e8e8: #eef2f7, #e0e0e0: #dfe5ee, #d1d1d1: #cfd7e3,
+  #c6c6c6: #c3ccda, #a8a8a8: #a3aec0, #8d8d8d: #7f8ca3, #6f6f6f: #5d6a80, #525252: #445066,
+  #474747: #33405a, #393939: #222d44, #161616: #0d1422,
+  #0f62fe: #1f5fd6, #0043ce: #1a4fb3, #d0e2ff: #dce7fb, #edf5ff: #eef4ff, #4589ff: #4f82e0,
+  #78a9ff: #8fb3ea, #a6c8ff: #b5cdf0, #24a148: #0f766e, #42be65: #2dd4bf, #f1c21b: #9a6a0b,
+  #da1e28: #c2383e, #fa4d56: #e57373, #8a3ffc: #6d4fc4, #be95ff: #a78bfa, #ff832b: #b8692e,
+);
+
+@mixin retint($theme, $map) {
+  @each $key, $value in $theme {
+    @if meta.type-of($value) == color and map.has-key($map, $value) {
+      --cds-#{$key}: #{map.get($map, $value)};
+    }
+  }
+}
+
+.cds--g100 {
+  @include retint(themes.$g100, $sa-dark);
+  --cds-button-primary: #2f6fe6;
+  --cds-button-primary-hover: #2a63cf;
+  --cds-button-primary-active: #2459bd;
+  --cds-button-secondary: #22314f;
+  --cds-button-secondary-hover: #283a5c;
+  --cds-button-separator: #070b14;
+  --cds-field-01: #0e1626;
+  --cds-field-02: #142036;
+  --cds-field-hover-01: #142036;
+
+  --sa-bg: #070b14;
+  --sa-bg-2: #0a101c;
+  --sa-layer: #0e1626;
+  --sa-layer-2: #142036;
+  --sa-layer-3: #1a2842;
+  --sa-border: #1c2a44;
+  --sa-border-strong: #34476b;
+  --sa-text: #e8edf5;
+  --sa-text-2: #a9b5c9;
+  --sa-helper: #8390a6;
+  --sa-accent: #5b96ff;
+  --sa-accent-strong: #2f6fe6;
+  --sa-accent-strong-hover: #3b7af0;
+  --sa-accent-ink: #f4f7fb;
+  --sa-ok: #2dd4bf;
+  --sa-review: #f2b84b;
+  --sa-confirmed: #f87171;
+  --sa-ai: #a78bfa;
+  --sa-neutral-1: #5b6b88;
+  --sa-neutral-2: #34476b;
+  --sa-hatch-a: #8a2f35;
+  --sa-hatch-b: #2b151a;
+  --sa-quiet: #8a6420;
+  --sa-covered: #136b61;
+  --sa-na: #101a2c;
+  --sa-glass: rgb(10 16 28 / 0.72);
+  --sa-shadow: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 12px 32px -12px rgb(0 0 0 / 0.6);
+  --sa-shadow-lg: 0 24px 64px -16px rgb(0 0 0 / 0.7);
+  --sa-grid-line: rgb(91 150 255 / 0.06);
+}
+
+.cds--g10 {
+  @include retint(themes.$g10, $sa-light);
+  --cds-button-primary: #1f5fd6;
+  --cds-button-primary-hover: #1a54bf;
+  --cds-button-primary-active: #1a4fb3;
+  --cds-button-separator: #dfe5ee;
+  --cds-field-01: #ffffff;
+  --cds-field-02: #f4f6fa;
+
+  --sa-bg: #f4f6fa;
+  --sa-bg-2: #eef1f6;
+  --sa-layer: #ffffff;
+  --sa-layer-2: #f0f3f8;
+  --sa-layer-3: #e6ebf3;
+  --sa-border: #dfe5ee;
+  --sa-border-strong: #aab5c6;
+  --sa-text: #0d1422;
+  --sa-text-2: #445066;
+  --sa-helper: #5d6a80;
+  --sa-accent: #1f5fd6;
+  --sa-accent-strong: #1f5fd6;
+  --sa-accent-strong-hover: #1a54bf;
+  --sa-accent-ink: #ffffff;
+  --sa-ok: #0f766e;
+  --sa-review: #9a6a0b;
+  --sa-confirmed: #c2383e;
+  --sa-ai: #6d4fc4;
+  --sa-neutral-1: #8391a7;
+  --sa-neutral-2: #b7c2d3;
+  --sa-hatch-a: #e3a6a9;
+  --sa-hatch-b: #f8e4e5;
+  --sa-quiet: #efd9a2;
+  --sa-covered: #b4e2db;
+  --sa-na: #eef2f7;
+  --sa-glass: rgb(255 255 255 / 0.78);
+  --sa-shadow: 0 1px 2px rgb(13 20 34 / 0.05), 0 8px 24px -12px rgb(13 20 34 / 0.12);
+  --sa-shadow-lg: 0 24px 64px -20px rgb(13 20 34 / 0.22);
+  --sa-grid-line: rgb(31 95 214 / 0.05);
+}
+
+:root {
+  --sa-mono: 'JetBrains Mono', 'IBM Plex Mono', Consolas, monospace;
+  --sa-sans: 'IBM Plex Sans', system-ui, 'Segoe UI', sans-serif;
+  --sa-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --sa-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  // One radius system.
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 20px;
+  --r-pill: 999px;
+  --sa-side-w: 17rem;
+  --sa-top-h: 3.75rem;
+  // z-index scale (documented, not ad hoc)
+  --sa-z-top: 7000;
+  --sa-z-nav: 8000;
+  --sa-z-panel-bg: 9000;
+  --sa-z-panel: 9001;
+  --sa-z-panel2-bg: 9100;
+  --sa-z-panel2: 9101;
+  // Above the tour's spotlight overlay (driver.js uses 10000) so toasts and "?" tips stay visible during a tour.
+  --sa-z-toast: 100000;
+  --sa-z-tip: 100001;
+  --sa-z-tourcenter: 100002;
+}

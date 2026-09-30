@@ -6,12 +6,22 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "snapshot": "node scripts/snapshot.mjs",
+    "build:static": "vite build --mode static",
+    "preview:static": "vite preview --mode static --port 4173",
     "typecheck": "tsc --noEmit",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@carbon/icons-react": "^11.89.0",
+    "@carbon/react": "^1.117.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "driver.js": "^1.8.0",
     "echarts": "^6.1.0",
     "echarts-for-react": "^3.0.6",
+    "motion": "^13.4.6",
+    "ogl": "^1.0.11",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-router-dom": "^7.18.4"
@@ -20,6 +30,7 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
+    "sass": "^1.105.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.1"
   }

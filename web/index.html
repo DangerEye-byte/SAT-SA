@@ -1,10 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="cds--g100" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
     <link rel="icon" href="/favicon.svg" />
     <title>SAT-SA · Supervisory Analytics</title>
+    <script>
+      // Apply the saved theme before first paint (no flash). Storage can be blocked; default is dark.
+      try {
+        if (localStorage.getItem("satsa-theme") === "light") {
+          document.documentElement.className = "cds--g10";
+          document.documentElement.dataset.theme = "light";
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>
