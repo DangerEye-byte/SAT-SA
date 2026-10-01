@@ -23,9 +23,11 @@ export const PALETTES: Record<Mode, Palette> = {
   },
 };
 
-const KEY = "satsa-theme";
+// New key: the old one stored "dark" automatically for every past visitor, so it cannot mean "chosen".
+const KEY = "satsa-theme-choice";
+// Light unless the user has switched to dark; the OS colour scheme is ignored on purpose.
 const readMode = (): Mode => {
-  try { return localStorage.getItem(KEY) === "light" ? "light" : "dark"; } catch { return "dark"; }
+  try { return localStorage.getItem(KEY) === "dark" ? "dark" : "light"; } catch { return "light"; }
 };
 
 export function applyMode(mode: Mode) {
@@ -37,7 +39,7 @@ export function applyMode(mode: Mode) {
 }
 
 type Ctx = { mode: Mode; p: Palette; toggle: () => void; reduceMotion: boolean };
-const ThemeCtx = createContext<Ctx>({ mode: "dark", p: PALETTES.dark, toggle: () => {}, reduceMotion: false });
+const ThemeCtx = createContext<Ctx>({ mode: "light", p: PALETTES.light, toggle: () => {}, reduceMotion: false });
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [mode, setMode] = useState<Mode>(readMode);
