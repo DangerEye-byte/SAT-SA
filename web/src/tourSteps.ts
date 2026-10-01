@@ -58,7 +58,7 @@ export const CHAPTERS: Chapter[] = [
     ],
   },
   {
-    id: "queue", title: "Review queue", blurb: "Ranked entities under a false-alarm budget you choose.", route: "/", icon: ListChecked, guideKey: "queue", match: (p) => p === "/",
+    id: "queue", title: "Review queue", blurb: "Ranked entities under a false-alarm budget you choose.", route: "/queue", icon: ListChecked, guideKey: "queue", match: (p) => p === "/queue",
     steps: [
       { id: "budget", el: ".sa-budget", side: "bottom", quick: true, title: "Choose how many false alarms you accept",
         body: "Statistical flags are held to the budget you pick. Beside it: how many entities are flagged, how many of those **may be false alarms**, and how many more rest on documented facts, which do not depend on the budget.",

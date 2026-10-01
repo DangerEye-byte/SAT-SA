@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { PlayFilledAlt } from "@carbon/icons-react";
 import Brand from "./components/Brand";
 import QueuePage from "./pages/Queue";
@@ -69,7 +69,7 @@ function Shell() {
         <main className="sa-main" id="main">
           <Suspense fallback={<Loading page label="Loading" />}>
             <Routes>
-              <Route path="/" element={<QueuePage />} />
+              <Route path="/queue" element={<QueuePage />} />
               <Route path="/command" element={<CommandPage />} />
               <Route path="/entity/:id" element={<EntityPage />} />
               <Route path="/review/:id" element={<ReviewPage />} />
@@ -92,7 +92,8 @@ function Shell() {
 export default function App() {
   return (
     <Routes>
-      <Route path="/overview" element={<Suspense fallback={<Loading page label="Loading" />}><OverviewPage /></Suspense>} />
+      <Route path="/" element={<Suspense fallback={<Loading page label="Loading" />}><OverviewPage /></Suspense>} />
+      <Route path="/overview" element={<Navigate to="/" replace />} />
       <Route path="*" element={<Shell />} />
     </Routes>
   );

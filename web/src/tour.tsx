@@ -384,7 +384,7 @@ export function TourProvider({ children }: { children: ReactNode }) {
 
   // First visit: offer the tour once.
   useEffect(() => {
-    if (saved.seen || loc.pathname === "/overview") return;
+    if (saved.seen || loc.pathname === "/" || loc.pathname === "/overview") return;
     const t = setTimeout(() => setCenter((c) => c ?? "welcome"), 900);
     return () => clearTimeout(t);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

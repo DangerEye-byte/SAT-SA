@@ -69,7 +69,7 @@ export default function SectorsPage() {
                 <span className="sa-sector__label"><Tipped text="Systemic provider risk" tip="mssp" /></span>
                 {s.systemic_providers.length ? <div className="sa-chips">{s.systemic_providers.map((pr: string) => <Link key={pr} to="/providers" className="sa-chip sa-chip--warn">{pr}</Link>)}</div> : <span className="sa-helper">none</span>}
               </div>
-              <Link to={`/?sector=${s.sector}`} className="sa-arrowlink sa-sector__go">Open this sector's queue <ArrowRight size={16} /></Link>
+              <Link to={`/queue?sector=${s.sector}`} className="sa-arrowlink sa-sector__go">Open this sector's queue <ArrowRight size={16} /></Link>
             </article>
           </Glow>
         ))}

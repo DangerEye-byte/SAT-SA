@@ -104,7 +104,7 @@ export default function IngestPage() {
             {job.status === "failed" && <ErrorBox e={job.error ?? "unknown error"} title="Re-analysis failed" />}
             {job.status === "done" && <div className="sa-btns">
               {(job.result?.merged?.entities || []).map((e: string) => <Btn key={e} kind="primary" to={`/entity/${e}`}>Open {e} dossier</Btn>)}
-              <Btn kind="secondary" to="/">See the queue</Btn></div>}
+              <Btn kind="secondary" to="/queue">See the queue</Btn></div>}
           </section>}
         </aside>
       </div>

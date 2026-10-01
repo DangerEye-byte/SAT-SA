@@ -94,7 +94,7 @@ export function EntityOrbit({ entities, detectors = [] }: { entities: QueueEntit
           const anchor = cs > 0.25 ? "start" : cs < -0.25 ? "end" : "middle";
           return (
             <g key={s.s} className="sa-orb__hub" role="link" tabIndex={0} aria-label={`${SHORT[s.s] ?? s.s}: ${f} of ${n.length} flagged. Open this sector's queue.`}
-              onMouseEnter={() => setHot({ kind: "sec", id: s.s })} onFocus={() => setHot({ kind: "sec", id: s.s })} onClick={() => nav(`/?sector=${s.s}`)} onKeyDown={(ev) => ev.key === "Enter" && nav(`/?sector=${s.s}`)}>
+              onMouseEnter={() => setHot({ kind: "sec", id: s.s })} onFocus={() => setHot({ kind: "sec", id: s.s })} onClick={() => nav(`/queue?sector=${s.s}`)} onKeyDown={(ev) => ev.key === "Enter" && nav(`/queue?sector=${s.s}`)}>
               <text x={lx} y={ly - 7} textAnchor={anchor} dominantBaseline="middle" fill={p.text2} fontSize="13.5" fontWeight="600" fontFamily={SANS}>{SHORT[s.s] ?? s.s}</text>
               <text x={lx} y={ly + 9} textAnchor={anchor} dominantBaseline="middle" fill={f ? p.review : p.helper} fontSize="11" fontFamily={SANS}>{f} of {n.length} flagged</text>
             </g>

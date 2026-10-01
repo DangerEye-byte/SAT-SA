@@ -7,7 +7,7 @@ export const NAV: (NavGroup & { blurb: string; tone: CardNavItem["tone"] })[] = 
   {
     label: "Supervise", blurb: "Who to examine first, and why.", tone: "accent", children: [
       { to: "/command", label: "Overview", icon: <RadarIcon size={16} />, hint: "At a glance: the entity map, priority list, findings and systemic risk" },
-      { to: "/", label: "Review queue", icon: <ListChecked size={16} />, hint: "Entities ranked for examiner review at a known false-alarm budget" },
+      { to: "/queue", label: "Review queue", icon: <ListChecked size={16} />, hint: "Entities ranked for examiner review at a known false-alarm budget" },
       { to: "/sectors", label: "Sectors", icon: <Enterprise size={16} />, hint: "Flagged entities, recurring weaknesses and blind tactics per critical sector" },
       { to: "/providers", label: "SOC providers", icon: <Network_3 size={16} />, hint: "Outsourced SOC providers whose clients share a weakness" },
     ],
@@ -34,9 +34,9 @@ export const NAV: (NavGroup & { blurb: string; tone: CardNavItem["tone"] })[] = 
 
 // Map any URL onto the nav item it belongs to.
 export function navKey(path: string) {
-  if (path === "/" || path.startsWith("/entity/")) return "/";
+  if (path === "/queue" || path.startsWith("/entity/")) return "/queue";
   if (path.startsWith("/review")) return "/review/BFS-02";
-  return NAV.flatMap((g) => g.children).find((c) => c.to !== "/" && path.startsWith(c.to))?.to ?? "";
+  return NAV.flatMap((g) => g.children).find((c) => path.startsWith(c.to))?.to ?? "";
 }
 
 export function crumbsFor(path: string): { group?: string; page: string } {

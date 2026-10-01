@@ -14,7 +14,7 @@ export default function NotFound() {
         <p className="sa-mono sa-helper">404</p>
         <h1 className="sa-h1">Nothing on the scope at <span className="sa-mono">{pathname}</span></h1>
         <p className="sa-lead">The review queue lists every entity under supervision.</p>
-        <Btn kind="primary" icon={ArrowRight} to="/">Back to the queue</Btn>
+        <Btn kind="primary" icon={ArrowRight} to="/queue">Back to the queue</Btn>
       </div>
     </section>
   );

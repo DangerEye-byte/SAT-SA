@@ -53,7 +53,7 @@ export default function CommandPage() {
 
       <div className="sa-kpis sa-kpis--glow">
         <Link to="/sectors" className="sa-kpilink"><Glow><Kpi icon={Enterprise} label="Entities assessed" tip={{ title: "Entities assessed", text: "Critical Sector Entities whose SOC paper trail (alerts, cases, workflow events, escalations, assets) was analysed this cycle. Click the card to see them by sector." }} value={<CountUp value={q.n_entities} />} note={`across ${new Set(q.entities.map((e) => e.sector)).size} critical sectors`} /></Glow></Link>
-        <Link to="/" className="sa-kpilink"><Glow tone="review"><Kpi icon={Flag} label="Flagged for examiner review" tip={{ title: "Flagged for examiner review", text: "Where to look first. Amber flags come from calibrated statistics and are held to the false-alarm budget; red flags are documented facts. A flag asks for examiner review; it is not a verdict." }} value={<><CountUp value={q.n_flagged} /><small>at {fdr * 100}% FDR</small></>} note={<span className="sa-row" style={{ gap: "0.375rem" }}><Badge kind="review">{q.n_flagged_statistical} statistical</Badge><Badge kind="confirmed">{q.n_flagged_deterministic} facts</Badge></span>} /></Glow></Link>
+        <Link to="/queue" className="sa-kpilink"><Glow tone="review"><Kpi icon={Flag} label="Flagged for examiner review" tip={{ title: "Flagged for examiner review", text: "Where to look first. Amber flags come from calibrated statistics and are held to the false-alarm budget; red flags are documented facts. A flag asks for examiner review; it is not a verdict." }} value={<><CountUp value={q.n_flagged} /><small>at {fdr * 100}% FDR</small></>} note={<span className="sa-row" style={{ gap: "0.375rem" }}><Badge kind="review">{q.n_flagged_statistical} statistical</Badge><Badge kind="confirmed">{q.n_flagged_deterministic} facts</Badge></span>} /></Glow></Link>
         <Link to="/blindspots" className="sa-kpilink"><Glow tone="confirmed"><Kpi icon={ViewOff} label="Blind entity-tactic pairs" tip={{ title: "Blind entity-tactic pairs", text: "Each pair is one entity and one ATT&CK tactic that its own declared log sources cannot see. Silence there means blind, not safe." }} value={<CountUp value={blindPairs} />} note="tactics an entity's own log sources cannot see" /></Glow></Link>
         <Link to="/ledger" className="sa-kpilink"><Glow tone="ok"><Kpi icon={Blockchain} label="Findings raised" tip={{ title: "Findings raised", text: "Detector results across every entity in this run. The note counts examiner decisions (accept, dismiss, escalate) sealed in the audit ledger." }} value={<CountUp value={meta.data?.run?.n_findings} />} note={`${decisions ?? 0} examiner decision${decisions === 1 ? "" : "s"} sealed in the ledger`} /></Glow></Link>
       </div>
@@ -80,7 +80,7 @@ export default function CommandPage() {
                   <Meter v={e.attention} basis={e.flag_basis} />
                 </button></li>))}
             </ol>
-            <Btn kind="secondary" to="/" icon={ArrowRight}>Open the full review queue</Btn>
+            <Btn kind="secondary" to="/queue" icon={ArrowRight}>Open the full review queue</Btn>
           </aside>
         </div>
       </section>
@@ -104,7 +104,7 @@ export default function CommandPage() {
             <Btn kind="ghost" size="sm" to="/sectors" icon={ArrowRight}>Sector view</Btn></div>
           <ul className="sa-bars sa-bars--sector">
             {(sectors.data ?? []).map((s: any) => (
-              <li key={s.sector}><button type="button" onClick={() => nav(`/?sector=${s.sector}`)}>
+              <li key={s.sector}><button type="button" onClick={() => nav(`/queue?sector=${s.sector}`)}>
                 <span className="sa-bars__label"><span className="sa-chip">{s.sector}</span> {s.sector_name}</span>
                 <span className="sa-bars__stack" aria-label={`${s.flagged} of ${s.entities} flagged`}>
                   {Array.from({ length: s.entities }, (_, k) => <i key={k} className={k < s.flagged ? "is-hot" : ""} />)}

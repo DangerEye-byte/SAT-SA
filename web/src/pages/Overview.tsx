@@ -95,7 +95,7 @@ function LiveQueue() {
               ))}
             </AnimatePresence>
           </ol>
-          <Link to="/" className="sa-arrowlink">Open all {q.n_flagged} in the review queue <ArrowRight size={16} /></Link>
+          <Link to="/queue" className="sa-arrowlink">Open all {q.n_flagged} in the review queue <ArrowRight size={16} /></Link>
         </>}
       </div>
     </Glow>
@@ -453,7 +453,7 @@ export default function OverviewPage() {
   return (
     <div className="sa-land">
       <div className="sa-land-navwrap">
-        <CardNav brand={<Brand />} items={CARD_NAV} cta={<><ThemeToggle compact /><Btn kind="primary" size="sm" to="/" icon={ArrowRight}>Open the queue</Btn></>} />
+        <CardNav brand={<Brand />} items={CARD_NAV} cta={<><ThemeToggle compact /><Btn kind="primary" size="sm" to="/command" icon={ArrowRight}>Open the dashboard</Btn></>} />
       </div>
 
       <main id="main">
@@ -469,7 +469,7 @@ export default function OverviewPage() {
                 SAT-SA reads the paper trail entities already submit and ranks who to examine first, with a known false-alarm budget.
               </motion.p>
               <motion.div className="sa-hero__ctas" initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.75, ease }}>
-                <Btn kind="primary" size="lg" to="/" icon={ArrowRight}>Open the review queue</Btn>
+                <Btn kind="primary" size="lg" to="/command" icon={ArrowRight}>Open the dashboard</Btn>
                 <Btn kind="secondary" size="lg" icon={PlayFilledAlt} iconLeft onClick={open}>Take the guided tour</Btn>
               </motion.div>
             </div>
@@ -508,7 +508,7 @@ export default function OverviewPage() {
           <div className="sa-cta__in">
             <h2 id="cta-h" className="sa-land-h2">Start with the queue.</h2>
             <p className="sa-land-p">Every flag comes with its evidence, its statistics and the examiner's final say.</p>
-            <div className="sa-hero__ctas"><Btn kind="primary" size="lg" to="/" icon={ArrowRight}>Open the review queue</Btn><Btn kind="ghost" size="lg" icon={DataCheck} iconLeft to="/validation">Read the validation</Btn></div>
+            <div className="sa-hero__ctas"><Btn kind="primary" size="lg" to="/command" icon={ArrowRight}>Open the dashboard</Btn><Btn kind="ghost" size="lg" icon={DataCheck} iconLeft to="/validation">Read the validation</Btn></div>
           </div>
         </section>
       </main>
